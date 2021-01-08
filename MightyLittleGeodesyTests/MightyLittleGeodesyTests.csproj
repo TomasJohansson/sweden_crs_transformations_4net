@@ -12,4 +12,9 @@
   <ItemGroup>
     <ProjectReference Include="..\MightyLittleGeodesy\MightyLittleGeodesy.csproj" />
   </ItemGroup>
+  <ItemGroup>
+    <None Update="CoordinateFiles\data\swedish_crs_coordinates.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
 </Project>
