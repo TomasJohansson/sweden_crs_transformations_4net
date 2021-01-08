@@ -29,6 +29,8 @@ namespace MightyLittleGeodesy.Positions
 {
     public class RT90Position : Position
     {
+        
+        [System.Obsolete("To become replaced with CrsProjection with values for both RT90Projection and SWEREF99Position (and also WGS84)")]
         public enum RT90Projection
         {
             rt90_7_5_gon_v = 0,

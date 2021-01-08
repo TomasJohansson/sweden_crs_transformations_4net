@@ -29,6 +29,7 @@ namespace MightyLittleGeodesy.Positions
 {
     public class SWEREF99Position : Position
     {
+        [System.Obsolete("To become replaced with CrsProjection with values for both RT90Projection and SWEREF99Position (and also WGS84)")]
         public enum SWEREFProjection
         {
             sweref_99_tm = 0,
