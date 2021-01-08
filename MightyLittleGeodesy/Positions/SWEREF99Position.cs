@@ -29,23 +29,6 @@ namespace MightyLittleGeodesy.Positions
 {
     public class SWEREF99Position : Position
     {
-        [System.Obsolete("To become replaced with CrsProjection with values for both RT90Projection and SWEREF99Position (and also WGS84)")]
-        public enum SWEREFProjection
-        {
-            sweref_99_tm = 0,
-            sweref_99_12_00 = 1,
-            sweref_99_13_30 = 2,
-            sweref_99_15_00 = 3,
-            sweref_99_16_30 = 4,
-            sweref_99_18_00 = 5,
-            sweref_99_14_15 = 6,
-            sweref_99_15_45 = 7,
-            sweref_99_17_15 = 8,
-            sweref_99_18_45 = 9,
-            sweref_99_20_15 = 10,
-            sweref_99_21_45 = 11,
-            sweref_99_23_15 = 12
-        }
 
         /// <summary>
         /// Create a Sweref99 position from double values with 
@@ -56,7 +39,7 @@ namespace MightyLittleGeodesy.Positions
         public SWEREF99Position(double n, double e)
             : base(n, e, Grid.SWEREF99)
         {
-            Projection = SWEREFProjection.sweref_99_tm;
+            Projection = CrsProjection.sweref_99_tm;
         }
 
         /// <summary>
@@ -66,7 +49,7 @@ namespace MightyLittleGeodesy.Positions
         /// <param name="n"></param>
         /// <param name="e"></param>
         /// <param name="projection"></param>
-        public SWEREF99Position(double n, double e, SWEREFProjection projection)
+        public SWEREF99Position(double n, double e, CrsProjection projection)
             : base(n, e, Grid.SWEREF99)
         {
             Projection = projection;
@@ -77,7 +60,7 @@ namespace MightyLittleGeodesy.Positions
         /// </summary>
         /// <param name="position">WGS84 position to convert</param>
         /// <param name="rt90projection">Projection to convert to</param>
-        public SWEREF99Position(WGS84Position position, SWEREFProjection projection)
+        public SWEREF99Position(WGS84Position position, CrsProjection projection)
             : base(Grid.SWEREF99)
         {
             GaussKreuger gkProjection = new GaussKreuger();
@@ -108,48 +91,48 @@ namespace MightyLittleGeodesy.Positions
             return newPos;
         }
 
-        private string GetProjectionString(SWEREFProjection projection)
+        private string GetProjectionString(CrsProjection projection)
         {
             string retVal = string.Empty;
             switch (projection)
             {
-                case SWEREFProjection.sweref_99_tm:
+                case CrsProjection.sweref_99_tm:
                     retVal = "sweref_99_tm";
                     break;
-                case SWEREFProjection.sweref_99_12_00:
+                case CrsProjection.sweref_99_12_00:
                     retVal = "sweref_99_1200";
                     break;
-                case SWEREFProjection.sweref_99_13_30:
+                case CrsProjection.sweref_99_13_30:
                     retVal = "sweref_99_1330";
                     break;
-                case SWEREFProjection.sweref_99_14_15:
+                case CrsProjection.sweref_99_14_15:
                     retVal = "sweref_99_1415";
                     break;
-                case SWEREFProjection.sweref_99_15_00:
+                case CrsProjection.sweref_99_15_00:
                     retVal = "sweref_99_1500";
                     break;
-                case SWEREFProjection.sweref_99_15_45:
+                case CrsProjection.sweref_99_15_45:
                     retVal = "sweref_99_1545";
                     break;
-                case SWEREFProjection.sweref_99_16_30:
+                case CrsProjection.sweref_99_16_30:
                     retVal = "sweref_99_1630";
                     break;
-                case SWEREFProjection.sweref_99_17_15:
+                case CrsProjection.sweref_99_17_15:
                     retVal = "sweref_99_1715";
                     break;
-                case SWEREFProjection.sweref_99_18_00:
+                case CrsProjection.sweref_99_18_00:
                     retVal = "sweref_99_1800";
                     break;
-                case SWEREFProjection.sweref_99_18_45:
+                case CrsProjection.sweref_99_18_45:
                     retVal = "sweref_99_1845";
                     break;
-                case SWEREFProjection.sweref_99_20_15:
+                case CrsProjection.sweref_99_20_15:
                     retVal = "sweref_99_2015";
                     break;
-                case SWEREFProjection.sweref_99_21_45:
+                case CrsProjection.sweref_99_21_45:
                     retVal = "sweref_99_2145";
                     break;
-                case SWEREFProjection.sweref_99_23_15:
+                case CrsProjection.sweref_99_23_15:
                     retVal = "sweref_99_2315";
                     break;
                 default:
@@ -160,7 +143,7 @@ namespace MightyLittleGeodesy.Positions
             return retVal;
         }
 
-        public SWEREFProjection Projection { get; set; }
+        public CrsProjection Projection { get; set; }
         public string ProjectionString
         {
             get

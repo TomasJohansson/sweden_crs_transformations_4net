@@ -29,17 +29,6 @@ namespace MightyLittleGeodesy.Positions
 {
     public class RT90Position : Position
     {
-        
-        [System.Obsolete("To become replaced with CrsProjection with values for both RT90Projection and SWEREF99Position (and also WGS84)")]
-        public enum RT90Projection
-        {
-            rt90_7_5_gon_v = 0,
-            rt90_5_0_gon_v = 1,
-            rt90_2_5_gon_v = 2,
-            rt90_0_0_gon_v = 3,
-            rt90_2_5_gon_o = 4,
-            rt90_5_0_gon_o = 5
-        }
 
         /// <summary>
         /// Create a new position using default projection (2.5 gon v);
@@ -49,7 +38,7 @@ namespace MightyLittleGeodesy.Positions
         public RT90Position(double x, double y)
             :base(x, y, Grid.RT90)
         {
-            Projection = RT90Projection.rt90_2_5_gon_v;
+            Projection = CrsProjection.rt90_2_5_gon_v;
         }
 
         /// <summary>
@@ -58,7 +47,7 @@ namespace MightyLittleGeodesy.Positions
         /// <param name="x"></param>
         /// <param name="y"></param>
         /// <param name="projection"></param>
-        public RT90Position(double x, double y, RT90Projection projection)
+        public RT90Position(double x, double y, CrsProjection projection)
             : base(x, y, Grid.RT90)
         {
             Projection = projection;
@@ -69,7 +58,7 @@ namespace MightyLittleGeodesy.Positions
         /// </summary>
         /// <param name="position">WGS84 position to convert</param>
         /// <param name="rt90projection">Projection to convert to</param>
-        public RT90Position(WGS84Position position, RT90Projection rt90projection)
+        public RT90Position(WGS84Position position, CrsProjection rt90projection)
             : base(Grid.RT90)
         {
             GaussKreuger gkProjection = new GaussKreuger();
@@ -100,27 +89,27 @@ namespace MightyLittleGeodesy.Positions
             return newPos;
         }
 
-        private string GetProjectionString(RT90Projection projection)
+        private string GetProjectionString(CrsProjection projection)
         {
             string retVal = string.Empty;
             switch (projection)
             {
-                case RT90Projection.rt90_7_5_gon_v:
+                case CrsProjection.rt90_7_5_gon_v:
                     retVal = "rt90_7.5_gon_v";
                     break;
-                case RT90Projection.rt90_5_0_gon_v:
+                case CrsProjection.rt90_5_0_gon_v:
                     retVal = "rt90_5.0_gon_v";
                     break;
-                case RT90Projection.rt90_2_5_gon_v:
+                case CrsProjection.rt90_2_5_gon_v:
                     retVal = "rt90_2.5_gon_v";
                     break;
-                case RT90Projection.rt90_0_0_gon_v:
+                case CrsProjection.rt90_0_0_gon_v:
                     retVal = "rt90_0.0_gon_v";
                     break;
-                case RT90Projection.rt90_2_5_gon_o:
+                case CrsProjection.rt90_2_5_gon_o:
                     retVal = "rt90_2.5_gon_o";
                     break;
-                case RT90Projection.rt90_5_0_gon_o:
+                case CrsProjection.rt90_5_0_gon_o:
                     retVal = "rt90_5.0_gon_o";
                     break;
                 default:
@@ -131,7 +120,7 @@ namespace MightyLittleGeodesy.Positions
             return retVal;
         }
         
-        public RT90Projection Projection { get; set; }
+        public CrsProjection Projection { get; set; }
         public string ProjectionString
         {
             get

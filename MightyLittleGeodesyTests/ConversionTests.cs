@@ -3,7 +3,7 @@
     using System;
 
     using Microsoft.VisualStudio.TestTools.UnitTesting;
-
+    using MightyLittleGeodesy;
     using MightyLittleGeodesy.Positions;
 
     [TestClass]
@@ -38,7 +38,7 @@
         public void WGS84ToRT90()
         {
             WGS84Position wgsPos = new WGS84Position("N 59º 58' 55.23\" E 017º 50' 06.12\"", WGS84Position.WGS84Format.DegreesMinutesSeconds);
-            RT90Position rtPos = new RT90Position(wgsPos, RT90Position.RT90Projection.rt90_2_5_gon_v);
+            RT90Position rtPos = new RT90Position(wgsPos, CrsProjection.rt90_2_5_gon_v);
 
             // Conversion values from Lantmateriet.se, they convert from DMS only.
             // Reference: http://www.lantmateriet.se/templates/LMV_Enkelkoordinattransformation.aspx?id=11500
@@ -57,7 +57,7 @@
             wgsPos.SetLatitudeFromString("N 59º 58' 55.23\"", WGS84Position.WGS84Format.DegreesMinutesSeconds);
             wgsPos.SetLongitudeFromString("E 017º 50' 06.12\"", WGS84Position.WGS84Format.DegreesMinutesSeconds);
 
-            SWEREF99Position rtPos = new SWEREF99Position(wgsPos, SWEREF99Position.SWEREFProjection.sweref_99_tm);
+            SWEREF99Position rtPos = new SWEREF99Position(wgsPos, CrsProjection.sweref_99_tm);
 
             // Conversion values from Lantmateriet.se, they convert from DMS only.
             // Reference: http://www.lantmateriet.se/templates/LMV_Enkelkoordinattransformation.aspx?id=11500

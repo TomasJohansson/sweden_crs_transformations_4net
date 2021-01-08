@@ -1,7 +1,5 @@
 ﻿using MightyLittleGeodesy.Positions;
 using System;
-using static MightyLittleGeodesy.Positions.RT90Position;
-using static MightyLittleGeodesy.Positions.SWEREF99Position;
 
 namespace MightyLittleGeodesy
 {
@@ -23,19 +21,19 @@ namespace MightyLittleGeodesy
             if(isWgs84(sourceCoordinate.epsgNumber)) {
                 var wgs84position = new WGS84Position(sourceCoordinate.yLatitude, sourceCoordinate.xLongitude);
                 if(isSweref(targetEpsg)) {
-                    SWEREFProjection swerefProjection = ProjectionFactory.GetSwerefProjectionByEpsgNumber(targetEpsg);
+                    CrsProjection swerefProjection = ProjectionFactory.GetCrsProjectionByEpsgNumber(targetEpsg);
                     var position = new SWEREF99Position(wgs84position, swerefProjection);
                     return new Coordinate(targetEpsg, position.Longitude, position.Latitude);
                 }
                 else if(isRT90(targetEpsg)) {
-                    RT90Projection rt90Projection = ProjectionFactory.GetRT90ProjectionProjectionByEpsgNumber(targetEpsg);
+                    CrsProjection rt90Projection = ProjectionFactory.GetCrsProjectionByEpsgNumber(targetEpsg);
                     var position = new RT90Position(wgs84position, rt90Projection);
                     return new Coordinate(targetEpsg, position.Longitude, position.Latitude);
                 }
             }
             else if(isSweref(sourceCoordinate.epsgNumber)) {
                 if(isWgs84(targetEpsg)) {
-                    SWEREFProjection swerefProjection = ProjectionFactory.GetSwerefProjectionByEpsgNumber(sourceCoordinate.epsgNumber);
+                    CrsProjection swerefProjection = ProjectionFactory.GetCrsProjectionByEpsgNumber(sourceCoordinate.epsgNumber);
                     var sweref99Position = new SWEREF99Position(sourceCoordinate.yLatitude, sourceCoordinate.xLongitude, swerefProjection);
                     var wgs84result = sweref99Position.ToWGS84();
                     return new Coordinate(targetEpsg, wgs84result.Longitude, wgs84result.Latitude);
@@ -48,7 +46,7 @@ namespace MightyLittleGeodesy
             }
             else if(isRT90(sourceCoordinate.epsgNumber)) {
                 if(isWgs84(targetEpsg)) {
-                    RT90Projection rt90Projection = ProjectionFactory.GetRT90ProjectionProjectionByEpsgNumber(sourceCoordinate.epsgNumber);
+                    CrsProjection rt90Projection = ProjectionFactory.GetCrsProjectionByEpsgNumber(sourceCoordinate.epsgNumber);
                     var rt90Position = new RT90Position(sourceCoordinate.yLatitude, sourceCoordinate.xLongitude, rt90Projection);
                     var wgs84result = rt90Position.ToWGS84();
                     return new Coordinate(targetEpsg, wgs84result.Longitude, wgs84result.Latitude);
