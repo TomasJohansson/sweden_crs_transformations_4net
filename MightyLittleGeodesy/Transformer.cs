@@ -3,7 +3,7 @@ using System;
 
 namespace MightyLittleGeodesy {
 
-    public class Transformer {
+    internal class Transformer {
 
         public static CrsCoordinate Transform(CrsCoordinate sourceCoordinate, CrsProjection targetCrsProjection) {
             if(sourceCoordinate.crsProjection == targetCrsProjection) throw new ArgumentException("Trying to transform from/to the same CRS");

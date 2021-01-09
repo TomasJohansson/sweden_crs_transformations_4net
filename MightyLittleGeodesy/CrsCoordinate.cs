@@ -24,6 +24,11 @@
             this.yLatitude = yLatitude;
         }
 
+        public CrsCoordinate Transform(CrsProjection targetCrsProjection) {
+            return Transformer.Transform(this, targetCrsProjection);
+        }
+
+
         public static CrsCoordinate CreateCoordinatePoint(
             int epsgNumber,
             double xLongitude,
