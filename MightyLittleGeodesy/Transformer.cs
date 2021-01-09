@@ -16,9 +16,11 @@ namespace MightyLittleGeodesy
         private const int epsgLowerValueForRT90 = 3019;
         private const int epsgUpperValueForRT90 = 3024;
 
+        // TODO use CrsProjection as parameter instead of integer
+        // TODO implement extension methods such as isWgs84 for the CrsProjection
         public static CrsCoordinate Transform(CrsCoordinate sourceCoordinate, int targetEpsg) {
             if(sourceCoordinate.epsgNumber == targetEpsg) throw new ArgumentException("Trying to transform from/to the same CRS");
-            if(isWgs84(sourceCoordinate.epsgNumber)) {
+            if(isWgs84(sourceCoordinate.epsgNumber)) { // TODO implement 'isWgs84' as a method in CrsCoordinate or an extension method of CrsProjection
                 var wgs84position = new WGS84Position(sourceCoordinate.yLatitude, sourceCoordinate.xLongitude);
                 if(isSweref(targetEpsg)) {
                     CrsProjection swerefProjection = ProjectionFactory.GetCrsProjectionByEpsgNumber(targetEpsg);

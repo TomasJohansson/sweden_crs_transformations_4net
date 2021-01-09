@@ -1,16 +1,25 @@
 ﻿namespace MightyLittleGeodesy
 {
     public class CrsCoordinate {
-        public int epsgNumber { get; private set; }
+
+        public CrsProjection crsProjection { get; private set; }
+        
+        [System.Obsolete("Instead use CrsProjection")]
+        public int epsgNumber { 
+            get {
+                return crsProjection.GetEpsgNumber();
+            }
+        }
+
         public double xLongitude { get; private set; }
         public double yLatitude { get; private set; }
 
         private CrsCoordinate(
-            int epsgNumber,
+            CrsProjection crsProjection,
             double xLongitude,
             double yLatitude
         ) {
-            this.epsgNumber = epsgNumber;
+            this.crsProjection = crsProjection;
             this.xLongitude = xLongitude;
             this.yLatitude = yLatitude;
         }
@@ -20,7 +29,16 @@
             double xLongitude,
             double yLatitude
         ) {
-            return new CrsCoordinate(epsgNumber, xLongitude, yLatitude);
+            CrsProjection crsProjection = ProjectionFactory.GetCrsProjectionByEpsgNumber(epsgNumber);
+            return CreateCoordinatePoint(crsProjection, xLongitude, yLatitude);
+        }
+
+        public static CrsCoordinate CreateCoordinatePoint(
+            CrsProjection crsProjection,
+            double xLongitude,
+            double yLatitude
+        ) {
+            return new CrsCoordinate(crsProjection, xLongitude, yLatitude);
         }
     }
 }
