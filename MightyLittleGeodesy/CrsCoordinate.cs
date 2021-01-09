@@ -1,10 +1,10 @@
 ﻿namespace MightyLittleGeodesy
 {
-    public class Coordinate {
+    public class CrsCoordinate {
         public readonly int epsgNumber;
         public readonly double xLongitude;
         public readonly double yLatitude;
-        public Coordinate(
+        public CrsCoordinate(
             int epsgNumber,
             double xLongitude,
             double yLatitude

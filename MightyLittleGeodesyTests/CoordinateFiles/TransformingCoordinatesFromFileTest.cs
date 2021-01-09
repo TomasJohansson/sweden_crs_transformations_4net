@@ -44,7 +44,7 @@ namespace SwedenCrsTransformationsTests.CoordinateFiles {
             Assert.AreEqual(18, listOfCoordinates.Count);
             int numberOfTransformations = 0;
             foreach(var listOfCoordinatesWhichRepresentTheSameLocation in listOfCoordinates) {
-                IList<Coordinate> coordinates = listOfCoordinatesWhichRepresentTheSameLocation.coordinateList;
+                IList<CrsCoordinate> coordinates = listOfCoordinatesWhichRepresentTheSameLocation.coordinateList;
                 for(int i=0; i<coordinates.Count-1; i++) {
                     for(int j=i+1; j<coordinates.Count; j++) {
                         Transform(coordinates[i], coordinates[j], problemTransformationResults);
@@ -76,12 +76,12 @@ namespace SwedenCrsTransformationsTests.CoordinateFiles {
 
 
         private void Transform(
-            Coordinate sourceCoordinate,
-            Coordinate targetCoordinateExpected,
+            CrsCoordinate sourceCoordinate,
+            CrsCoordinate targetCoordinateExpected,
             IList<string> problemTransformationResults
         ) {
             int targetEpsg = targetCoordinateExpected.epsgNumber;
-            Coordinate targetCoordinate = Transformer.Transform(sourceCoordinate, targetEpsg);
+            CrsCoordinate targetCoordinate = Transformer.Transform(sourceCoordinate, targetEpsg);
             bool isTargetEpsgWgs84 = targetEpsg == Transformer.epsgForWgs84;
             // double maxDifference = isTargetEpsgWgs84 ? 0.000002 : 0.2;   // fails, Epsg 3022 ==> 4326 , diffLongitude 2.39811809521484E-06
             // double maxDifference = isTargetEpsgWgs84 ? 000003 : 0.1;     // fails, Epsg 4326 ==> 3022 , diffLongitude 0.117090131156147
@@ -113,15 +113,15 @@ namespace SwedenCrsTransformationsTests.CoordinateFiles {
    }
 
     internal class Coordinates {
-        internal readonly List<Coordinate> coordinateList;
+        internal readonly List<CrsCoordinate> coordinateList;
         internal Coordinates(
             string lineFromFile
         ) {
             var array = lineFromFile.Split(TransformingCoordinatesFromFileTest.columnSeparator);
-            coordinateList = new List<Coordinate> {
-                new Coordinate(int.Parse(array[0]), double.Parse(array[1]), double.Parse(array[2])),
-                new Coordinate(int.Parse(array[3]), double.Parse(array[4]), double.Parse(array[5])),
-                new Coordinate(int.Parse(array[6]), double.Parse(array[7]), double.Parse(array[8]))
+            coordinateList = new List<CrsCoordinate> {
+                new CrsCoordinate(int.Parse(array[0]), double.Parse(array[1]), double.Parse(array[2])),
+                new CrsCoordinate(int.Parse(array[3]), double.Parse(array[4]), double.Parse(array[5])),
+                new CrsCoordinate(int.Parse(array[6]), double.Parse(array[7]), double.Parse(array[8]))
             };
         }
     }
