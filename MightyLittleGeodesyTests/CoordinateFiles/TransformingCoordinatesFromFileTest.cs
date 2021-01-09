@@ -80,8 +80,9 @@ namespace SwedenCrsTransformationsTests.CoordinateFiles {
             CrsCoordinate targetCoordinateExpected,
             IList<string> problemTransformationResults
         ) {
-            int targetEpsg = targetCoordinateExpected.epsgNumber;
-            CrsCoordinate targetCoordinate = Transformer.Transform(sourceCoordinate, targetEpsg);
+            CrsProjection targetCrs = targetCoordinateExpected.crsProjection;
+            int targetEpsg = targetCrs.GetEpsgNumber();
+            CrsCoordinate targetCoordinate = Transformer.Transform(sourceCoordinate, targetCrs);
             bool isTargetEpsgWgs84 = targetEpsg == Transformer.epsgForWgs84;
             // double maxDifference = isTargetEpsgWgs84 ? 0.000002 : 0.2;   // fails, Epsg 3022 ==> 4326 , diffLongitude 2.39811809521484E-06
             // double maxDifference = isTargetEpsgWgs84 ? 000003 : 0.1;     // fails, Epsg 4326 ==> 3022 , diffLongitude 0.117090131156147
