@@ -62,7 +62,7 @@ namespace MightyLittleGeodesy.Positions
             : base(Grid.RT90)
         {
             GaussKreuger gkProjection = new GaussKreuger();
-            gkProjection.swedish_params(GetProjectionString(rt90projection));
+            gkProjection.swedish_params(rt90projection);
             var lat_lon = gkProjection.geodetic_to_grid(position.Latitude, position.Longitude);
             Latitude = lat_lon[0];
             Longitude = lat_lon[1];
@@ -76,7 +76,7 @@ namespace MightyLittleGeodesy.Positions
         public WGS84Position ToWGS84()
         {
             GaussKreuger gkProjection = new GaussKreuger();
-            gkProjection.swedish_params(ProjectionString);
+            gkProjection.swedish_params(Projection);
             var lat_lon = gkProjection.grid_to_geodetic(Latitude, Longitude);
 
             WGS84Position newPos = new WGS84Position()
@@ -89,49 +89,11 @@ namespace MightyLittleGeodesy.Positions
             return newPos;
         }
 
-        private string GetProjectionString(CrsProjection projection)
-        {
-            string retVal = string.Empty;
-            switch (projection)
-            {
-                case CrsProjection.rt90_7_5_gon_v:
-                    retVal = "rt90_7.5_gon_v";
-                    break;
-                case CrsProjection.rt90_5_0_gon_v:
-                    retVal = "rt90_5.0_gon_v";
-                    break;
-                case CrsProjection.rt90_2_5_gon_v:
-                    retVal = "rt90_2.5_gon_v";
-                    break;
-                case CrsProjection.rt90_0_0_gon_v:
-                    retVal = "rt90_0.0_gon_v";
-                    break;
-                case CrsProjection.rt90_2_5_gon_o:
-                    retVal = "rt90_2.5_gon_o";
-                    break;
-                case CrsProjection.rt90_5_0_gon_o:
-                    retVal = "rt90_5.0_gon_o";
-                    break;
-                default:
-                    retVal = "rt90_2.5_gon_v";
-                    break;
-            }
-
-            return retVal;
-        }
-        
         public CrsProjection Projection { get; set; }
-        public string ProjectionString
-        {
-            get
-            {
-                return GetProjectionString(Projection);
-            }
-        }
 
         public override string ToString()
         {
-            return string.Format("X: {0} Y: {1} Projection: {2}", Latitude, Longitude, ProjectionString);
+            return string.Format("X: {0} Y: {1} Projection: {2}", Latitude, Longitude, Projection);
         }
     }
 }

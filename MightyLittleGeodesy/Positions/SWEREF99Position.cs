@@ -64,7 +64,7 @@ namespace MightyLittleGeodesy.Positions
             : base(Grid.SWEREF99)
         {
             GaussKreuger gkProjection = new GaussKreuger();
-            gkProjection.swedish_params(GetProjectionString(projection));
+            gkProjection.swedish_params(projection);
             var lat_lon = gkProjection.geodetic_to_grid(position.Latitude, position.Longitude);
             Latitude = lat_lon[0];
             Longitude = lat_lon[1];
@@ -78,7 +78,7 @@ namespace MightyLittleGeodesy.Positions
         public WGS84Position ToWGS84()
         {
             GaussKreuger gkProjection = new GaussKreuger();
-            gkProjection.swedish_params(ProjectionString);
+            gkProjection.swedish_params(Projection);
             var lat_lon = gkProjection.grid_to_geodetic(Latitude, Longitude);
 
             WGS84Position newPos = new WGS84Position()
@@ -91,70 +91,11 @@ namespace MightyLittleGeodesy.Positions
             return newPos;
         }
 
-        private string GetProjectionString(CrsProjection projection)
-        {
-            string retVal = string.Empty;
-            switch (projection)
-            {
-                case CrsProjection.sweref_99_tm:
-                    retVal = "sweref_99_tm";
-                    break;
-                case CrsProjection.sweref_99_12_00:
-                    retVal = "sweref_99_1200";
-                    break;
-                case CrsProjection.sweref_99_13_30:
-                    retVal = "sweref_99_1330";
-                    break;
-                case CrsProjection.sweref_99_14_15:
-                    retVal = "sweref_99_1415";
-                    break;
-                case CrsProjection.sweref_99_15_00:
-                    retVal = "sweref_99_1500";
-                    break;
-                case CrsProjection.sweref_99_15_45:
-                    retVal = "sweref_99_1545";
-                    break;
-                case CrsProjection.sweref_99_16_30:
-                    retVal = "sweref_99_1630";
-                    break;
-                case CrsProjection.sweref_99_17_15:
-                    retVal = "sweref_99_1715";
-                    break;
-                case CrsProjection.sweref_99_18_00:
-                    retVal = "sweref_99_1800";
-                    break;
-                case CrsProjection.sweref_99_18_45:
-                    retVal = "sweref_99_1845";
-                    break;
-                case CrsProjection.sweref_99_20_15:
-                    retVal = "sweref_99_2015";
-                    break;
-                case CrsProjection.sweref_99_21_45:
-                    retVal = "sweref_99_2145";
-                    break;
-                case CrsProjection.sweref_99_23_15:
-                    retVal = "sweref_99_2315";
-                    break;
-                default:
-                    retVal = "sweref_99_tm";
-                    break;
-            }
-
-            return retVal;
-        }
-
         public CrsProjection Projection { get; set; }
-        public string ProjectionString
-        {
-            get
-            {
-                return GetProjectionString(Projection);
-            }
-        }
 
         public override string ToString()
         {
-            return string.Format("N: {0} E: {1} Projection: {2}", Latitude, Longitude, ProjectionString);
+            return string.Format("N: {0} E: {1} Projection: {2}", Latitude, Longitude, Projection);
         }
     }
 }
