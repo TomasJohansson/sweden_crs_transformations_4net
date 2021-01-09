@@ -37,7 +37,7 @@ namespace MightyLittleGeodesy.Positions
         /// <param name="n"></param>
         /// <param name="e"></param>
         public SWEREF99Position(double n, double e)
-            : base(n, e, Grid.SWEREF99)
+            : base(n, e, Grid.SWEREF99) // n=north=y/Latitude   e=east=x/Longitude
         {
             Projection = CrsProjection.sweref_99_tm;
         }
@@ -50,7 +50,7 @@ namespace MightyLittleGeodesy.Positions
         /// <param name="e"></param>
         /// <param name="projection"></param>
         public SWEREF99Position(double n, double e, CrsProjection projection)
-            : base(n, e, Grid.SWEREF99)
+            : base(n, e, Grid.SWEREF99) // n=north=y/Latitude   e=east=x/Longitude
         {
             Projection = projection;
         }

@@ -51,7 +51,7 @@ namespace MightyLittleGeodesy.Positions
         /// </summary>
         /// <param name="latitude"></param>
         /// <param name="longitude"></param>
-        public WGS84Position(double latitude, double longitude)
+        public WGS84Position(double latitude, double longitude) 
             : base(Grid.WGS84)
         {
             Latitude = latitude;

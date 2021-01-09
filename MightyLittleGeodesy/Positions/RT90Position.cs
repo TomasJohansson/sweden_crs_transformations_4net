@@ -33,10 +33,10 @@ namespace MightyLittleGeodesy.Positions
         /// <summary>
         /// Create a new position using default projection (2.5 gon v);
         /// </summary>
-        /// <param name="x">X value</param>
-        /// <param name="y">Y value</param>
-        public RT90Position(double x, double y)
-            :base(x, y, Grid.RT90)
+        /// <param name="yLatitude">X value</param>
+        /// <param name="xLongitude">Y value</param>
+        public RT90Position(double yLatitude, double xLongitude)
+            :base(yLatitude, xLongitude, Grid.RT90)
         {
             Projection = CrsProjection.rt90_2_5_gon_v;
         }
@@ -44,11 +44,11 @@ namespace MightyLittleGeodesy.Positions
         /// <summary>
         /// Create a new position
         /// </summary>
-        /// <param name="x"></param>
-        /// <param name="y"></param>
+        /// <param name="yLatitude"></param>
+        /// <param name="xLongitude"></param>
         /// <param name="projection"></param>
-        public RT90Position(double x, double y, CrsProjection projection)
-            : base(x, y, Grid.RT90)
+        public RT90Position(double yLatitude, double xLongitude, CrsProjection projection)
+            : base(yLatitude, xLongitude, Grid.RT90)
         {
             Projection = projection;
         }

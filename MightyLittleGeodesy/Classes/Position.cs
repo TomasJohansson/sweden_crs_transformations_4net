@@ -38,7 +38,7 @@ namespace MightyLittleGeodesy.Classes
         public double Longitude { get; set; }
         public Grid GridFormat { get; set; }
 
-        public Position(double lat, double lon, Grid format)
+        public Position(double lat, double lon, Grid format) 
         {
             Latitude = lat;
             Longitude = lon;
