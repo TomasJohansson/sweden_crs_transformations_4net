@@ -8,7 +8,7 @@ namespace MightyLittleGeodesy
     /// <summary>
     /// Class with methods for getting all projections, and for getting one projection by its EPSG number.
     /// </summary>
-    public static class ProjectionFactory {
+    public static class CrsProjectionFactory {
         public static CrsProjection GetCrsProjectionByEpsgNumber(int epsg) {
             var values = GetAllCrsProjections();
             foreach(CrsProjection value in values) {

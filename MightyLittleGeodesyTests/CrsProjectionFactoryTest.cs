@@ -4,7 +4,7 @@ using MightyLittleGeodesy;
 namespace MightyLittleGeodesyTests
 {
     [TestClass]
-    public class ProjectionFactoryTest {
+    public class CrsProjectionFactoryTest {
 
         private const int epsgNumberForWgs84 = 4326;
         private const int epsgNumberForSweref99tm = 3006; // https://epsg.org/crs_3006/SWEREF99-TM.html
@@ -18,30 +18,30 @@ namespace MightyLittleGeodesyTests
         public void GetCrsProjectionByEpsgNumber() {
             Assert.AreEqual(
                 CrsProjection.sweref_99_tm,
-                ProjectionFactory.GetCrsProjectionByEpsgNumber(epsgNumberForSweref99tm)
+                CrsProjectionFactory.GetCrsProjectionByEpsgNumber(epsgNumberForSweref99tm)
             );
 
             Assert.AreEqual(
                 CrsProjection.sweref_99_23_15,
-                ProjectionFactory.GetCrsProjectionByEpsgNumber(3018) // https://epsg.io/3018
+                CrsProjectionFactory.GetCrsProjectionByEpsgNumber(3018) // https://epsg.io/3018
             );
 
             Assert.AreEqual(
                 CrsProjection.rt90_5_0_gon_o,
-                ProjectionFactory.GetCrsProjectionByEpsgNumber(3024)  // https://epsg.io/3018
+                CrsProjectionFactory.GetCrsProjectionByEpsgNumber(3024)  // https://epsg.io/3018
             );
         }
 
         [TestMethod]
         public void GetAllCrsProjections() {
-            var allCrsProjections = ProjectionFactory.GetAllCrsProjections();
+            var allCrsProjections = CrsProjectionFactory.GetAllCrsProjections();
             Assert.AreEqual(
                 totalNumberOfProjections,
                 allCrsProjections.Count
             );
 
             foreach(var crsProjection in allCrsProjections) {
-                var crsProj = ProjectionFactory.GetCrsProjectionByEpsgNumber(crsProjection.GetEpsgNumber());
+                var crsProj = CrsProjectionFactory.GetCrsProjectionByEpsgNumber(crsProjection.GetEpsgNumber());
                 Assert.AreEqual(crsProjection, crsProj);
             }
         }    

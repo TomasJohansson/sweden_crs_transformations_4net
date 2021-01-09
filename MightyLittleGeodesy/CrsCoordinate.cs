@@ -29,7 +29,7 @@
             double xLongitude,
             double yLatitude
         ) {
-            CrsProjection crsProjection = ProjectionFactory.GetCrsProjectionByEpsgNumber(epsgNumber);
+            CrsProjection crsProjection = CrsProjectionFactory.GetCrsProjectionByEpsgNumber(epsgNumber);
             return CreateCoordinatePoint(crsProjection, xLongitude, yLatitude);
         }
 
