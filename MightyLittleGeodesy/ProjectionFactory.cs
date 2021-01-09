@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace MightyLittleGeodesy {
-    
+namespace MightyLittleGeodesy
+{
+
     /// <summary>
     /// Class with methods for getting all projections, and for getting one projection by its EPSG number.
     /// </summary>
@@ -20,13 +21,6 @@ namespace MightyLittleGeodesy {
 
         public static IList<CrsProjection> GetAllCrsProjections() {
             return ((CrsProjection[])Enum.GetValues(typeof(CrsProjection))).ToList();
-        }
-    }
-
-    public static class ProjectionEnumExtensions {
-        public static int GetEpsgNumber(this CrsProjection crsProjection) { 
-            // the EPSG numbers have been used as the values in this enum (which will replace SWEREFProjection and RT90Projection)
-            return (int)crsProjection;
         }
     }
 }
