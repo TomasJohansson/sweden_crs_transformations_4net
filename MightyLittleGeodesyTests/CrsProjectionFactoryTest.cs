@@ -47,7 +47,7 @@ namespace MightyLittleGeodesyTests
         }    
 
 
-        // ProjectionEnumExtensions
+        // TODO move this method to CrsProjectionExtensionsTest
         [TestMethod]
         public void GetEpsgNumber() {
             Assert.AreEqual(
