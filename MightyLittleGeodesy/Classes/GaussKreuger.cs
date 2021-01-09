@@ -290,7 +290,7 @@ namespace MightyLittleGeodesy.Classes
         }
 
         // Conversion from grid coordinates to geodetic coordinates.
-        public double[] grid_to_geodetic(double x, double y)
+        public double[] grid_to_geodetic(double yLatitude, double xLongitude)
         {
             double[] lat_lon = new double[2];
             if (central_meridian == double.MinValue)
@@ -314,8 +314,8 @@ namespace MightyLittleGeodesy.Classes
             // Convert.
             double deg_to_rad = Math.PI / 180;
             double lambda_zero = central_meridian * deg_to_rad;
-            double xi = (x - false_northing) / (scale * a_roof);
-            double eta = (y - false_easting) / (scale * a_roof);
+            double xi = (yLatitude - false_northing) / (scale * a_roof);
+            double eta = (xLongitude - false_easting) / (scale * a_roof);
             double xi_prim = xi -
                             delta1 * Math.Sin(2.0 * xi) * math_cosh(2.0 * eta) -
                             delta2 * Math.Sin(4.0 * xi) * math_cosh(4.0 * eta) -

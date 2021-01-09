@@ -77,7 +77,7 @@ namespace MightyLittleGeodesy.Positions
         {
             GaussKreuger gkProjection = new GaussKreuger();
             gkProjection.swedish_params(Projection);
-            var lat_lon = gkProjection.grid_to_geodetic(Latitude, Longitude);
+            var lat_lon = gkProjection.grid_to_geodetic(Latitude, Longitude); 
 
             WGS84Position newPos = new WGS84Position()
             {
