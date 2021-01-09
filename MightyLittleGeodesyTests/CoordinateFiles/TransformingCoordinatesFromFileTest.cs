@@ -119,9 +119,9 @@ namespace SwedenCrsTransformationsTests.CoordinateFiles {
         ) {
             var array = lineFromFile.Split(TransformingCoordinatesFromFileTest.columnSeparator);
             coordinateList = new List<CrsCoordinate> {
-                new CrsCoordinate(int.Parse(array[0]), double.Parse(array[1]), double.Parse(array[2])),
-                new CrsCoordinate(int.Parse(array[3]), double.Parse(array[4]), double.Parse(array[5])),
-                new CrsCoordinate(int.Parse(array[6]), double.Parse(array[7]), double.Parse(array[8]))
+                CrsCoordinate.CreateCoordinatePoint(int.Parse(array[0]), double.Parse(array[1]), double.Parse(array[2])),
+                CrsCoordinate.CreateCoordinatePoint(int.Parse(array[3]), double.Parse(array[4]), double.Parse(array[5])),
+                CrsCoordinate.CreateCoordinatePoint(int.Parse(array[6]), double.Parse(array[7]), double.Parse(array[8]))
             };
         }
     }

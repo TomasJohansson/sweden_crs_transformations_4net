@@ -23,12 +23,12 @@ namespace MightyLittleGeodesy
                 if(isSweref(targetEpsg)) {
                     CrsProjection swerefProjection = ProjectionFactory.GetCrsProjectionByEpsgNumber(targetEpsg);
                     var position = new SWEREF99Position(wgs84position, swerefProjection);
-                    return new CrsCoordinate(targetEpsg, position.Longitude, position.Latitude);
+                    return CrsCoordinate.CreateCoordinatePoint(targetEpsg, position.Longitude, position.Latitude);
                 }
                 else if(isRT90(targetEpsg)) {
                     CrsProjection rt90Projection = ProjectionFactory.GetCrsProjectionByEpsgNumber(targetEpsg);
                     var position = new RT90Position(wgs84position, rt90Projection);
-                    return new CrsCoordinate(targetEpsg, position.Longitude, position.Latitude);
+                    return CrsCoordinate.CreateCoordinatePoint(targetEpsg, position.Longitude, position.Latitude);
                 }
             }
             else if(isSweref(sourceCoordinate.epsgNumber)) {
@@ -36,7 +36,7 @@ namespace MightyLittleGeodesy
                     CrsProjection swerefProjection = ProjectionFactory.GetCrsProjectionByEpsgNumber(sourceCoordinate.epsgNumber);
                     var sweref99Position = new SWEREF99Position(sourceCoordinate.yLatitude, sourceCoordinate.xLongitude, swerefProjection);
                     var wgs84result = sweref99Position.ToWGS84();
-                    return new CrsCoordinate(targetEpsg, wgs84result.Longitude, wgs84result.Latitude);
+                    return CrsCoordinate.CreateCoordinatePoint(targetEpsg, wgs84result.Longitude, wgs84result.Latitude);
                 }
                 else {
                     // the only direct transform supported is to/from WGS84, so therefore first transform to wgs84
@@ -49,7 +49,7 @@ namespace MightyLittleGeodesy
                     CrsProjection rt90Projection = ProjectionFactory.GetCrsProjectionByEpsgNumber(sourceCoordinate.epsgNumber);
                     var rt90Position = new RT90Position(sourceCoordinate.yLatitude, sourceCoordinate.xLongitude, rt90Projection);
                     var wgs84result = rt90Position.ToWGS84();
-                    return new CrsCoordinate(targetEpsg, wgs84result.Longitude, wgs84result.Latitude);
+                    return CrsCoordinate.CreateCoordinatePoint(targetEpsg, wgs84result.Longitude, wgs84result.Latitude);
                 }
                 else {
                     // the only direct transform supported is to/from WGS84, so therefore first transform to wgs84
