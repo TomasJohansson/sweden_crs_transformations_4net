@@ -65,9 +65,9 @@ namespace MightyLittleGeodesy.Positions
         {
             GaussKreuger gkProjection = new GaussKreuger();
             gkProjection.swedish_params(projection);
-            var lat_lon = gkProjection.geodetic_to_grid(position.Latitude, position.Longitude);
-            Latitude = lat_lon[0];
-            Longitude = lat_lon[1];
+            LonLat lonLat = gkProjection.geodetic_to_grid(position.Latitude, position.Longitude);
+            Latitude = lonLat.yLatitude;    // lat_lon[0];
+            Longitude = lonLat.xLongitude;  // lat_lon[1];
             Projection = projection;
         }
 
@@ -79,12 +79,12 @@ namespace MightyLittleGeodesy.Positions
         {
             GaussKreuger gkProjection = new GaussKreuger();
             gkProjection.swedish_params(Projection);
-            var lat_lon = gkProjection.grid_to_geodetic(Latitude, Longitude); 
+            LonLat lonLat = gkProjection.grid_to_geodetic(Latitude, Longitude); 
 
             WGS84Position newPos = new WGS84Position()
             {
-                Latitude = lat_lon[0],
-                Longitude = lat_lon[1],
+                Latitude = lonLat.yLatitude, //  lat_lon[0],
+                Longitude = lonLat.xLongitude, // lat_lon[1],
                 GridFormat = Grid.WGS84
             };
 

@@ -241,7 +241,7 @@ namespace MightyLittleGeodesy.Classes
         }
 
         // Conversion from geodetic coordinates to grid coordinates.
-        public double[] geodetic_to_grid(double latitude, double longitude)
+        public LonLat geodetic_to_grid(double latitude, double longitude) // public double[] geodetic_to_grid(double latitude, double longitude)
         {
             double[] x_y = new double[2];
 
@@ -285,17 +285,18 @@ namespace MightyLittleGeodesy.Classes
                             false_easting;
             x_y[0] = Math.Round(x * 1000.0) / 1000.0;
             x_y[1] = Math.Round(y * 1000.0) / 1000.0;
-
-            return x_y;
+            var lonLat = new LonLat(x_y[1], x_y[0]);
+            return lonLat; //return x_y;
         }
 
         // Conversion from grid coordinates to geodetic coordinates.
-        public double[] grid_to_geodetic(double yLatitude, double xLongitude)
+        
+        public LonLat grid_to_geodetic(double yLatitude, double xLongitude) // public double[] grid_to_geodetic(double yLatitude, double xLongitude)
         {
             double[] lat_lon = new double[2];
             if (central_meridian == double.MinValue)
             {
-                return lat_lon;
+                return new LonLat(lat_lon[0], lat_lon[1]);
             }
             // Prepare ellipsoid-based stuff.
             double e2 = flattening * (2.0 - flattening);
@@ -336,7 +337,8 @@ namespace MightyLittleGeodesy.Classes
                              Dstar * Math.Pow(Math.Sin(phi_star), 6));
             lat_lon[0] = lat_radian * 180.0 / Math.PI;
             lat_lon[1] = lon_radian * 180.0 / Math.PI;
-            return lat_lon;
+            var lonLat = new LonLat(lat_lon[1], lat_lon[0]);
+            return lonLat; // return lat_lon;
         }
 
 
@@ -353,5 +355,12 @@ namespace MightyLittleGeodesy.Classes
     }
 
 
-
+    public class LonLat {
+        public double xLongitude { get; private set; }
+        public double yLatitude { get; private set; }
+        public LonLat(double xLongitude, double yLatitude) {
+            this.xLongitude = xLongitude;
+            this.yLatitude = yLatitude;
+        }
+    }
 }
