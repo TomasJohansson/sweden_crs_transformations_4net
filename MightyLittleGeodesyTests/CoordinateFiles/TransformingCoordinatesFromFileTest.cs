@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Linq;
 using System.Collections.Generic;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 using System.IO;
 using MightyLittleGeodesy;
 
 namespace SwedenCrsTransformationsTests.CoordinateFiles {
     
-    [TestClass]
+    [TestFixture]
     public class TransformingCoordinatesFromFileTest {
 
         internal const string columnSeparator = "|";
@@ -18,7 +18,7 @@ namespace SwedenCrsTransformationsTests.CoordinateFiles {
         // the project file should use "CopyToOutputDirectory" for the above file
 
 
-        [TestMethod]
+        [Test]
         public void AssertThatTransformationsDoNotDifferTooMuchFromExpectedResultInFile() {
             string directory = GetPathToOutputDirectoryWhereTheDataFileShouldBeCopiedToAutomatically();
             string absolutePathToFile = Path.Combine(directory, relativePathForFileWith_swedish_crs_transformations).Replace('/', Path.DirectorySeparatorChar);

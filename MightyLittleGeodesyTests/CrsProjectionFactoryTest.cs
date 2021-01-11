@@ -1,9 +1,9 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using NUnit.Framework;
 using MightyLittleGeodesy;
 
 namespace MightyLittleGeodesyTests
 {
-    [TestClass]
+    [TestFixture]
     public class CrsProjectionFactoryTest {
 
         private const int epsgNumberForWgs84 = 4326;
@@ -14,7 +14,7 @@ namespace MightyLittleGeodesyTests
         private const int totalNumberOfProjections = numberOfSweref99projections + numberOfRTprojections + numberOfWgs84Projectios;
 
 
-        [TestMethod]
+        [Test]
         public void GetCrsProjectionByEpsgNumber() {
             Assert.AreEqual(
                 CrsProjection.sweref_99_tm,
@@ -32,7 +32,7 @@ namespace MightyLittleGeodesyTests
             );
         }
 
-        [TestMethod]
+        [Test]
         public void GetAllCrsProjections() {
             var allCrsProjections = CrsProjectionFactory.GetAllCrsProjections();
             Assert.AreEqual(
@@ -48,7 +48,7 @@ namespace MightyLittleGeodesyTests
 
 
         // TODO move this method to CrsProjectionExtensionsTest
-        [TestMethod]
+        [Test]
         public void GetEpsgNumber() {
             Assert.AreEqual(
                 epsgNumberForSweref99tm,

@@ -1,27 +1,27 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using NUnit.Framework;
 using MightyLittleGeodesy;
 
 namespace MightyLittleGeodesyTests {
     
-    [TestClass]
+    [TestFixture]
     public class CrsProjectionExtensionsTest {
 
         // TODO add more tests for all enum values
-        [TestMethod]
+        [Test]
         public void isWgs84() {
             Assert.IsTrue(CrsProjection.wgs84.isWgs84());
             Assert.IsFalse(CrsProjection.sweref_99_12_00.isWgs84());
             Assert.IsFalse(CrsProjection.rt90_0_0_gon_v.isWgs84());
         }
 
-        [TestMethod]
+        [Test]
         public void isSweref() {
             Assert.IsFalse(CrsProjection.wgs84.isSweref());
             Assert.IsTrue(CrsProjection.sweref_99_12_00.isSweref());
             Assert.IsFalse(CrsProjection.rt90_0_0_gon_v.isSweref());
         }
 
-        [TestMethod]
+        [Test]
         public void isRT90() {
             Assert.IsFalse(CrsProjection.wgs84.isRT90());
             Assert.IsFalse(CrsProjection.sweref_99_12_00.isRT90());

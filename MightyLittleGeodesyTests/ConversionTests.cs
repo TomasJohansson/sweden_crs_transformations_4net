@@ -2,14 +2,14 @@
 {
     using System;
 
-    using Microsoft.VisualStudio.TestTools.UnitTesting;
+    using NUnit.Framework;
     using MightyLittleGeodesy;
     using MightyLittleGeodesy.Positions;
 
-    [TestClass]
+    [TestFixture]
     public class ConversionTests
     {
-        [TestMethod]
+        [Test]
         public void RT90ToWGS84()
         {
             RT90Position position = new RT90Position(6583052, 1627548);
@@ -34,7 +34,7 @@
             Assert.AreEqual(lonDmsStringFromLM, wgsPos.LongitudeToString(WGS84Position.WGS84Format.DegreesMinutesSeconds));
         }
 
-        [TestMethod]
+        [Test]
         public void WGS84ToRT90()
         {
             WGS84Position wgsPos = new WGS84Position("N 59º 58' 55.23\" E 017º 50' 06.12\"", WGS84Position.WGS84Format.DegreesMinutesSeconds);
@@ -49,7 +49,7 @@
             Assert.AreEqual(Math.Round(rtPos.Longitude, 3), yPosFromLM);
         }
 
-        [TestMethod]
+        [Test]
         public void WGS84ToSweref()
         {
             WGS84Position wgsPos = new WGS84Position();
@@ -68,7 +68,7 @@
             Assert.AreEqual(Math.Round(rtPos.Longitude, 3), yPosFromLM);
         }
 
-        [TestMethod]
+        [Test]
         public void SwerefToWGS84()
         {
             SWEREF99Position swePos = new SWEREF99Position(6652797.165, 658185.201);
@@ -83,7 +83,7 @@
             Assert.AreEqual(lonDmsStringFromLM, wgsPos.LongitudeToString(WGS84Position.WGS84Format.DegreesMinutesSeconds));
         }
 
-        [TestMethod]
+        [Test]
         public void WGS84ParseString()
         {
             // Values from Eniro.se
