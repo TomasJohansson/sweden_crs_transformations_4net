@@ -58,6 +58,7 @@ namespace MightyLittleGeodesy.Positions
         /// </summary>
         /// <param name="position">WGS84 position to convert</param>
         /// <param name="rt90projection">Projection to convert to</param>
+        [System.Obsolete("Use GaussKreuger directly from the TransFormStrategy implementations instead of using this constructor")]
         public RT90Position(WGS84Position position, CrsProjection rt90projection)
             : base(Grid.RT90)
         {
@@ -73,6 +74,7 @@ namespace MightyLittleGeodesy.Positions
         /// Convert the position to WGS84 format
         /// </summary>
         /// <returns></returns>
+        [System.Obsolete("Use GaussKreuger directly from the TransFormStrategy implementations instead of using this method")]
         public WGS84Position ToWGS84()
         {
             GaussKreuger gkProjection = new GaussKreuger();
