@@ -73,5 +73,26 @@ namespace SwedenCrsTransformations {
 
         // These five methods above was generated with Visual Studio 2019
         // ----------------------------------------------------------------------------------------------------------------------
+
+        /// <summary>
+        /// Two examples of the string that can be returned:
+        /// "CoordinatePoint [ X: 153369.673 , Y: 6579457.649 , CRS: SWEREF_99_18_00 ]"
+        /// "CoordinatePoint [ Longitude: 18.059196 , Latitude: 59.330231 , CRS: WGS84 ]"
+        /// </summary>
+        public override string ToString() {
+            string crs = this.CrsProjection.ToString().ToUpper();
+            bool isWgs84 =  this.CrsProjection.IsWgs84();
+            string xOrLongitude = isWgs84 ? "Longitude" : "X";
+            string yOrLatitude = isWgs84 ? "Latitude" : "Y";
+            return string.Format(
+                "{0} [ {1}: {2} , {3}: {4} , CRS: {5} ]",
+                    nameof(CrsCoordinate), // 0
+                    xOrLongitude,   // 1
+                    this.XLongitude,// 2
+                    yOrLatitude,    // 3
+                    this.YLatitude, // 4
+                    crs             // 5
+            );
+        }
     }
 }

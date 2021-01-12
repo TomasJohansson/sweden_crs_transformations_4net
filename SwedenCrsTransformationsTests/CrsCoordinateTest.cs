@@ -78,5 +78,20 @@ namespace SwedenCrsTransformationsTests {
             Assert.IsFalse(coordinateInstance_1.Equals(coordinateInstance_4));
             Assert.IsFalse(coordinateInstance_4.Equals(coordinateInstance_1));
         }
+
+
+        [Test]
+        public void ToStringTest() {
+            CrsCoordinate coordinatePoint = CrsCoordinate.CreateCoordinatePoint(CrsProjection.sweref_99_18_00, 153369.673, 6579457.649);
+            Assert.AreEqual(
+                "CrsCoordinate [ X: 153369.673 , Y: 6579457.649 , CRS: SWEREF_99_18_00 ]",
+                coordinatePoint.ToString()
+            );
+            CrsCoordinate coordinatePoint2 = CrsCoordinate.CreateCoordinatePoint(CrsProjection.wgs84, 18.059196, 59.330231);
+            Assert.AreEqual(
+                "CrsCoordinate [ Longitude: 18.059196 , Latitude: 59.330231 , CRS: WGS84 ]",
+                coordinatePoint2.ToString()
+            );
+        }
     }
 }
