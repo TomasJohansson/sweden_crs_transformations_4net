@@ -43,9 +43,6 @@ namespace SwedenCrsTransformationsTests {
 
         [Test]
         public void isWgs84() {
-            //Assert.IsTrue(CrsProjection.wgs84.IsWgs84());
-            //Assert.IsFalse(CrsProjection.sweref_99_12_00.IsWgs84());
-            //Assert.IsFalse(CrsProjection.rt90_0_0_gon_v.IsWgs84());
             Assert.AreEqual(numberOfWgs84Projections, _wgs84Projections.Count);
 
             foreach(var item in _wgs84Projections) {
@@ -61,10 +58,6 @@ namespace SwedenCrsTransformationsTests {
 
         [Test]
         public void isSweref() {
-            //Assert.IsFalse(CrsProjection.wgs84.IsSweref());
-            //Assert.IsTrue(CrsProjection.sweref_99_12_00.IsSweref());
-            //Assert.IsFalse(CrsProjection.rt90_0_0_gon_v.IsSweref());
-
             Assert.AreEqual(numberOfSweref99projections, _sweref99Projections.Count);
 
             foreach(var item in _wgs84Projections) {
@@ -80,10 +73,6 @@ namespace SwedenCrsTransformationsTests {
 
         [Test]
         public void isRT90() {
-            //Assert.IsFalse(CrsProjection.wgs84.IsRT90());
-            //Assert.IsFalse(CrsProjection.sweref_99_12_00.IsRT90());
-            //Assert.IsTrue(CrsProjection.rt90_0_0_gon_v.IsRT90());
-
             Assert.AreEqual(numberOfRT90projections, _rt90Projections.Count);
 
             foreach(var item in _wgs84Projections) {
@@ -95,7 +84,6 @@ namespace SwedenCrsTransformationsTests {
             foreach(var item in _rt90Projections) {
                 Assert.IsTrue(item.IsRT90());
             }
-
         }
 
     }

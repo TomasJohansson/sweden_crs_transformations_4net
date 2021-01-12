@@ -108,38 +108,6 @@ namespace MightyLittleGeodesy.Classes
                 false_easting = 1500121.846;
             }
 
-            // RT90 parameters, Bessel 1841 ellipsoid.
-            //else if (projection == "bessel_rt90_7.5_gon_v")
-            //{
-            //    bessel_params();
-            //    central_meridian = 11.0 + 18.0 / 60.0 + 29.8 / 3600.0;
-            //}
-            //else if (projection == "bessel_rt90_5.0_gon_v")
-            //{
-            //    bessel_params();
-            //    central_meridian = 13.0 + 33.0 / 60.0 + 29.8 / 3600.0;
-            //}
-            //else if (projection == "bessel_rt90_2.5_gon_v")
-            //{
-            //    bessel_params();
-            //    central_meridian = 15.0 + 48.0 / 60.0 + 29.8 / 3600.0;
-            //}
-            //else if (projection == "bessel_rt90_0.0_gon_v")
-            //{
-            //    bessel_params();
-            //    central_meridian = 18.0 + 3.0 / 60.0 + 29.8 / 3600.0;
-            //}
-            //else if (projection == "bessel_rt90_2.5_gon_o")
-            //{
-            //    bessel_params();
-            //    central_meridian = 20.0 + 18.0 / 60.0 + 29.8 / 3600.0;
-            //}
-            //else if (projection == "bessel_rt90_5.0_gon_o")
-            //{
-            //    bessel_params();
-            //    central_meridian = 22.0 + 33.0 / 60.0 + 29.8 / 3600.0;
-            //}
-
             // SWEREF99TM and SWEREF99ddmm  parameters.
             else if (projection == sweref_99_tm)
             {
