@@ -1,4 +1,9 @@
 ﻿namespace SwedenCrsTransformations {
+
+    /// <summary>
+    /// Extension methods for the enum CrsProjection.
+    /// See also <see cref="CrsProjection"/>
+    /// </summary>
     public static class CrsProjectionExtensions {
 
         private const int epsgForSweref99tm = 3006;
@@ -11,18 +16,39 @@
         private const int epsgLowerValueForRT90 = 3019;
         private const int epsgUpperValueForRT90 = 3024;
 
+        /// <summary>
+        /// The EPSG number for the enum instance representing a coordinate reference system.
+        /// The implementation is trivial but it is a convenience method that provides semantic 
+        /// through the method name i.e. what the enum value represents 
+        /// and it also lets the client code avoid to do the casting.
+        /// </summary>
+        /// <returns>
+        /// An EPSG number.
+        /// https://en.wikipedia.org/wiki/EPSG_Geodetic_Parameter_Dataset
+        /// </returns>
         public static int GetEpsgNumber(this CrsProjection crsProjection) { 
             // the EPSG numbers have been used as the values in this enum
             return (int)crsProjection;
         }
 
+        /// <summary>
+        /// True if the coordinate reference system is WGS84.
+        /// </summary>
         public static bool IsWgs84(this CrsProjection crsProjection) {
             return crsProjection == CrsProjection.wgs84;
         }
+
+        /// <summary>
+        /// True if the coordinate reference system is a version of SWEREF99.
+        /// </summary>
         public static bool IsSweref(this CrsProjection crsProjection) {
             int epsgNumber = crsProjection.GetEpsgNumber();
             return epsgLowerValueForSweref <= epsgNumber && epsgNumber <= epsgUpperValueForSweref;
         }
+
+        /// <summary>
+        /// True if the coordinate reference system is a version of RT90.
+        /// </summary>
         public static bool IsRT90(this CrsProjection crsProjection) {
             int epsgNumber = crsProjection.GetEpsgNumber();
             return epsgLowerValueForRT90 <= epsgNumber && epsgNumber <= epsgUpperValueForRT90;

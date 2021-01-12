@@ -3,13 +3,30 @@ using System;
 using System.Collections.Generic;
 
 namespace SwedenCrsTransformations {
+
+    /// <summary>
+    /// Coordinate, defined by the three parameters for the factory methods.
+    /// </summary>
     public class CrsCoordinate : IEquatable<CrsCoordinate> {
 
+        /// <summary>
+        /// The coordinate reference system that defines the location together with the other two properties (LongitudeX and LatitudeY).
+        /// </summary>
         public CrsProjection CrsProjection { get; private set; }
         
+        /// <summary>
+        /// The coordinate value representing the longitude or X or Easting.
+        /// </summary>    
         public double LongitudeX { get; private set; }
+
+        /// <summary>
+        /// The coordinate value representing the latitude or Y or Northing.
+        /// </summary>
         public double LatitudeY { get; private set; }
 
+        /// <summary>
+        /// Private constructor. Client code must instead use the public factory methods.
+        /// </summary>
         private CrsCoordinate(
             CrsProjection crsProjection,
             double xLongitude,
@@ -20,11 +37,21 @@ namespace SwedenCrsTransformations {
             this.LatitudeY = yLatitude;
         }
 
+        /// <summary>
+        /// Transforms the coordinate to another coordinate reference system
+        /// </summary>
+        /// <param name="targetCrsProjection">the coordinate reference system that you want to transform to</param>        
         public CrsCoordinate Transform(CrsProjection targetCrsProjection) {
             return Transformer.Transform(this, targetCrsProjection);
         }
 
 
+        /// <summary>
+        /// Factory method for creating an instance.
+        /// </summary>
+        /// <param name="epsgNumber">represents the coordinate reference system that defines the location together with the other two parameters</param>
+        /// <param name="xLongitude">the coordinate position value representing the longitude or X or Easting</param>
+        /// <param name="yLatitude">the coordinate position value representing the latitude or Y or Northing</param>
         public static CrsCoordinate CreateCoordinate(
             int epsgNumber,
             double xLongitude,
@@ -34,6 +61,13 @@ namespace SwedenCrsTransformations {
             return CreateCoordinate(crsProjection, xLongitude, yLatitude);
         }
 
+        /// <summary>
+        /// Factory method for creating an instance.
+        /// See also <see cref="CrsProjection"/>
+        /// </summary>
+        /// <param name="crsProjection">represents the coordinate reference system that defines the location together with the other two parameters</param>
+        /// <param name="xLongitude">the coordinate position value representing the longitude or X or Easting</param>
+        /// <param name="yLatitude">the coordinate position value representing the latitude or Y or Northing</param>
         public static CrsCoordinate CreateCoordinate(
             CrsProjection crsProjection,
             double xLongitude,
@@ -101,9 +135,16 @@ namespace SwedenCrsTransformations {
             );
         }
 
+        /// <summary>
+        /// Sets a custom method to be used for rendering an instance when the 'ToString' method is used.
+        /// </summary>
         public static void SetToStringImplementation(Func<CrsCoordinate, string> toStringImplementation) {
             _toStringImplementation = toStringImplementation;
         }
+
+        /// <summary>
+        /// Sets the default method to be used for rendering an instance when the 'ToString' method is used.
+        /// </summary>
         public static void SetToStringImplementationDefault() { 
             _toStringImplementation = defaultToStringImplementation;
         }
