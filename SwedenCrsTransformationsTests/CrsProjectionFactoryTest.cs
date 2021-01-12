@@ -1,5 +1,6 @@
 ﻿using NUnit.Framework;
 using SwedenCrsTransformations;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace SwedenCrsTransformationsTests
@@ -13,6 +14,13 @@ namespace SwedenCrsTransformationsTests
         private const int numberOfRTprojections = 6; // with EPSG numbers 3019-3024
         private const int numberOfWgs84Projectios = 1; // just to provide semantic instead of using a magic number 1 below
         private const int totalNumberOfProjections = numberOfSweref99projections + numberOfRTprojections + numberOfWgs84Projectios;
+
+        private IList<CrsProjection> _allCrsProjections;
+
+        [SetUp]
+        public void SetUp() {
+            _allCrsProjections = CrsProjectionFactory.GetAllCrsProjections();;
+        }
 
 
         [Test]
@@ -34,21 +42,32 @@ namespace SwedenCrsTransformationsTests
         }
 
         [Test]
-        public void GetAllCrsProjections() {
-            var allCrsProjections = CrsProjectionFactory.GetAllCrsProjections();
+        public void VerifyTotalNumberOfProjections() {
             Assert.AreEqual(
                 totalNumberOfProjections,
-                allCrsProjections.Count
+                _allCrsProjections.Count // retrieved with 'GetAllCrsProjections' in the SetUp method
             );
+        }    
+        [Test]
+        public void VerifyNumberOfWgs84Projections() {
+            Assert.AreEqual(numberOfWgs84Projectios, _allCrsProjections.Where(crs => crs.IsWgs84()).Count());
+        }
+        [Test]
+        public void VerifyNumberOfSweref99Projections() {
+            Assert.AreEqual(numberOfSweref99projections, _allCrsProjections.Where(crs => crs.IsSweref()).Count());
+        }
+        [Test]
+        public void VerifyNumberOfRT90Projections() {
+            Assert.AreEqual(numberOfRTprojections, _allCrsProjections.Where(crs => crs.IsRT90()).Count());
+        }
 
-            foreach(var crsProjection in allCrsProjections) {
+        [Test]
+
+        public void VerifyThatAllProjectionsCanBeRetrievedByItsEpsgNumber() {
+            foreach(var crsProjection in _allCrsProjections) {
                 var crsProj = CrsProjectionFactory.GetCrsProjectionByEpsgNumber(crsProjection.GetEpsgNumber());
                 Assert.AreEqual(crsProjection, crsProj);
             }
-
-            Assert.AreEqual(numberOfWgs84Projectios, allCrsProjections.Where(crs => crs.IsWgs84()).Count());
-            Assert.AreEqual(numberOfSweref99projections, allCrsProjections.Where(crs => crs.IsSweref()).Count());
-            Assert.AreEqual(numberOfRTprojections, allCrsProjections.Where(crs => crs.IsRT90()).Count());
         }    
 
     }
