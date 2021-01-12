@@ -1,4 +1,4 @@
-﻿// This enum 'Grid' was previously located in the same file as the class Position in the file Classes/Position.cs
+﻿// This enum 'CrsGrid' was previously located in the same file as the class Position in the file Classes/Position.cs and then with the name 'Grid'
 /*
  * MightyLittleGeodesy 
  * RT90, SWEREF99 and WGS84 coordinate transformation library
@@ -25,7 +25,7 @@
  */
 
 namespace SwedenCrsTransformations {
-    public enum Grid {
+    public enum CrsGrid {
         RT90 = 0,
         WGS84 = 1,
         SWEREF99 = 2

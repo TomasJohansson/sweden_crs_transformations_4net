@@ -27,6 +27,7 @@
             int epsgNumber = crsProjection.GetEpsgNumber();
             return epsgLowerValueForRT90 <= epsgNumber && epsgNumber <= epsgUpperValueForRT90;
         }
+        // TODO implement a Grid property returning an instance of CrsGrid
 
     }
 
