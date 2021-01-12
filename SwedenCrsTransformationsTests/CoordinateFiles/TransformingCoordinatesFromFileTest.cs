@@ -91,11 +91,11 @@ namespace SwedenCrsTransformationsTests.CoordinateFiles {
 
             if (diffLongitude > maxDifference || diffLatitude > maxDifference) {
                 string problem = string.Format(
-                    "Epsg {0} ==> {1} , diffLongitude {2}  , diffLatitude {3}"
+                    "Projection {0} ==> {1} , diffLongitude {2}  , diffLatitude {3}"
                     + "sourceCoordinate xLongitude/yLatitude: {4}/{5}" 
                     + "targetCoordinate xLongitude/yLatitude: {6}/{7}" 
                     + "targetCoordinateExpected xLongitude/yLatitude: {8}/{9}",
-                    sourceCoordinate.epsgNumber, targetCoordinateExpected.epsgNumber,
+                    sourceCoordinate.crsProjection, targetCoordinateExpected.crsProjection,
                     diffLongitude, diffLatitude,
                     sourceCoordinate.xLongitude, sourceCoordinate.yLatitude,
                     targetCoordinate.xLongitude, targetCoordinate.yLatitude,

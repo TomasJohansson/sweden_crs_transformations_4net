@@ -5,13 +5,6 @@ namespace SwedenCrsTransformations {
 
         public CrsProjection crsProjection { get; private set; }
         
-        [System.Obsolete("Instead use CrsProjection")]
-        public int epsgNumber { 
-            get {
-                return crsProjection.GetEpsgNumber();
-            }
-        }
-
         public double xLongitude { get; private set; }
         public double yLatitude { get; private set; }
 

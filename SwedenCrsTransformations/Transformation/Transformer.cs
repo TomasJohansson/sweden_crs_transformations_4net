@@ -49,7 +49,7 @@ namespace SwedenCrsTransformations.Transformation {
                 return _transFormStrategy.Transform(sourceCoordinate, targetCrsProjection);
             }
 
-            throw new ArgumentException(string.Format("Unhandled source/target EPSG {0} ==> {1}", sourceCoordinate.epsgNumber, targetCrsProjection));
+            throw new ArgumentException(string.Format("Unhandled source/target projection transformation: {0} ==> {1}", sourceCoordinate.crsProjection, targetCrsProjection));
         }
 
     }
