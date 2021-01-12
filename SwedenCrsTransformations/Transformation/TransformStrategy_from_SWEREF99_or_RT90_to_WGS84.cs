@@ -8,8 +8,8 @@ namespace SwedenCrsTransformations.Transformation {
             CrsProjection targetCrsProjection
         ) {
             var gkProjection = new GaussKreuger();
-            gkProjection.swedish_params(sourceCoordinate.crsProjection);
-            LonLat lonLat = gkProjection.grid_to_geodetic(sourceCoordinate.yLatitude, sourceCoordinate.xLongitude);
+            gkProjection.swedish_params(sourceCoordinate.CrsProjection);
+            LonLat lonLat = gkProjection.grid_to_geodetic(sourceCoordinate.YLatitude, sourceCoordinate.XLongitude);
             return CrsCoordinate.CreateCoordinatePoint(targetCrsProjection, lonLat.xLongitude, lonLat.yLatitude);
         }
     }

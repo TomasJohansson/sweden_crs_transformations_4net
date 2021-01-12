@@ -3,19 +3,19 @@
 namespace SwedenCrsTransformations {
     public class CrsCoordinate {
 
-        public CrsProjection crsProjection { get; private set; }
+        public CrsProjection CrsProjection { get; private set; }
         
-        public double xLongitude { get; private set; }
-        public double yLatitude { get; private set; }
+        public double XLongitude { get; private set; }
+        public double YLatitude { get; private set; }
 
         private CrsCoordinate(
             CrsProjection crsProjection,
             double xLongitude,
             double yLatitude
         ) {
-            this.crsProjection = crsProjection;
-            this.xLongitude = xLongitude;
-            this.yLatitude = yLatitude;
+            this.CrsProjection = crsProjection;
+            this.XLongitude = xLongitude;
+            this.YLatitude = yLatitude;
         }
 
         public CrsCoordinate Transform(CrsProjection targetCrsProjection) {

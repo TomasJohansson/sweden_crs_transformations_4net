@@ -13,33 +13,33 @@ namespace SwedenCrsTransformations.Transformation {
         private static TransformStrategy _transFormStrategy_From_Sweref99OrRT90_to_WGS84_andThenToRealTarget  = new TransFormStrategy_From_Sweref99OrRT90_to_WGS84_andThenToRealTarget();
 
         public static CrsCoordinate Transform(CrsCoordinate sourceCoordinate, CrsProjection targetCrsProjection) {
-            if(sourceCoordinate.crsProjection == targetCrsProjection) throw new ArgumentException("Trying to transform from/to the same CRS");
+            if(sourceCoordinate.CrsProjection == targetCrsProjection) throw new ArgumentException("Trying to transform from/to the same CRS");
 
             TransformStrategy _transFormStrategy = null;
 
             // Transform FROM wgs84:
             if(
-                sourceCoordinate.crsProjection.isWgs84()
+                sourceCoordinate.CrsProjection.IsWgs84()
                 &&
-                ( targetCrsProjection.isSweref() || targetCrsProjection.isRT90() )
+                ( targetCrsProjection.IsSweref() || targetCrsProjection.IsRT90() )
             ) {
                 _transFormStrategy = _transformStrategy_from_WGS84_to_SWEREF99_or_RT90;
             }
 
             // Transform TO wgs84:
             else if(
-                targetCrsProjection.isWgs84()
+                targetCrsProjection.IsWgs84()
                 &&
-                ( sourceCoordinate.crsProjection.isSweref() || sourceCoordinate.crsProjection.isRT90() )
+                ( sourceCoordinate.CrsProjection.IsSweref() || sourceCoordinate.CrsProjection.IsRT90() )
             ) {
                 _transFormStrategy = _transformStrategy_from_SWEREF99_or_RT90_to_WGS84;
             }
 
             // Transform between two non-wgs84:
             else if(
-                ( sourceCoordinate.crsProjection.isSweref() || sourceCoordinate.crsProjection.isRT90() )
+                ( sourceCoordinate.CrsProjection.IsSweref() || sourceCoordinate.CrsProjection.IsRT90() )
                 &&
-                ( targetCrsProjection.isSweref() || targetCrsProjection.isRT90() )
+                ( targetCrsProjection.IsSweref() || targetCrsProjection.IsRT90() )
             ) {
                 // the only direct transform supported is to/from WGS84, so therefore first transform to wgs84
                 _transFormStrategy = _transFormStrategy_From_Sweref99OrRT90_to_WGS84_andThenToRealTarget;
@@ -49,7 +49,7 @@ namespace SwedenCrsTransformations.Transformation {
                 return _transFormStrategy.Transform(sourceCoordinate, targetCrsProjection);
             }
 
-            throw new ArgumentException(string.Format("Unhandled source/target projection transformation: {0} ==> {1}", sourceCoordinate.crsProjection, targetCrsProjection));
+            throw new ArgumentException(string.Format("Unhandled source/target projection transformation: {0} ==> {1}", sourceCoordinate.CrsProjection, targetCrsProjection));
         }
 
     }

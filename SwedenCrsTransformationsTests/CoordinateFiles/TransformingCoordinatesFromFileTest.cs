@@ -80,14 +80,14 @@ namespace SwedenCrsTransformationsTests.CoordinateFiles {
             CrsCoordinate targetCoordinateExpected,
             IList<string> problemTransformationResults
         ) {
-            CrsProjection targetCrs = targetCoordinateExpected.crsProjection;
+            CrsProjection targetCrs = targetCoordinateExpected.CrsProjection;
             CrsCoordinate targetCoordinate = sourceCoordinate.Transform(targetCrs);
-            bool isTargetEpsgWgs84 = targetCrs.isWgs84();
+            bool isTargetEpsgWgs84 = targetCrs.IsWgs84();
             // double maxDifference = isTargetEpsgWgs84 ? 0.000002 : 0.2;   // fails, Epsg 3022 ==> 4326 , diffLongitude 2.39811809521484E-06
             // double maxDifference = isTargetEpsgWgs84 ? 000003 : 0.1;     // fails, Epsg 4326 ==> 3022 , diffLongitude 0.117090131156147
             double maxDifference = isTargetEpsgWgs84 ? 000003 : 0.2; // the other (i.e. non-WGS84) are using meter as unit, so 0.2 is just two decimeters difference
-            double diffLongitude = Math.Abs((targetCoordinate.xLongitude - targetCoordinateExpected.xLongitude));
-            double diffLatitude = Math.Abs((targetCoordinate.yLatitude - targetCoordinateExpected.yLatitude));
+            double diffLongitude = Math.Abs((targetCoordinate.XLongitude - targetCoordinateExpected.XLongitude));
+            double diffLatitude = Math.Abs((targetCoordinate.YLatitude - targetCoordinateExpected.YLatitude));
 
             if (diffLongitude > maxDifference || diffLatitude > maxDifference) {
                 string problem = string.Format(
@@ -95,11 +95,11 @@ namespace SwedenCrsTransformationsTests.CoordinateFiles {
                     + "sourceCoordinate xLongitude/yLatitude: {4}/{5}" 
                     + "targetCoordinate xLongitude/yLatitude: {6}/{7}" 
                     + "targetCoordinateExpected xLongitude/yLatitude: {8}/{9}",
-                    sourceCoordinate.crsProjection, targetCoordinateExpected.crsProjection,
+                    sourceCoordinate.CrsProjection, targetCoordinateExpected.CrsProjection,
                     diffLongitude, diffLatitude,
-                    sourceCoordinate.xLongitude, sourceCoordinate.yLatitude,
-                    targetCoordinate.xLongitude, targetCoordinate.yLatitude,
-                    targetCoordinateExpected.xLongitude, targetCoordinateExpected.yLatitude
+                    sourceCoordinate.XLongitude, sourceCoordinate.YLatitude,
+                    targetCoordinate.XLongitude, targetCoordinate.YLatitude,
+                    targetCoordinateExpected.XLongitude, targetCoordinateExpected.YLatitude
                 );
                 problemTransformationResults.Add(problem);
             }

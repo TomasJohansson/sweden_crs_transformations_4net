@@ -16,25 +16,25 @@
             return (int)crsProjection;
         }
 
-        public static bool isWgs84(this CrsProjection crsProjection) {
+        public static bool IsWgs84(this CrsProjection crsProjection) {
             return crsProjection == CrsProjection.wgs84;
         }
-        public static bool isSweref(this CrsProjection crsProjection) {
+        public static bool IsSweref(this CrsProjection crsProjection) {
             int epsgNumber = crsProjection.GetEpsgNumber();
             return epsgLowerValueForSweref <= epsgNumber && epsgNumber <= epsgUpperValueForSweref;
         }
-        public static bool isRT90(this CrsProjection crsProjection) {
+        public static bool IsRT90(this CrsProjection crsProjection) {
             int epsgNumber = crsProjection.GetEpsgNumber();
             return epsgLowerValueForRT90 <= epsgNumber && epsgNumber <= epsgUpperValueForRT90;
         }
         public static CrsGrid Grid(this CrsProjection crsProjection) {
-            if(crsProjection.isWgs84()) {
+            if(crsProjection.IsWgs84()) {
                 return CrsGrid.WGS84;
             }
-            else if(crsProjection.isSweref()) {
+            else if(crsProjection.IsSweref()) {
                 return CrsGrid.SWEREF99;
             }
-            else if(crsProjection.isRT90()) {
+            else if(crsProjection.IsRT90()) {
                 return CrsGrid.RT90;
             }
             else {
