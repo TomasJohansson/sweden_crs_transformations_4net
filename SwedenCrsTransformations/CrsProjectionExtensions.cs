@@ -12,7 +12,7 @@
         private const int epsgUpperValueForRT90 = 3024;
 
         public static int GetEpsgNumber(this CrsProjection crsProjection) { 
-            // the EPSG numbers have been used as the values in this enum (which will replace SWEREFProjection and RT90Projection)
+            // the EPSG numbers have been used as the values in this enum
             return (int)crsProjection;
         }
 

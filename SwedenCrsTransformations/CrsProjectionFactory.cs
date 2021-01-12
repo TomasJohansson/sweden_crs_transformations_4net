@@ -15,7 +15,7 @@ namespace SwedenCrsTransformations {
                     return value;
                 }
             }
-            throw new ArgumentException("Could not find RT90Projection for EPSG " + epsg);
+            throw new ArgumentException("Could not find CrsProjection for EPSG " + epsg);
         }
 
         public static IList<CrsProjection> GetAllCrsProjections() {
