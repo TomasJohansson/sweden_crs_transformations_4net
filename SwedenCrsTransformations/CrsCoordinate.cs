@@ -80,19 +80,32 @@ namespace SwedenCrsTransformations {
         /// "CoordinatePoint [ Longitude: 18.059196 , Latitude: 59.330231 , CRS: WGS84 ]"
         /// </summary>
         public override string ToString() {
-            string crs = this.CrsProjection.ToString().ToUpper();
-            bool isWgs84 =  this.CrsProjection.IsWgs84();
+            return _toStringImplementation(this);
+        }
+
+        private static Func<CrsCoordinate, string> _toStringImplementation = defaultToStringImplementation;
+        
+        private static string defaultToStringImplementation(CrsCoordinate coordinate) {
+            string crs = coordinate.CrsProjection.ToString().ToUpper();
+            bool isWgs84 =  coordinate.CrsProjection.IsWgs84();
             string xOrLongitude = isWgs84 ? "Longitude" : "X";
             string yOrLatitude = isWgs84 ? "Latitude" : "Y";
             return string.Format(
                 "{0} [ {1}: {2} , {3}: {4} , CRS: {5} ]",
-                    nameof(CrsCoordinate), // 0
-                    xOrLongitude,   // 1
-                    this.XLongitude,// 2
-                    yOrLatitude,    // 3
-                    this.YLatitude, // 4
-                    crs             // 5
+                    nameof(CrsCoordinate),  // 0
+                    xOrLongitude,           // 1
+                    coordinate.XLongitude,  // 2
+                    yOrLatitude,            // 3
+                    coordinate.YLatitude,   // 4
+                    crs                     // 5
             );
+        }
+
+        public static void SetToStringImplementation(Func<CrsCoordinate, string> toStringImplementation) {
+            _toStringImplementation = toStringImplementation;
+        }
+        public static void SetToStringImplementationDefault() { 
+            _toStringImplementation = defaultToStringImplementation;
         }
     }
 }

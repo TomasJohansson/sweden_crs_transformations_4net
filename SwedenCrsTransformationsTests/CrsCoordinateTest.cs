@@ -92,6 +92,22 @@ namespace SwedenCrsTransformationsTests {
                 "CrsCoordinate [ Longitude: 18.059196 , Latitude: 59.330231 , CRS: WGS84 ]",
                 coordinatePoint2.ToString()
             );
+            // now testing the same coordinate as above but with a custom 'ToString' implementation
+            CrsCoordinate.SetToStringImplementation(myCustomToStringMethod);
+            Assert.AreEqual(
+                "59.330231 , 18.059196",
+                coordinatePoint2.ToString()
+            );
+            CrsCoordinate.SetToStringImplementationDefault(); // restores the default 'ToString' implementation
         }
+
+        private string myCustomToStringMethod(CrsCoordinate coordinate) {
+            return string.Format(
+                "{0} , {1}",
+                    coordinate.YLatitude,
+                    coordinate.XLongitude
+            );
+        }
+
     }
 }
