@@ -1,5 +1,6 @@
 ﻿using NUnit.Framework;
 using SwedenCrsTransformations;
+using System.Linq;
 
 namespace SwedenCrsTransformationsTests
 {
@@ -44,6 +45,10 @@ namespace SwedenCrsTransformationsTests
                 var crsProj = CrsProjectionFactory.GetCrsProjectionByEpsgNumber(crsProjection.GetEpsgNumber());
                 Assert.AreEqual(crsProjection, crsProj);
             }
+
+            Assert.AreEqual(numberOfWgs84Projectios, allCrsProjections.Where(crs => crs.IsWgs84()).Count());
+            Assert.AreEqual(numberOfSweref99projections, allCrsProjections.Where(crs => crs.IsSweref()).Count());
+            Assert.AreEqual(numberOfRTprojections, allCrsProjections.Where(crs => crs.IsRT90()).Count());
         }    
 
     }
