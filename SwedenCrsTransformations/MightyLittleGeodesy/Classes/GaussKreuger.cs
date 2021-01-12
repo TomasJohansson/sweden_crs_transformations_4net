@@ -41,7 +41,7 @@ namespace MightyLittleGeodesy.Classes
      * Source: Arnold Andreasson, 2007. http://mellifica.se/konsult
      * Author: Björn Sållarp. 2009. http://blog.sallarp.com
      */
-    public class GaussKreuger
+    internal class GaussKreuger
     {
         double axis; // Semi-major axis of the ellipsoid.
         double flattening; // Flattening of the ellipsoid.
@@ -356,7 +356,7 @@ namespace MightyLittleGeodesy.Classes
     }
 
 
-    public class LonLat {
+    internal class LonLat {
         public double xLongitude { get; private set; }
         public double yLatitude { get; private set; }
         public LonLat(double xLongitude, double yLatitude) {
