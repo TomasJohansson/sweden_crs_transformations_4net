@@ -1,8 +1,6 @@
-﻿using MightyLittleGeodesy.Classes;
-using System;
+﻿using System;
 
 namespace MightyLittleGeodesy {
-
     internal class Transformer {
 
         // Implementations of transformations from WGS84:
@@ -54,51 +52,6 @@ namespace MightyLittleGeodesy {
             throw new ArgumentException(string.Format("Unhandled source/target EPSG {0} ==> {1}", sourceCoordinate.epsgNumber, targetCrsProjection));
         }
 
-    }
-
-    internal interface TransformStrategy {
-        CrsCoordinate Transform(
-            CrsCoordinate sourceCoordinate,
-            CrsProjection targetCrsProjection
-        );
-    }
-
-    
-    internal class TransformStrategy_from_WGS84_to_SWEREF99_or_RT90 : TransformStrategy {
-        // Precondition: sourceCoordinate must be CRS WGS84
-        public CrsCoordinate Transform(
-            CrsCoordinate sourceCoordinate,
-            CrsProjection targetCrsProjection
-        ) {
-            var gkProjection = new GaussKreuger();
-            gkProjection.swedish_params(targetCrsProjection);
-            LonLat lonLat = gkProjection.geodetic_to_grid(sourceCoordinate.yLatitude, sourceCoordinate.xLongitude);
-            return CrsCoordinate.CreateCoordinatePoint(targetCrsProjection, lonLat.xLongitude, lonLat.yLatitude);
-        }
-    }
-
-    internal class TransformStrategy_from_SWEREF99_or_RT90_to_WGS84 : TransformStrategy {
-        // Precondition: sourceCoordinate must be CRS RT90
-        public CrsCoordinate Transform(
-            CrsCoordinate sourceCoordinate,
-            CrsProjection targetCrsProjection
-        ) {
-            var gkProjection = new GaussKreuger();
-            gkProjection.swedish_params(sourceCoordinate.crsProjection);
-            LonLat lonLat = gkProjection.grid_to_geodetic(sourceCoordinate.yLatitude, sourceCoordinate.xLongitude);
-            return CrsCoordinate.CreateCoordinatePoint(targetCrsProjection, lonLat.xLongitude, lonLat.yLatitude);
-        }
-    }
-
-    internal class TransFormStrategy_From_Sweref99OrRT90_to_WGS84_andThenToRealTarget : TransformStrategy {
-        // Precondition: sourceCoordinate must be CRS SWEREF99 or RT90
-        public CrsCoordinate Transform(
-            CrsCoordinate sourceCoordinate,
-            CrsProjection targetCrsProjection
-        ) {
-            var wgs84coordinate = Transformer.Transform(sourceCoordinate, CrsProjection.wgs84);
-            return Transformer.Transform(wgs84coordinate, targetCrsProjection);
-        }
     }
 
 }
