@@ -11,9 +11,9 @@ namespace SwedenCrsTransformationsTests
         internal const int epsgNumberForWgs84 = 4326;
         internal const int epsgNumberForSweref99tm = 3006; // https://epsg.org/crs_3006/SWEREF99-TM.html
         private const int numberOfSweref99projections = 13; // with EPSG numbers 3006-3018
-        private const int numberOfRTprojections = 6; // with EPSG numbers 3019-3024
-        private const int numberOfWgs84Projectios = 1; // just to provide semantic instead of using a magic number 1 below
-        private const int totalNumberOfProjections = numberOfSweref99projections + numberOfRTprojections + numberOfWgs84Projectios;
+        private const int numberOfRT90projections = 6; // with EPSG numbers 3019-3024
+        private const int numberOfWgs84Projections = 1; // just to provide semantic instead of using a magic number 1 below
+        private const int totalNumberOfProjections = numberOfSweref99projections + numberOfRT90projections + numberOfWgs84Projections;
 
         private IList<CrsProjection> _allCrsProjections;
 
@@ -50,7 +50,7 @@ namespace SwedenCrsTransformationsTests
         }    
         [Test]
         public void VerifyNumberOfWgs84Projections() {
-            Assert.AreEqual(numberOfWgs84Projectios, _allCrsProjections.Where(crs => crs.IsWgs84()).Count());
+            Assert.AreEqual(numberOfWgs84Projections, _allCrsProjections.Where(crs => crs.IsWgs84()).Count());
         }
         [Test]
         public void VerifyNumberOfSweref99Projections() {
@@ -58,7 +58,7 @@ namespace SwedenCrsTransformationsTests
         }
         [Test]
         public void VerifyNumberOfRT90Projections() {
-            Assert.AreEqual(numberOfRTprojections, _allCrsProjections.Where(crs => crs.IsRT90()).Count());
+            Assert.AreEqual(numberOfRT90projections, _allCrsProjections.Where(crs => crs.IsRT90()).Count());
         }
 
         [Test]
