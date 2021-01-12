@@ -1,8 +1,6 @@
 ﻿
 namespace MightyLittleGeodesy {
     
-    // This enum will replace RT90Position.RT90Projection and SWEREF99Position.SWEREFProjection
-    // (those projection enums are defined within their corresponding Position class)
     public enum CrsProjection {
             wgs84 = 4326,
 
