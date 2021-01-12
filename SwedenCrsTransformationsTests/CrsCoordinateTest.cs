@@ -1,5 +1,6 @@
 ﻿using NUnit.Framework;
 using SwedenCrsTransformations;
+using static SwedenCrsTransformationsTests.CrsProjectionFactoryTest; // to be able to use constants such as epsgNumberForSweref99tm
 
 namespace SwedenCrsTransformationsTests {
     
@@ -8,19 +9,23 @@ namespace SwedenCrsTransformationsTests {
         
         [Test]
         public void CreateCoordinatePointByEpsgNumber() {
-            CrsCoordinate crsCoordinate = CrsCoordinate.CreateCoordinatePoint(3006, 20.0, 60.0);
-            Assert.AreEqual(3006, crsCoordinate.CrsProjection.GetEpsgNumber());
-            Assert.AreEqual(20.0, crsCoordinate.XLongitude);
-            Assert.AreEqual(60.0, crsCoordinate.YLatitude);
+            const double x = 20.0;
+            const double y = 60.0;
+            CrsCoordinate crsCoordinate = CrsCoordinate.CreateCoordinatePoint(epsgNumberForSweref99tm, x, y);
+            Assert.AreEqual(epsgNumberForSweref99tm, crsCoordinate.CrsProjection.GetEpsgNumber());
+            Assert.AreEqual(x, crsCoordinate.XLongitude);
+            Assert.AreEqual(y, crsCoordinate.YLatitude);
         }
 
         [Test]
         public void CreateCoordinatePoint() {
-            CrsCoordinate crsCoordinate = CrsCoordinate.CreateCoordinatePoint(CrsProjection.sweref_99_tm, 20.0, 60.0);
-            Assert.AreEqual(3006, crsCoordinate.CrsProjection.GetEpsgNumber());
+            const double x = 22.5;
+            const double y = 62.5;
+            CrsCoordinate crsCoordinate = CrsCoordinate.CreateCoordinatePoint(CrsProjection.sweref_99_tm, x, y);
+            Assert.AreEqual(epsgNumberForSweref99tm, crsCoordinate.CrsProjection.GetEpsgNumber());
             Assert.AreEqual(CrsProjection.sweref_99_tm, crsCoordinate.CrsProjection);
-            Assert.AreEqual(20.0, crsCoordinate.XLongitude);
-            Assert.AreEqual(60.0, crsCoordinate.YLatitude);
+            Assert.AreEqual(x, crsCoordinate.XLongitude);
+            Assert.AreEqual(y, crsCoordinate.YLatitude);
         }
 
     }
