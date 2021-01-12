@@ -6,8 +6,8 @@ namespace SwedenCrsTransformationsTests
     [TestFixture]
     public class CrsProjectionFactoryTest {
 
-        private const int epsgNumberForWgs84 = 4326;
-        private const int epsgNumberForSweref99tm = 3006; // https://epsg.org/crs_3006/SWEREF99-TM.html
+        internal const int epsgNumberForWgs84 = 4326;
+        internal const int epsgNumberForSweref99tm = 3006; // https://epsg.org/crs_3006/SWEREF99-TM.html
         private const int numberOfSweref99projections = 13; // with EPSG numbers 3006-3018
         private const int numberOfRTprojections = 6; // with EPSG numbers 3019-3024
         private const int numberOfWgs84Projectios = 1; // just to provide semantic instead of using a magic number 1 below
@@ -45,21 +45,6 @@ namespace SwedenCrsTransformationsTests
                 Assert.AreEqual(crsProjection, crsProj);
             }
         }    
-
-
-        // TODO move this method to CrsProjectionExtensionsTest
-        [Test]
-        public void GetEpsgNumber() {
-            Assert.AreEqual(
-                epsgNumberForSweref99tm,
-                CrsProjection.sweref_99_tm.GetEpsgNumber()
-            );
-
-            Assert.AreEqual(
-                epsgNumberForWgs84,
-                CrsProjection.wgs84.GetEpsgNumber()
-            );
-        }
 
     }
 }

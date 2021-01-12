@@ -1,10 +1,24 @@
 ﻿using NUnit.Framework;
 using SwedenCrsTransformations;
-
+using static SwedenCrsTransformationsTests.CrsProjectionFactoryTest; // to be able to use constants such as epsgNumberForSweref99tm and epsgNumberForWgs84
 namespace SwedenCrsTransformationsTests {
     
     [TestFixture]
     public class CrsProjectionExtensionsTest {
+
+        [Test]
+        public void GetEpsgNumber() {
+            Assert.AreEqual(
+                epsgNumberForSweref99tm, // constant defined in CrsProjectionFactoryTest
+                CrsProjection.sweref_99_tm.GetEpsgNumber()
+            );
+
+            Assert.AreEqual(
+                epsgNumberForWgs84, // constant defined in CrsProjectionFactoryTest
+                CrsProjection.wgs84.GetEpsgNumber()
+            );
+        }
+
 
         // TODO add more tests for all enum values
         [Test]
