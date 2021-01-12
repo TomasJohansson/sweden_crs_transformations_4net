@@ -1,11 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.28307.329
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30804.86
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MightyLittleGeodesyTests", "MightyLittleGeodesyTests\MightyLittleGeodesyTests.csproj", "{809AE4C2-0334-42E7-A889-AAA3B1083AA1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SwedenCrsTransformationsTests", "MightyLittleGeodesyTests\SwedenCrsTransformationsTests.csproj", "{809AE4C2-0334-42E7-A889-AAA3B1083AA1}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MightyLittleGeodesy", "MightyLittleGeodesy\MightyLittleGeodesy.csproj", "{418ACB92-2063-4D6C-B56A-B0FF8DA89CAD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SwedenCrsTransformations", "MightyLittleGeodesy\SwedenCrsTransformations.csproj", "{418ACB92-2063-4D6C-B56A-B0FF8DA89CAD}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{51A96629-4E4C-44E9-B217-F8D47DB3B1CD}"
 	ProjectSection(SolutionItems) = preProject

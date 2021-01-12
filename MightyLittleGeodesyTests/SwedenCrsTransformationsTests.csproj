@@ -10,7 +10,7 @@
     <PackageReference Include="NUnit3TestAdapter" Version="3.17.0" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\MightyLittleGeodesy\MightyLittleGeodesy.csproj" />
+    <ProjectReference Include="..\MightyLittleGeodesy\SwedenCrsTransformations.csproj" />
   </ItemGroup>
   <ItemGroup>
     <None Update="CoordinateFiles\data\swedish_crs_coordinates.csv">
