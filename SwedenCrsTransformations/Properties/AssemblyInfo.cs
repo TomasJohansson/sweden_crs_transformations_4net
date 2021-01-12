@@ -5,11 +5,17 @@ using System.Security;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyDescription("You can translate both ways between coordinate systems: RT90, SWEREF99 andWGS84.\r\n\r\nThe WGS84 object can parse out positions from strings in DMS (degrees, minutes seconds, and DM (degrees, minutes) format. \r\n\r\nAll in all it’s a pretty easy to use and powerful library.")]
+[assembly: AssemblyDescription(""
++"This library 'SwedenCrsTransformations' is based on 'MightyLittleGeodesy' (URL https://github.com/bjornsallarp/MightyLittleGeodesy )"
++"In particular the class 'GaussKreuger' (and the usages of it) from that project is still used."
++"It (GaussKreuger) is the class doing the mathematical work of the transformations between the coordinate systems."
++"You can translate both ways between coordinate systems: RT90, SWEREF99 andWGS84."
++"The license for 'SwedenCrsTransformations' is MIT, like the forked/original library 'MightyLittleGeodesy'"
++"")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Björn Sållarp")]
-[assembly: AssemblyProduct("MightyLittleGeodesy")]
-[assembly: AssemblyCopyright("Copyright © Björn Sållarp 2009")]
+[assembly: AssemblyCompany("Tomas Johansson (regarding the fork 'SwedenCrsTransformations') and Björn Sållarp (regarding the original library 'MightyLittleGeodesy')")]
+[assembly: AssemblyProduct("SwedenCrsTransformations")]
+[assembly: AssemblyCopyright("MIT license.  Copyright © Björn Sållarp 2009 (regarding the original library 'MightyLittleGeodesy')")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
