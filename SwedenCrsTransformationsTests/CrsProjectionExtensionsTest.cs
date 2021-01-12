@@ -98,13 +98,5 @@ namespace SwedenCrsTransformationsTests {
 
         }
 
-
-
-        [Test]
-        public void Grid() {
-            Assert.AreEqual(CrsGrid.WGS84,      CrsProjection.wgs84.Grid());
-            Assert.AreEqual(CrsGrid.SWEREF99,   CrsProjection.sweref_99_12_00.Grid());
-            Assert.AreEqual(CrsGrid.RT90,       CrsProjection.rt90_0_0_gon_v.Grid());
-        }
     }
 }
