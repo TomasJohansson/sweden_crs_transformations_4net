@@ -27,8 +27,22 @@
             int epsgNumber = crsProjection.GetEpsgNumber();
             return epsgLowerValueForRT90 <= epsgNumber && epsgNumber <= epsgUpperValueForRT90;
         }
-        // TODO implement a Grid property returning an instance of CrsGrid
-
+        public static CrsGrid Grid(this CrsProjection crsProjection) {
+            if(crsProjection.isWgs84()) {
+                return CrsGrid.WGS84;
+            }
+            else if(crsProjection.isSweref()) {
+                return CrsGrid.SWEREF99;
+            }
+            else if(crsProjection.isRT90()) {
+                return CrsGrid.RT90;
+            }
+            else {
+                // TODO throw some appropriate exception instead ... or maybe even delete this extension method
+                // and delete the CrsGrid since it is redundant i.e you can get the same information from it as you can by using the three is-methods above.
+                return CrsGrid.WGS84;
+            }
+        }
     }
 
 }
