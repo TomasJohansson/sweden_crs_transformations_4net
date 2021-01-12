@@ -13,7 +13,7 @@ namespace SwedenCrsTransformations.Transformation {
         private static TransformStrategy _transFormStrategy_From_Sweref99OrRT90_to_WGS84_andThenToRealTarget  = new TransFormStrategy_From_Sweref99OrRT90_to_WGS84_andThenToRealTarget();
 
         public static CrsCoordinate Transform(CrsCoordinate sourceCoordinate, CrsProjection targetCrsProjection) {
-            if(sourceCoordinate.CrsProjection == targetCrsProjection) throw new ArgumentException("Trying to transform from/to the same CRS");
+            if(sourceCoordinate.CrsProjection == targetCrsProjection) return sourceCoordinate;
 
             TransformStrategy _transFormStrategy = null;
 
