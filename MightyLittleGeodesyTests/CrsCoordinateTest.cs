@@ -1,7 +1,7 @@
 ﻿using NUnit.Framework;
-using MightyLittleGeodesy;
+using SwedenCrsTransformations;
 
-namespace MightyLittleGeodesyTests {
+namespace SwedenCrsTransformationsTests {
     
     [TestFixture]
     public class CrsCoordinateTest {

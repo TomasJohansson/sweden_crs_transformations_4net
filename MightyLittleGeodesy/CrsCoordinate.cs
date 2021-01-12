@@ -1,5 +1,6 @@
-﻿namespace MightyLittleGeodesy
-{
+﻿using SwedenCrsTransformations.Transformation;
+
+namespace SwedenCrsTransformations {
     public class CrsCoordinate {
 
         public CrsProjection crsProjection { get; private set; }

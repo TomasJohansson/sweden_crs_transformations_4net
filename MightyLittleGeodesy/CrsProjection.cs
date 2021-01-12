@@ -1,5 +1,4 @@
-﻿
-namespace MightyLittleGeodesy {
+﻿namespace SwedenCrsTransformations {
     
     public enum CrsProjection {
             wgs84 = 4326,

@@ -24,7 +24,8 @@
  */
 
 using System;
-using static MightyLittleGeodesy.CrsProjection;
+using static SwedenCrsTransformations.CrsProjection;
+using SwedenCrsTransformations;
 
 namespace MightyLittleGeodesy.Classes
 {

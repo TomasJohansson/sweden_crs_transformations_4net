@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace MightyLittleGeodesy {
+namespace SwedenCrsTransformations.Transformation {
     internal class Transformer {
 
         // Implementations of transformations from WGS84:

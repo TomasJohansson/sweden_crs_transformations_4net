@@ -1,5 +1,4 @@
-﻿namespace MightyLittleGeodesy
-{
+﻿namespace SwedenCrsTransformations {
     public static class CrsProjectionExtensions {
 
         private const int epsgForSweref99tm = 3006;

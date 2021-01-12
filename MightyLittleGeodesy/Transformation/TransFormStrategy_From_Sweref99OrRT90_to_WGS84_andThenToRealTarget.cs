@@ -1,4 +1,4 @@
-﻿namespace MightyLittleGeodesy {
+﻿namespace SwedenCrsTransformations.Transformation {
     internal class TransFormStrategy_From_Sweref99OrRT90_to_WGS84_andThenToRealTarget : TransformStrategy {
         // Precondition: sourceCoordinate must be CRS SWEREF99 or RT90
         public CrsCoordinate Transform(

@@ -2,8 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace MightyLittleGeodesy
-{
+namespace SwedenCrsTransformations {
 
     /// <summary>
     /// Class with methods for getting all projections, and for getting one projection by its EPSG number.

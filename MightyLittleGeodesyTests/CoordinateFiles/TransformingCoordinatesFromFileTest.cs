@@ -3,7 +3,7 @@ using System.Linq;
 using System.Collections.Generic;
 using NUnit.Framework;
 using System.IO;
-using MightyLittleGeodesy;
+using SwedenCrsTransformations;
 
 namespace SwedenCrsTransformationsTests.CoordinateFiles {
     

@@ -24,10 +24,8 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-namespace MightyLittleGeodesy.Classes
-{
-    public enum Grid
-    {
+namespace SwedenCrsTransformations {
+    public enum Grid {
         RT90 = 0,
         WGS84 = 1,
         SWEREF99 = 2
