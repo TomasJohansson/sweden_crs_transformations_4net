@@ -84,8 +84,8 @@ namespace SwedenCrsTransformationsTests.CoordinateFiles {
             CrsCoordinate targetCoordinate = sourceCoordinate.Transform(targetCrs);
             bool isTargetEpsgWgs84 = targetCrs.IsWgs84();
             // double maxDifference = isTargetEpsgWgs84 ? 0.000002 : 0.2;   // fails, Epsg 3022 ==> 4326 , diffLongitude 2.39811809521484E-06
-            // double maxDifference = isTargetEpsgWgs84 ? 000003 : 0.1;     // fails, Epsg 4326 ==> 3022 , diffLongitude 0.117090131156147
-            double maxDifference = isTargetEpsgWgs84 ? 000003 : 0.2; // the other (i.e. non-WGS84) are using meter as unit, so 0.2 is just two decimeters difference
+            // double maxDifference = isTargetEpsgWgs84 ? 0.000003 : 0.1;     // fails, Epsg 4326 ==> 3022 , diffLongitude 0.117090131156147
+            double maxDifference = isTargetEpsgWgs84 ? 0.000003 : 0.2; // the other (i.e. non-WGS84) are using meter as unit, so 0.2 is just two decimeters difference
             double diffLongitude = Math.Abs((targetCoordinate.LongitudeX - targetCoordinateExpected.LongitudeX));
             double diffLatitude = Math.Abs((targetCoordinate.LatitudeY - targetCoordinateExpected.LatitudeY));
 
