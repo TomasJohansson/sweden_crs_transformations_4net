@@ -354,14 +354,4 @@ namespace MightyLittleGeodesy.Classes
         }
 
     }
-
-
-    internal class LonLat {
-        public double xLongitude { get; private set; }
-        public double yLatitude { get; private set; }
-        public LonLat(double xLongitude, double yLatitude) {
-            this.xLongitude = xLongitude;
-            this.yLatitude = yLatitude;
-        }
-    }
 }
