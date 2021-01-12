@@ -25,16 +25,16 @@ namespace SwedenCrsTransformations {
         }
 
 
-        public static CrsCoordinate CreateCoordinatePoint(
+        public static CrsCoordinate CreateCoordinate(
             int epsgNumber,
             double xLongitude,
             double yLatitude
         ) {
             CrsProjection crsProjection = CrsProjectionFactory.GetCrsProjectionByEpsgNumber(epsgNumber);
-            return CreateCoordinatePoint(crsProjection, xLongitude, yLatitude);
+            return CreateCoordinate(crsProjection, xLongitude, yLatitude);
         }
 
-        public static CrsCoordinate CreateCoordinatePoint(
+        public static CrsCoordinate CreateCoordinate(
             CrsProjection crsProjection,
             double xLongitude,
             double yLatitude
@@ -76,8 +76,8 @@ namespace SwedenCrsTransformations {
 
         /// <summary>
         /// Two examples of the string that can be returned:
-        /// "CoordinatePoint [ X: 153369.673 , Y: 6579457.649 , CRS: SWEREF_99_18_00 ]"
-        /// "CoordinatePoint [ Longitude: 18.059196 , Latitude: 59.330231 , CRS: WGS84 ]"
+        /// "CrsCoordinate [ X: 153369.673 , Y: 6579457.649 , CRS: SWEREF_99_18_00 ]"
+        /// "CrsCoordinate [ Longitude: 18.059196 , Latitude: 59.330231 , CRS: WGS84 ]"
         /// </summary>
         public override string ToString() {
             return _toStringImplementation(this);

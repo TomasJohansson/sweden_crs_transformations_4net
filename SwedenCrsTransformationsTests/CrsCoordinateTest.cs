@@ -8,20 +8,20 @@ namespace SwedenCrsTransformationsTests {
     public class CrsCoordinateTest {
         
         [Test]
-        public void CreateCoordinatePointByEpsgNumber() {
+        public void CreateCoordinateByEpsgNumber() {
             const double x = 20.0;
             const double y = 60.0;
-            CrsCoordinate crsCoordinate = CrsCoordinate.CreateCoordinatePoint(epsgNumberForSweref99tm, x, y);
+            CrsCoordinate crsCoordinate = CrsCoordinate.CreateCoordinate(epsgNumberForSweref99tm, x, y);
             Assert.AreEqual(epsgNumberForSweref99tm, crsCoordinate.CrsProjection.GetEpsgNumber());
             Assert.AreEqual(x, crsCoordinate.XLongitude);
             Assert.AreEqual(y, crsCoordinate.YLatitude);
         }
 
         [Test]
-        public void CreateCoordinatePoint() {
+        public void CreateCoordinate() {
             const double x = 22.5;
             const double y = 62.5;
-            CrsCoordinate crsCoordinate = CrsCoordinate.CreateCoordinatePoint(CrsProjection.sweref_99_tm, x, y);
+            CrsCoordinate crsCoordinate = CrsCoordinate.CreateCoordinate(CrsProjection.sweref_99_tm, x, y);
             Assert.AreEqual(epsgNumberForSweref99tm, crsCoordinate.CrsProjection.GetEpsgNumber());
             Assert.AreEqual(CrsProjection.sweref_99_tm, crsCoordinate.CrsProjection);
             Assert.AreEqual(x, crsCoordinate.XLongitude);
@@ -34,8 +34,8 @@ namespace SwedenCrsTransformationsTests {
 
         [Test]
         public void EqualityTest() {
-            CrsCoordinate coordinateInstance_1 = CrsCoordinate.CreateCoordinatePoint(CrsProjection.wgs84, longitudeStockholmCentralStation, latitudeStockholmCentralStation);
-            CrsCoordinate coordinateInstance_2 = CrsCoordinate.CreateCoordinatePoint(CrsProjection.wgs84, longitudeStockholmCentralStation, latitudeStockholmCentralStation);
+            CrsCoordinate coordinateInstance_1 = CrsCoordinate.CreateCoordinate(CrsProjection.wgs84, longitudeStockholmCentralStation, latitudeStockholmCentralStation);
+            CrsCoordinate coordinateInstance_2 = CrsCoordinate.CreateCoordinate(CrsProjection.wgs84, longitudeStockholmCentralStation, latitudeStockholmCentralStation);
             Assert.AreEqual(coordinateInstance_1, coordinateInstance_2);
             Assert.AreEqual(coordinateInstance_1.GetHashCode(), coordinateInstance_2.GetHashCode());
             Assert.IsTrue(coordinateInstance_1 == coordinateInstance_2);
@@ -45,7 +45,7 @@ namespace SwedenCrsTransformationsTests {
 
 
             double delta = 0.000000000000001; // see comments further below regarding the value of "delta"
-            CrsCoordinate coordinateInstance_3 = CrsCoordinate.CreateCoordinatePoint(
+            CrsCoordinate coordinateInstance_3 = CrsCoordinate.CreateCoordinate(
                 CrsProjection.wgs84,
                 longitudeStockholmCentralStation + delta,
                 latitudeStockholmCentralStation + delta
@@ -65,7 +65,7 @@ namespace SwedenCrsTransformationsTests {
             // the difference is as 'big' as in the "delta" value above.
 
             delta = delta * 10; // moving the decimal one bit to get a somewhat larger values, and then the instances are not considered equal, as you can see in the tests below.
-            CrsCoordinate coordinateInstance_4 = CrsCoordinate.CreateCoordinatePoint(
+            CrsCoordinate coordinateInstance_4 = CrsCoordinate.CreateCoordinate(
                 CrsProjection.wgs84,
                 longitudeStockholmCentralStation + delta,
                 latitudeStockholmCentralStation + delta
@@ -82,21 +82,21 @@ namespace SwedenCrsTransformationsTests {
 
         [Test]
         public void ToStringTest() {
-            CrsCoordinate coordinatePoint = CrsCoordinate.CreateCoordinatePoint(CrsProjection.sweref_99_18_00, 153369.673, 6579457.649);
+            CrsCoordinate coordinate = CrsCoordinate.CreateCoordinate(CrsProjection.sweref_99_18_00, 153369.673, 6579457.649);
             Assert.AreEqual(
                 "CrsCoordinate [ X: 153369.673 , Y: 6579457.649 , CRS: SWEREF_99_18_00 ]",
-                coordinatePoint.ToString()
+                coordinate.ToString()
             );
-            CrsCoordinate coordinatePoint2 = CrsCoordinate.CreateCoordinatePoint(CrsProjection.wgs84, 18.059196, 59.330231);
+            CrsCoordinate coordinate2 = CrsCoordinate.CreateCoordinate(CrsProjection.wgs84, 18.059196, 59.330231);
             Assert.AreEqual(
                 "CrsCoordinate [ Longitude: 18.059196 , Latitude: 59.330231 , CRS: WGS84 ]",
-                coordinatePoint2.ToString()
+                coordinate2.ToString()
             );
             // now testing the same coordinate as above but with a custom 'ToString' implementation
             CrsCoordinate.SetToStringImplementation(myCustomToStringMethod);
             Assert.AreEqual(
                 "59.330231 , 18.059196",
-                coordinatePoint2.ToString()
+                coordinate2.ToString()
             );
             CrsCoordinate.SetToStringImplementationDefault(); // restores the default 'ToString' implementation
         }
