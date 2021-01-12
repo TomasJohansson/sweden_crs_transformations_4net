@@ -6,6 +6,8 @@ namespace SwedenCrsTransformationsTests {
     
     [TestFixture]
     public class CrsCoordinateTest {
+        private const double stockholmCentralStation_WGS84_latitude = 59.330231;
+        private const double stockholmCentralStation_WGS84_longitude = 18.059196;
         
         [Test]
         public void CreateCoordinateByEpsgNumber() {
@@ -29,13 +31,10 @@ namespace SwedenCrsTransformationsTests {
         }
 
 
-        private const double latitudeStockholmCentralStation = 59.330231;
-        private const double longitudeStockholmCentralStation = 18.059196;
-
         [Test]
         public void EqualityTest() {
-            CrsCoordinate coordinateInstance_1 = CrsCoordinate.CreateCoordinate(CrsProjection.wgs84, longitudeStockholmCentralStation, latitudeStockholmCentralStation);
-            CrsCoordinate coordinateInstance_2 = CrsCoordinate.CreateCoordinate(CrsProjection.wgs84, longitudeStockholmCentralStation, latitudeStockholmCentralStation);
+            CrsCoordinate coordinateInstance_1 = CrsCoordinate.CreateCoordinate(CrsProjection.wgs84, stockholmCentralStation_WGS84_longitude, stockholmCentralStation_WGS84_latitude);
+            CrsCoordinate coordinateInstance_2 = CrsCoordinate.CreateCoordinate(CrsProjection.wgs84, stockholmCentralStation_WGS84_longitude, stockholmCentralStation_WGS84_latitude);
             Assert.AreEqual(coordinateInstance_1, coordinateInstance_2);
             Assert.AreEqual(coordinateInstance_1.GetHashCode(), coordinateInstance_2.GetHashCode());
             Assert.IsTrue(coordinateInstance_1 == coordinateInstance_2);
@@ -47,8 +46,8 @@ namespace SwedenCrsTransformationsTests {
             double delta = 0.000000000000001; // see comments further below regarding the value of "delta"
             CrsCoordinate coordinateInstance_3 = CrsCoordinate.CreateCoordinate(
                 CrsProjection.wgs84,
-                longitudeStockholmCentralStation + delta,
-                latitudeStockholmCentralStation + delta
+                stockholmCentralStation_WGS84_longitude + delta,
+                stockholmCentralStation_WGS84_latitude + delta
             );
             Assert.AreEqual(coordinateInstance_1, coordinateInstance_3);
             Assert.AreEqual(coordinateInstance_1.GetHashCode(), coordinateInstance_3.GetHashCode());
@@ -67,8 +66,8 @@ namespace SwedenCrsTransformationsTests {
             delta = delta * 10; // moving the decimal one bit to get a somewhat larger values, and then the instances are not considered equal, as you can see in the tests below.
             CrsCoordinate coordinateInstance_4 = CrsCoordinate.CreateCoordinate(
                 CrsProjection.wgs84,
-                longitudeStockholmCentralStation + delta,
-                latitudeStockholmCentralStation + delta
+                stockholmCentralStation_WGS84_longitude + delta,
+                stockholmCentralStation_WGS84_latitude + delta
             );
             // Note that below are the Are*NOT*Equal assertions made instead of AreEqual as further above when a smaller delta value was used
             Assert.AreNotEqual(coordinateInstance_1, coordinateInstance_4);
