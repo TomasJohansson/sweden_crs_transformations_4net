@@ -46,6 +46,13 @@ namespace SwedenCrsTransformationsTests {
                 stockholmWGS84, // expected WGS84
                 stockholmRT90.Transform(CrsProjection.wgs84) // actual/transformed WGS84
             );
+            // below is a similar test as one of the above tests but using the overloaded Transform method
+            // which takes an integer as parameter instead of an instance of the enum CrsProjection
+            int epsgNumberForWgs84 = CrsProjection.wgs84.GetEpsgNumber();
+            AssertEqual(
+                stockholmWGS84,
+                stockholmRT90.Transform(epsgNumberForWgs84) // testing the overloaded Transform method with an integer parameter
+            );
             
 
             // Transformations to SWEREF99TM (from WGS84 and RT90):

@@ -45,6 +45,14 @@ namespace SwedenCrsTransformations {
             return Transformer.Transform(this, targetCrsProjection);
         }
 
+        /// <summary>
+        /// Transforms the coordinate to another coordinate reference system
+        /// </summary>
+        /// <param name="targetEpsgNumber">the coordinate reference system that you want to transform to</param>        
+        public CrsCoordinate Transform(int targetEpsgNumber) {
+            CrsProjection targetCrsProjection = CrsProjectionFactory.GetCrsProjectionByEpsgNumber(targetEpsgNumber);
+            return this.Transform(targetCrsProjection);
+        }
 
         /// <summary>
         /// Factory method for creating an instance.
