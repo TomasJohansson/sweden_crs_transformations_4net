@@ -1,4 +1,5 @@
-﻿/*
+﻿// This enum 'Grid' was previously located in the same file as the class Position in the file Classes/Position.cs
+/*
  * MightyLittleGeodesy 
  * RT90, SWEREF99 and WGS84 coordinate transformation library
  * 
@@ -25,24 +26,10 @@
 
 namespace MightyLittleGeodesy.Classes
 {
-
-    [System.Obsolete("Use CrsCoordinate instead of Position and its three subclasses")]
-    public abstract class Position
+    public enum Grid
     {
-        public double Latitude { get; set; }
-        public double Longitude { get; set; }
-        public Grid GridFormat { get; set; }
-
-        public Position(double lat, double lon, Grid format) 
-        {
-            Latitude = lat;
-            Longitude = lon;
-            GridFormat = format;
-        }
-
-        public Position(Grid format)
-        {
-            GridFormat = format;
-        }
+        RT90 = 0,
+        WGS84 = 1,
+        SWEREF99 = 2
     }
 }
