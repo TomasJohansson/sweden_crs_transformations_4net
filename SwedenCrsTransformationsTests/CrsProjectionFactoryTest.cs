@@ -10,9 +10,9 @@ namespace SwedenCrsTransformationsTests
 
         internal const int epsgNumberForWgs84 = 4326;
         internal const int epsgNumberForSweref99tm = 3006; // https://epsg.org/crs_3006/SWEREF99-TM.html
-        private const int numberOfSweref99projections = 13; // with EPSG numbers 3006-3018
-        private const int numberOfRT90projections = 6; // with EPSG numbers 3019-3024
-        private const int numberOfWgs84Projections = 1; // just to provide semantic instead of using a magic number 1 below
+        internal const int numberOfSweref99projections = 13; // with EPSG numbers 3006-3018
+        internal const int numberOfRT90projections = 6; // with EPSG numbers 3019-3024
+        internal const int numberOfWgs84Projections = 1; // just to provide semantic instead of using a magic number 1 below
         private const int totalNumberOfProjections = numberOfSweref99projections + numberOfRT90projections + numberOfWgs84Projections;
 
         private IList<CrsProjection> _allCrsProjections;
