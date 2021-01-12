@@ -1,4 +1,5 @@
-﻿using MightyLittleGeodesy.Positions;
+﻿using MightyLittleGeodesy.Classes;
+using MightyLittleGeodesy.Positions;
 using System;
 
 namespace MightyLittleGeodesy {
@@ -62,16 +63,19 @@ namespace MightyLittleGeodesy {
         );
     }
 
-    // TODO modify the below implementations to use GaussKreuger directly instead of using it through the classes SWEREF99Position and RT90Position
     internal class TransformStrategy_from_WGS84_to_SWEREF99 : TransformStrategy {
         // Precondition: sourceCoordinate must be CRS WGS84
         public CrsCoordinate Transform(
             CrsCoordinate sourceCoordinate,
             CrsProjection targetCrsProjection
         ) {
-            var wgs84position = new WGS84Position(sourceCoordinate.yLatitude, sourceCoordinate.xLongitude);
-            var position = new SWEREF99Position(wgs84position, targetCrsProjection);
-            return CrsCoordinate.CreateCoordinatePoint(targetCrsProjection, position.Longitude, position.Latitude);
+            //var wgs84position = new WGS84Position(sourceCoordinate.yLatitude, sourceCoordinate.xLongitude);
+            //var position = new SWEREF99Position(wgs84position, targetCrsProjection);
+            //return CrsCoordinate.CreateCoordinatePoint(targetCrsProjection, position.Longitude, position.Latitude);
+            var gkProjection = new GaussKreuger();
+            gkProjection.swedish_params(targetCrsProjection);
+            LonLat lonLat = gkProjection.geodetic_to_grid(sourceCoordinate.yLatitude, sourceCoordinate.xLongitude);
+            return CrsCoordinate.CreateCoordinatePoint(targetCrsProjection, lonLat.xLongitude, lonLat.yLatitude);
         }
     }
 
@@ -82,9 +86,13 @@ namespace MightyLittleGeodesy {
             CrsCoordinate sourceCoordinate,
             CrsProjection targetCrsProjection
         ) {
-            var wgs84position = new WGS84Position(sourceCoordinate.yLatitude, sourceCoordinate.xLongitude);
-            var position = new RT90Position(wgs84position, targetCrsProjection);
-            return CrsCoordinate.CreateCoordinatePoint(targetCrsProjection, position.Longitude, position.Latitude);
+            //var wgs84position = new WGS84Position(sourceCoordinate.yLatitude, sourceCoordinate.xLongitude);
+            //var position = new RT90Position(wgs84position, targetCrsProjection);
+            //return CrsCoordinate.CreateCoordinatePoint(targetCrsProjection, position.Longitude, position.Latitude);
+            var gkProjection = new GaussKreuger();
+            gkProjection.swedish_params(targetCrsProjection);
+            LonLat lonLat = gkProjection.geodetic_to_grid(sourceCoordinate.yLatitude, sourceCoordinate.xLongitude);
+            return CrsCoordinate.CreateCoordinatePoint(targetCrsProjection, lonLat.xLongitude, lonLat.yLatitude);
         }
     }
 
@@ -94,9 +102,13 @@ namespace MightyLittleGeodesy {
             CrsCoordinate sourceCoordinate,
             CrsProjection targetCrsProjection
         ) {
-            var sweref99Position = new SWEREF99Position(sourceCoordinate.yLatitude, sourceCoordinate.xLongitude, sourceCoordinate.crsProjection);
-            var wgs84result = sweref99Position.ToWGS84();
-            return CrsCoordinate.CreateCoordinatePoint(targetCrsProjection, wgs84result.Longitude, wgs84result.Latitude);
+            //var sweref99Position = new SWEREF99Position(sourceCoordinate.yLatitude, sourceCoordinate.xLongitude, sourceCoordinate.crsProjection);
+            //var wgs84result = sweref99Position.ToWGS84();
+            //return CrsCoordinate.CreateCoordinatePoint(targetCrsProjection, wgs84result.Longitude, wgs84result.Latitude);
+            var gkProjection = new GaussKreuger();
+            gkProjection.swedish_params(sourceCoordinate.crsProjection);
+            LonLat lonLat = gkProjection.grid_to_geodetic(sourceCoordinate.yLatitude, sourceCoordinate.xLongitude); 
+            return CrsCoordinate.CreateCoordinatePoint(targetCrsProjection, lonLat.xLongitude, lonLat.yLatitude);
         }
     }
     internal class TransformStrategy_from_RT90_to_WGS84 : TransformStrategy {
@@ -105,9 +117,13 @@ namespace MightyLittleGeodesy {
             CrsCoordinate sourceCoordinate,
             CrsProjection targetCrsProjection
         ) {
-            var rt90Position = new RT90Position(sourceCoordinate.yLatitude, sourceCoordinate.xLongitude, sourceCoordinate.crsProjection);
-            var wgs84result = rt90Position.ToWGS84();
-            return CrsCoordinate.CreateCoordinatePoint(targetCrsProjection, wgs84result.Longitude, wgs84result.Latitude);
+            //var rt90Position = new RT90Position(sourceCoordinate.yLatitude, sourceCoordinate.xLongitude, sourceCoordinate.crsProjection);
+            //var wgs84result = rt90Position.ToWGS84();
+            //return CrsCoordinate.CreateCoordinatePoint(targetCrsProjection, wgs84result.Longitude, wgs84result.Latitude);
+            var gkProjection = new GaussKreuger();
+            gkProjection.swedish_params(sourceCoordinate.crsProjection);
+            LonLat lonLat = gkProjection.grid_to_geodetic(sourceCoordinate.yLatitude, sourceCoordinate.xLongitude);
+            return CrsCoordinate.CreateCoordinatePoint(targetCrsProjection, lonLat.xLongitude, lonLat.yLatitude);
         }
     }
 

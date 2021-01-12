@@ -27,6 +27,7 @@ using MightyLittleGeodesy.Classes;
 
 namespace MightyLittleGeodesy.Positions
 {
+    [System.Obsolete("Use CrsCoordinate instead of Position and its three subclasses")]
     public class SWEREF99Position : Position
     {
 
@@ -65,6 +66,7 @@ namespace MightyLittleGeodesy.Positions
         public SWEREF99Position(WGS84Position position, CrsProjection projection)
             : base(Grid.SWEREF99)
         {
+            // this below implementation has been copied to a TransformStrategy implementation
             GaussKreuger gkProjection = new GaussKreuger();
             gkProjection.swedish_params(projection);
             LonLat lonLat = gkProjection.geodetic_to_grid(position.Latitude, position.Longitude);
@@ -80,6 +82,7 @@ namespace MightyLittleGeodesy.Positions
         [System.Obsolete("Use GaussKreuger directly from the TransFormStrategy implementations instead of using this method")]
         public WGS84Position ToWGS84()
         {
+            // this below implementation has been copied to a TransformStrategy implementation
             GaussKreuger gkProjection = new GaussKreuger();
             gkProjection.swedish_params(Projection);
             LonLat lonLat = gkProjection.grid_to_geodetic(Latitude, Longitude); 

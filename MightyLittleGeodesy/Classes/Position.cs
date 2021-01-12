@@ -32,6 +32,7 @@ namespace MightyLittleGeodesy.Classes
         SWEREF99 = 2
     }
 
+    [System.Obsolete("Use CrsCoordinate instead of Position and its three subclasses")]
     public abstract class Position
     {
         public double Latitude { get; set; }

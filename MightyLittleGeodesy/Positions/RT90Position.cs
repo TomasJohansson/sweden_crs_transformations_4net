@@ -27,6 +27,7 @@ using MightyLittleGeodesy.Classes;
 
 namespace MightyLittleGeodesy.Positions
 {
+    [System.Obsolete("Use CrsCoordinate instead of Position and its three subclasses")]
     public class RT90Position : Position
     {
 
@@ -62,6 +63,7 @@ namespace MightyLittleGeodesy.Positions
         public RT90Position(WGS84Position position, CrsProjection rt90projection)
             : base(Grid.RT90)
         {
+            // this below implementation has been copied to a TransformStrategy implementation
             GaussKreuger gkProjection = new GaussKreuger();
             gkProjection.swedish_params(rt90projection);
             LonLat lonLat = gkProjection.geodetic_to_grid(position.Latitude, position.Longitude);
@@ -77,6 +79,7 @@ namespace MightyLittleGeodesy.Positions
         [System.Obsolete("Use GaussKreuger directly from the TransFormStrategy implementations instead of using this method")]
         public WGS84Position ToWGS84()
         {
+            // this below implementation has been copied to a TransformStrategy implementation
             GaussKreuger gkProjection = new GaussKreuger();
             gkProjection.swedish_params(Projection);
             LonLat lonLat = gkProjection.grid_to_geodetic(Latitude, Longitude); 

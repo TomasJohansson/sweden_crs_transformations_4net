@@ -30,6 +30,7 @@ namespace MightyLittleGeodesy.Positions
 
     using MightyLittleGeodesy.Classes;
 
+    [System.Obsolete("Use CrsCoordinate instead of Position and its three subclasses")]
     public class WGS84Position : Position
     {
         public enum WGS84Format
