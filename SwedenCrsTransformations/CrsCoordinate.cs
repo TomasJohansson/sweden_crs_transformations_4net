@@ -7,8 +7,8 @@ namespace SwedenCrsTransformations {
 
         public CrsProjection CrsProjection { get; private set; }
         
-        public double XLongitude { get; private set; }
-        public double YLatitude { get; private set; }
+        public double LongitudeX { get; private set; }
+        public double LatitudeY { get; private set; }
 
         private CrsCoordinate(
             CrsProjection crsProjection,
@@ -16,8 +16,8 @@ namespace SwedenCrsTransformations {
             double yLatitude
         ) {
             this.CrsProjection = crsProjection;
-            this.XLongitude = xLongitude;
-            this.YLatitude = yLatitude;
+            this.LongitudeX = xLongitude;
+            this.LatitudeY = yLatitude;
         }
 
         public CrsCoordinate Transform(CrsProjection targetCrsProjection) {
@@ -51,15 +51,15 @@ namespace SwedenCrsTransformations {
         public bool Equals(CrsCoordinate other) {
             return other != null &&
                    CrsProjection == other.CrsProjection &&
-                   XLongitude == other.XLongitude &&
-                   YLatitude == other.YLatitude;
+                   LongitudeX == other.LongitudeX &&
+                   LatitudeY == other.LatitudeY;
         }
 
         public override int GetHashCode() {
             int hashCode = 1147467376;
             hashCode = hashCode * -1521134295 + CrsProjection.GetHashCode();
-            hashCode = hashCode * -1521134295 + XLongitude.GetHashCode();
-            hashCode = hashCode * -1521134295 + YLatitude.GetHashCode();
+            hashCode = hashCode * -1521134295 + LongitudeX.GetHashCode();
+            hashCode = hashCode * -1521134295 + LatitudeY.GetHashCode();
             return hashCode;
         }
 
@@ -94,9 +94,9 @@ namespace SwedenCrsTransformations {
                 "{0} [ {1}: {2} , {3}: {4} , CRS: {5} ]",
                     nameof(CrsCoordinate),  // 0
                     xOrLongitude,           // 1
-                    coordinate.XLongitude,  // 2
+                    coordinate.LongitudeX,  // 2
                     yOrLatitude,            // 3
-                    coordinate.YLatitude,   // 4
+                    coordinate.LatitudeY,   // 4
                     crs                     // 5
             );
         }

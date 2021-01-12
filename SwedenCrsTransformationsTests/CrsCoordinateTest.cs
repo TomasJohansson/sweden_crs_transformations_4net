@@ -13,8 +13,8 @@ namespace SwedenCrsTransformationsTests {
             const double y = 60.0;
             CrsCoordinate crsCoordinate = CrsCoordinate.CreateCoordinate(epsgNumberForSweref99tm, x, y);
             Assert.AreEqual(epsgNumberForSweref99tm, crsCoordinate.CrsProjection.GetEpsgNumber());
-            Assert.AreEqual(x, crsCoordinate.XLongitude);
-            Assert.AreEqual(y, crsCoordinate.YLatitude);
+            Assert.AreEqual(x, crsCoordinate.LongitudeX);
+            Assert.AreEqual(y, crsCoordinate.LatitudeY);
         }
 
         [Test]
@@ -24,8 +24,8 @@ namespace SwedenCrsTransformationsTests {
             CrsCoordinate crsCoordinate = CrsCoordinate.CreateCoordinate(CrsProjection.sweref_99_tm, x, y);
             Assert.AreEqual(epsgNumberForSweref99tm, crsCoordinate.CrsProjection.GetEpsgNumber());
             Assert.AreEqual(CrsProjection.sweref_99_tm, crsCoordinate.CrsProjection);
-            Assert.AreEqual(x, crsCoordinate.XLongitude);
-            Assert.AreEqual(y, crsCoordinate.YLatitude);
+            Assert.AreEqual(x, crsCoordinate.LongitudeX);
+            Assert.AreEqual(y, crsCoordinate.LatitudeY);
         }
 
 
@@ -104,8 +104,8 @@ namespace SwedenCrsTransformationsTests {
         private string myCustomToStringMethod(CrsCoordinate coordinate) {
             return string.Format(
                 "{0} , {1}",
-                    coordinate.YLatitude,
-                    coordinate.XLongitude
+                    coordinate.LatitudeY,
+                    coordinate.LongitudeX
             );
         }
 
