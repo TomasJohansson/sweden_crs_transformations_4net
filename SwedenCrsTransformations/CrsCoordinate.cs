@@ -4,7 +4,7 @@
 * The library is based on the library 'MightyLittleGeodesy' (https://github.com/bjornsallarp/MightyLittleGeodesy/) 
 * which is also released with MIT.
 * For more information see the webpage below.
-* https://github.com/TomasJohansson/sweden_crs_transformations
+* https://github.com/TomasJohansson/sweden_crs_transformations_4net
 */
 
 using SwedenCrsTransformations.Transformation;

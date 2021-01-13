@@ -5,7 +5,7 @@
 The library is based on [MightyLittleGeodesy](https://github.com/bjornsallarp/MightyLittleGeodesy/) which in turn is based on a [javascript library by Arnold Andreasson](http://latlong.mellifica.se/).
 
 The main part of 'MightyLittleGeodesy' which has been kept is the mathematical calculations in the class 'GaussKreuger.cs'.
-(although some modifications have been done in the class [GaussKreuger](https://github.com/TomasJohansson/sweden_crs_transformations/blob/csharpe_SwedenCrsTransformations/SwedenCrsTransformations/MightyLittleGeodesy/Classes/GaussKreuger.cs))
+(although some modifications have been done in the class [GaussKreuger](https://github.com/TomasJohansson/sweden_crs_transformations_4net/blob/csharpe_SwedenCrsTransformations/SwedenCrsTransformations/MightyLittleGeodesy/Classes/GaussKreuger.cs))
 
 # NuGet release
 
