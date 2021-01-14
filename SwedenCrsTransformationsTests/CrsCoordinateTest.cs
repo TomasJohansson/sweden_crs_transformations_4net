@@ -43,7 +43,6 @@ namespace SwedenCrsTransformationsTests {
                 stockholmWGS84, // expected WGS84
                 stockholmSWEREF99TM.Transform(CrsProjection.wgs84) // actual/transformed WGS84
             );
-            if(true) return;
             AssertEqual(
                 stockholmWGS84, // expected WGS84
                 stockholmRT90.Transform(CrsProjection.wgs84) // actual/transformed WGS84
