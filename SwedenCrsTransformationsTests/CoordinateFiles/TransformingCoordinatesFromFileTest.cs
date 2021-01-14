@@ -119,9 +119,12 @@ namespace SwedenCrsTransformationsTests.CoordinateFiles {
         ) {
             var array = lineFromFile.Split(TransformingCoordinatesFromFileTest.columnSeparator);
             coordinateList = new List<CrsCoordinate> {
-                CrsCoordinate.CreateCoordinate(int.Parse(array[0]), double.Parse(array[1]), double.Parse(array[2])),
-                CrsCoordinate.CreateCoordinate(int.Parse(array[3]), double.Parse(array[4]), double.Parse(array[5])),
-                CrsCoordinate.CreateCoordinate(int.Parse(array[6]), double.Parse(array[7]), double.Parse(array[8]))
+                // Note that the order of the parameters in the input file (with its lines being used here)
+                // are in the order x/Longitude first, but the create method below takes the y/Latitude first
+                // (and therefore the parameters are not in the sequential order regarding the array indexes)
+                CrsCoordinate.CreateCoordinate(int.Parse(array[0]), double.Parse(array[2]), double.Parse(array[1])),
+                CrsCoordinate.CreateCoordinate(int.Parse(array[3]), double.Parse(array[5]), double.Parse(array[4])),
+                CrsCoordinate.CreateCoordinate(int.Parse(array[6]), double.Parse(array[8]), double.Parse(array[7]))
             };
         }
     }

@@ -21,7 +21,7 @@ namespace SwedenCrsTransformations.Transformation {
             var gkProjection = new GaussKreuger();
             gkProjection.swedish_params(targetCrsProjection);
             LonLat lonLat = gkProjection.geodetic_to_grid(sourceCoordinate.LatitudeY, sourceCoordinate.LongitudeX);
-            return CrsCoordinate.CreateCoordinate(targetCrsProjection, lonLat.LongitudeX, lonLat.LatitudeY);
+            return CrsCoordinate.CreateCoordinate(targetCrsProjection, lonLat.LatitudeY, lonLat.LongitudeX);
         }
     }
 

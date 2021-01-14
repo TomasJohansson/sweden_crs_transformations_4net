@@ -40,12 +40,12 @@ namespace SwedenCrsTransformations {
         /// </summary>
         private CrsCoordinate(
             CrsProjection crsProjection,
-            double xLongitude,
-            double yLatitude
+            double yLatitude,
+            double xLongitude
         ) {
             this.CrsProjection = crsProjection;
-            this.LongitudeX = xLongitude;
             this.LatitudeY = yLatitude;
+            this.LongitudeX = xLongitude;
         }
 
         /// <summary>
@@ -73,11 +73,11 @@ namespace SwedenCrsTransformations {
         /// <param name="yLatitude">the coordinate position value representing the latitude or Y or Northing</param>
         public static CrsCoordinate CreateCoordinate(
             int epsgNumber,
-            double xLongitude,
-            double yLatitude
+            double yLatitude,
+            double xLongitude
         ) {
             CrsProjection crsProjection = CrsProjectionFactory.GetCrsProjectionByEpsgNumber(epsgNumber);
-            return CreateCoordinate(crsProjection, xLongitude, yLatitude);
+            return CreateCoordinate(crsProjection, yLatitude, xLongitude);
         }
 
         /// <summary>
@@ -89,10 +89,10 @@ namespace SwedenCrsTransformations {
         /// <param name="yLatitude">the coordinate position value representing the latitude or Y or Northing</param>
         public static CrsCoordinate CreateCoordinate(
             CrsProjection crsProjection,
-            double xLongitude,
-            double yLatitude
+            double yLatitude,
+            double xLongitude
         ) {
-            return new CrsCoordinate(crsProjection, xLongitude, yLatitude);
+            return new CrsCoordinate(crsProjection, yLatitude, xLongitude);
         }
 
         // ----------------------------------------------------------------------------------------------------------------------
@@ -141,15 +141,15 @@ namespace SwedenCrsTransformations {
         private static string defaultToStringImplementation(CrsCoordinate coordinate) {
             string crs = coordinate.CrsProjection.ToString().ToUpper();
             bool isWgs84 =  coordinate.CrsProjection.IsWgs84();
-            string xOrLongitude = isWgs84 ? "Longitude" : "X";
             string yOrLatitude = isWgs84 ? "Latitude" : "Y";
+            string xOrLongitude = isWgs84 ? "Longitude" : "X";
             return string.Format(
                 "{0} [ {1}: {2} , {3}: {4} , CRS: {5} ]",
                     nameof(CrsCoordinate),  // 0
-                    xOrLongitude,           // 1
-                    coordinate.LongitudeX,  // 2
-                    yOrLatitude,            // 3
-                    coordinate.LatitudeY,   // 4
+                    yOrLatitude,            // 1
+                    coordinate.LatitudeY,   // 2
+                    xOrLongitude,           // 3
+                    coordinate.LongitudeX,  // 4
                     crs                     // 5
             );
         }
