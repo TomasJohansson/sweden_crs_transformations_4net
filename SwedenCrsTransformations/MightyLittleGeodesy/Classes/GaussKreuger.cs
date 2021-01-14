@@ -19,10 +19,10 @@
 // That original version has been modified below in this file below but not in a significant way (e.g. the mathematical calculations has not been modified).
 // The modifications:
 //      - changed the class from public to internal i.e. "public class GaussKreuger" ==> "internal class GaussKreuger"
-//      - a new 'LonLat' class is used as return type from two methods instead of returning an array "double[]"
+//      - a new 'LatLon' class is used as return type from two methods instead of returning an array "double[]"
 //              i.e. the two method signatures have changed as below:
-//              "public double[] geodetic_to_grid(double latitude, double longitude)"  ==> "public LonLat geodetic_to_grid(double latitude, double longitude)"
-//              "public double[] grid_to_geodetic(double x, double y)" ==> "public LonLat grid_to_geodetic(double yLatitude, double xLongitude)"
+//              "public double[] geodetic_to_grid(double latitude, double longitude)"  ==> "public LatLon geodetic_to_grid(double latitude, double longitude)"
+//              "public double[] grid_to_geodetic(double x, double y)" ==> "public LatLon grid_to_geodetic(double yLatitude, double xLongitude)"
 //      - renamed and changed order of the parameters for the method "grid_to_geodetic" (see the above line)
 //      - changed the method "swedish_params" to use an enum as parameter instead of string, i.e. the method signature changed as below:
 //              "public void swedish_params(string projection)" ==> "public void swedish_params(CrsProjection projection)"
@@ -249,7 +249,7 @@ namespace MightyLittleGeodesy.Classes
         }
 
         // Conversion from geodetic coordinates to grid coordinates.
-        public LonLat geodetic_to_grid(double latitude, double longitude) // public double[] geodetic_to_grid(double latitude, double longitude)
+        public LatLon geodetic_to_grid(double latitude, double longitude) // public double[] geodetic_to_grid(double latitude, double longitude)
         {
             double[] x_y = new double[2];
 
@@ -293,18 +293,18 @@ namespace MightyLittleGeodesy.Classes
                             false_easting;
             x_y[0] = Math.Round(x * 1000.0) / 1000.0;
             x_y[1] = Math.Round(y * 1000.0) / 1000.0;
-            var lonLat = new LonLat(x_y[1], x_y[0]);
-            return lonLat; //return x_y;
+            var latLon = new LatLon(x_y[0], x_y[1]);
+            return latLon;
         }
 
         // Conversion from grid coordinates to geodetic coordinates.
         
-        public LonLat grid_to_geodetic(double yLatitude, double xLongitude) // public double[] grid_to_geodetic(double yLatitude, double xLongitude)
+        public LatLon grid_to_geodetic(double yLatitude, double xLongitude) // public double[] grid_to_geodetic(double yLatitude, double xLongitude)
         {
             double[] lat_lon = new double[2];
             if (central_meridian == double.MinValue)
             {
-                return new LonLat(lat_lon[0], lat_lon[1]);
+                return new LatLon(lat_lon[1], lat_lon[0]);
             }
             // Prepare ellipsoid-based stuff.
             double e2 = flattening * (2.0 - flattening);
@@ -345,8 +345,8 @@ namespace MightyLittleGeodesy.Classes
                              Dstar * Math.Pow(Math.Sin(phi_star), 6));
             lat_lon[0] = lat_radian * 180.0 / Math.PI;
             lat_lon[1] = lon_radian * 180.0 / Math.PI;
-            var lonLat = new LonLat(lat_lon[1], lat_lon[0]);
-            return lonLat; // return lat_lon;
+            var latLon = new LatLon(lat_lon[0], lat_lon[1]);
+            return latLon;
         }
 
 
