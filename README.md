@@ -22,7 +22,9 @@ For example if you want to transform between two SWEREF99 systems, then you have
 See a code example further down below which compares the API for 'MightyLittleGeodesy' with this library 'sweden_crs_transformations_4net'.  
 
 # Ports to other programming languages
-Currently I have ported this library to the Dart programming language in the github repository [sweden_crs_transformations_4dart](https://github.com/TomasJohansson/sweden_crs_transformations_4dart)
+Currently I have ported this C#.NET library to the following programming languages and github repositories:   
+Dart: [sweden_crs_transformations_4dart](https://github.com/TomasJohansson/sweden_crs_transformations_4dart)   
+TypeScript: [sweden_crs_transformations_4typescript](https://github.com/TomasJohansson/sweden_crs_transformations_4typescript)   
 
 # Code example
 Please note that the API is very different from the originally forked library.  
