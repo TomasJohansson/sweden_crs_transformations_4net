@@ -1,4 +1,6 @@
 ﻿using SwedenCrsTransformations;
+using System;
+using System.Collections.Generic;
 
 namespace MightyLittleGeodesy {
     internal class GaussKreugerFactory {
@@ -9,14 +11,23 @@ namespace MightyLittleGeodesy {
             return _gaussKreugerFactory;
         }
 
-        private GaussKreugerFactory() {
-        }
+        private readonly IDictionary<CrsProjection, GaussKreuger>
+            mapWithAllGaussKreugers = new Dictionary<CrsProjection, GaussKreuger>();
 
+        private GaussKreugerFactory() {
+            IList<CrsProjection> crsProjections = CrsProjectionFactory.GetAllCrsProjections();
+            foreach(CrsProjection crsProjection in crsProjections) {
+                GaussKreugerParameterObject gaussKreugerParameterObject = new GaussKreugerParameterObject(crsProjection);
+                GaussKreuger gaussKreuger = GaussKreuger.create(gaussKreugerParameterObject);
+                mapWithAllGaussKreugers.Add(crsProjection, gaussKreuger);
+            }        
+        }
     
         internal GaussKreuger getGaussKreuger(CrsProjection crsProjection) {
-            // TODO cache the 'GaussKreuger' instances instead of creating new instances every time in this method
-            GaussKreuger gaussKreuger = GaussKreuger.create(new GaussKreugerParameterObject(crsProjection));
-            return gaussKreuger;
+            if(mapWithAllGaussKreugers.ContainsKey(crsProjection)) {
+                return mapWithAllGaussKreugers[crsProjection];
+            }
+            throw new ArgumentException("Could not find GaussKreuger for crsProjection " + crsProjection);
         }
 
     }
