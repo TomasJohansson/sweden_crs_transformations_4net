@@ -13,8 +13,7 @@ namespace MightyLittleGeodesy {
   
         [SetUp]
         public void setUp() {
-            gaussKreuger = new GaussKreuger();
-            gaussKreuger.swedish_params(SwedenCrsTransformations.CrsProjection.sweref_99_tm);
+            gaussKreuger = GaussKreugerFactory.getInstance().getGaussKreuger(SwedenCrsTransformations.CrsProjection.sweref_99_tm);
         }
   
         [Test]
