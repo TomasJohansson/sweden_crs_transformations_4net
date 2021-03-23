@@ -9,7 +9,7 @@
 * https://github.com/TomasJohansson/sweden_crs_transformations_4net
 */
 
-using MightyLittleGeodesy.Classes;
+using MightyLittleGeodesy;
 
 namespace SwedenCrsTransformations.Transformation {
     internal class TransformStrategy_from_SWEREF99_or_RT90_to_WGS84 : TransformStrategy {

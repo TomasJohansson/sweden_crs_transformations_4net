@@ -9,7 +9,7 @@
 * https://github.com/TomasJohansson/sweden_crs_transformations_4net
 */
 
-namespace MightyLittleGeodesy.Classes {
+namespace MightyLittleGeodesy {
 
     // This class was not part of the original 'MightyLittleGeodesy'
     // but the class 'GaussKreuger' has later been changed to return this 'LatLon' instead of array 'double[]'

@@ -63,7 +63,7 @@ using System;
 using static SwedenCrsTransformations.CrsProjection;
 using SwedenCrsTransformations;
 
-namespace MightyLittleGeodesy.Classes
+namespace MightyLittleGeodesy
 {
     /*
      * .NET-implementation of "Gauss Conformal Projection 
