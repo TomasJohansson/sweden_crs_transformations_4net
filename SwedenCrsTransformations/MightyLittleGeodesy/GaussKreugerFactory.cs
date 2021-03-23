@@ -15,11 +15,7 @@ namespace MightyLittleGeodesy {
     
         internal GaussKreuger getGaussKreuger(CrsProjection crsProjection) {
             // TODO cache the 'GaussKreuger' instances instead of creating new instances every time in this method
-
-            GaussKreuger gaussKreuger = new GaussKreuger();
-            // TODO make the 'GaussKreuger' immutable, e.g. provide the projection as parameter to the above constructor instead of the below method
-            gaussKreuger.swedish_params(crsProjection);
-        
+            GaussKreuger gaussKreuger = GaussKreuger.create(crsProjection);
             return gaussKreuger;
         }
 

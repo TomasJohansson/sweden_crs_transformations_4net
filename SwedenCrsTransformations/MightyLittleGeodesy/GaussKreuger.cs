@@ -82,6 +82,15 @@ namespace MightyLittleGeodesy
      */
     internal class GaussKreuger
     {
+        private GaussKreuger(CrsProjection crsProjection) {
+            this.swedish_params(crsProjection);
+        }
+        public static GaussKreuger create(CrsProjection crsProjection) {
+            GaussKreuger gaussKreuger = new GaussKreuger(crsProjection);
+            return gaussKreuger;
+        }
+        // TODO make the fields readonly (and private), but currently they are mutated through the method
+        // 'swedish_params' which at least now has been made into a private method
         double axis; // Semi-major axis of the ellipsoid.
         double flattening; // Flattening of the ellipsoid.
         double central_meridian; // Central meridian for the projection.    
@@ -95,7 +104,7 @@ namespace MightyLittleGeodesy
         // Bessel-variants should only be used if lat/long are given as
         // RT90-lat/long based on the Bessel ellipsoide (from old maps).
         // Parameter: projection (string). Must match if-statement.
-        public void swedish_params(CrsProjection projection)
+        private void swedish_params(CrsProjection projection)
         {
             // RT90 parameters, GRS 80 ellipsoid.
             if (projection == rt90_7_5_gon_v)
