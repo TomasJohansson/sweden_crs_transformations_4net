@@ -28,6 +28,9 @@
 //              "public void swedish_params(string projection)" ==> "public void swedish_params(CrsProjection projection)"
 //      - now the if/else statements in the implementation of the above method "swedish_params" compares with the enum values for CrsProjection instead of comparing with string literals
 //      - removed the if/else statements in the above method "swedish_params" which used the projection strings beginning with "bessel_rt90"
+//      - updated the GaussKreuger class to be immutable with readonly fields, and the methods that 
+//          previously initialized (mutated) the fields have instead been moved to another class and is provided as a 
+//          parameter object to the constructor which copies the values into the readonly fields.   
 // 
 // For more details about exactly what has changed in this GaussKreuger class, you can also use a git client with "compare" or "blame" features to see the changes)
 
@@ -80,23 +83,18 @@ namespace MightyLittleGeodesy
      * Some modifications in this file were made 2021 by Tomas Johansson.
      * For details about changes, you should be able to use the github repository to see the git history where you found this source code file.
      */
-    internal class GaussKreuger
-    {
-        private GaussKreuger(CrsProjection crsProjection) {
+
+    internal class GaussKreugerParameterObject {
+        internal double axis; // Semi-major axis of the ellipsoid.
+        internal double flattening; // Flattening of the ellipsoid.
+        internal double central_meridian; // Central meridian for the projection.    
+        internal double scale; // Scale on central meridian.
+        internal double false_northing; // Offset for origo.
+        internal double false_easting; // Offset for origo.
+
+        internal GaussKreugerParameterObject(CrsProjection crsProjection) {
             this.swedish_params(crsProjection);
         }
-        public static GaussKreuger create(CrsProjection crsProjection) {
-            GaussKreuger gaussKreuger = new GaussKreuger(crsProjection);
-            return gaussKreuger;
-        }
-        // TODO make the fields readonly (and private), but currently they are mutated through the method
-        // 'swedish_params' which at least now has been made into a private method
-        double axis; // Semi-major axis of the ellipsoid.
-        double flattening; // Flattening of the ellipsoid.
-        double central_meridian; // Central meridian for the projection.    
-        double scale; // Scale on central meridian.
-        double false_northing; // Offset for origo.
-        double false_easting; // Offset for origo.
 
         // Parameters for RT90 and SWEREF99TM.
         // Note: Parameters for RT90 are choosen to eliminate the 
@@ -256,6 +254,29 @@ namespace MightyLittleGeodesy
             false_northing = 0.0;
             false_easting = 150000.0;
         }
+    }    
+
+    internal class GaussKreuger
+    {
+        // Immutable class with all fields 'readonly'
+        private readonly double axis; // Semi-major axis of the ellipsoid.
+        private readonly double flattening; // Flattening of the ellipsoid.
+        private readonly double central_meridian; // Central meridian for the projection.    
+        private readonly double scale; // Scale on central meridian.
+        private readonly double false_northing; // Offset for origo.
+        private readonly double false_easting; // Offset for origo.
+        private GaussKreuger(GaussKreugerParameterObject gaussKreugerParameterObject) {
+            this.axis = gaussKreugerParameterObject.axis;
+            this.flattening = gaussKreugerParameterObject.flattening;
+            this.central_meridian = gaussKreugerParameterObject.central_meridian;
+            this.scale = gaussKreugerParameterObject.scale;
+            this.false_northing = gaussKreugerParameterObject.false_northing;
+            this.false_easting = gaussKreugerParameterObject.false_easting;
+        }
+        public static GaussKreuger create(GaussKreugerParameterObject gaussKreugerParameterObject) {
+            GaussKreuger gaussKreuger = new GaussKreuger(gaussKreugerParameterObject);
+            return gaussKreuger;
+        }
 
         // Conversion from geodetic coordinates to grid coordinates.
         public LatLon geodetic_to_grid(double latitude, double longitude) // public double[] geodetic_to_grid(double latitude, double longitude)
@@ -371,3 +392,4 @@ namespace MightyLittleGeodesy
 
     }
 }
+
