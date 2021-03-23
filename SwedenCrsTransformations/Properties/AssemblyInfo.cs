@@ -61,3 +61,7 @@ using System.Security;
 // [assembly: AssemblyVersion("1.0.*")]
 [assembly: AssemblyVersion("1.0.0.0")]
 [assembly: AssemblyFileVersion("1.0.0.0")]
+
+// The purpose of the below configuration is to make it possible to test "internal" (i.e. non-public) classes
+// https://stackoverflow.com/questions/42810705/visual-studio-2017-and-the-new-csproj-internalsvisibleto
+[assembly: System.Runtime.CompilerServices.InternalsVisibleTo("SwedenCrsTransformationsTests")]
