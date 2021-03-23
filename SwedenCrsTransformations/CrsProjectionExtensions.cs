@@ -64,6 +64,13 @@ namespace SwedenCrsTransformations {
             int epsgNumber = crsProjection.GetEpsgNumber();
             return epsgLowerValueForRT90 <= epsgNumber && epsgNumber <= epsgUpperValueForRT90;
         }
-    }
 
+        public static CrsCoordinate CreateCoordinate(
+            this CrsProjection crsProjection,
+            double yLatitude,
+            double xLongitude
+        ) {
+            return CrsCoordinate.CreateCoordinate(crsProjection, yLatitude, xLongitude);
+        }
+    }
 }

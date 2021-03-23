@@ -86,5 +86,16 @@ namespace SwedenCrsTransformationsTests {
             }
         }
 
+        [Test]
+        public void CreateCoordinate() {
+            const double x = 22.5;
+            const double y = 62.5;
+            CrsCoordinate crsCoordinate = CrsProjection.sweref_99_tm.CreateCoordinate(y, x);
+            Assert.AreEqual(epsgNumberForSweref99tm, crsCoordinate.CrsProjection.GetEpsgNumber());
+            Assert.AreEqual(CrsProjection.sweref_99_tm, crsCoordinate.CrsProjection);
+            const double delta = 0.000001;
+            Assert.AreEqual(x, crsCoordinate.LongitudeX, delta);
+            Assert.AreEqual(y, crsCoordinate.LatitudeY, delta);
+        }
     }
 }
