@@ -22,6 +22,15 @@ namespace SwedenCrsTransformations {
     /// See also <see cref="CrsProjection"/>
     public static class CrsProjectionFactory {
     
+        private readonly static IDictionary<int, CrsProjection>
+            mapWithAllCrsProjections = new Dictionary<int, CrsProjection>();
+        static CrsProjectionFactory() {
+            IList<CrsProjection> crsProjections = GetAllCrsProjections();
+            foreach(CrsProjection crsProjection in crsProjections) {
+                mapWithAllCrsProjections.Add(crsProjection.GetEpsgNumber(), crsProjection);
+            }  
+        }
+
         /// <summary>
         /// Factory method creating an enum 'CrsProjection' by its number (EPSG) value.
         /// </summary>
@@ -33,11 +42,8 @@ namespace SwedenCrsTransformations {
         /// </param>
         /// See also <see cref="CrsProjection"/>        
         public static CrsProjection GetCrsProjectionByEpsgNumber(int epsg) {
-            var values = GetAllCrsProjections();
-            foreach(CrsProjection value in values) {
-                if(value.GetEpsgNumber() == epsg) {
-                    return value;
-                }
+            if(mapWithAllCrsProjections.ContainsKey(epsg)) {
+                return mapWithAllCrsProjections[epsg];
             }
             throw new ArgumentException("Could not find CrsProjection for EPSG " + epsg);
         }
