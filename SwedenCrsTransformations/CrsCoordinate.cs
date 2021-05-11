@@ -139,7 +139,7 @@ namespace SwedenCrsTransformations {
         private static Func<CrsCoordinate, string> _toStringImplementation = defaultToStringImplementation;
         
         private static string defaultToStringImplementation(CrsCoordinate coordinate) {
-            string crs = coordinate.CrsProjection.ToString().ToUpper();
+            string crs = coordinate.CrsProjection.GetAsString();
             bool isWgs84 =  coordinate.CrsProjection.IsWgs84();
             string yOrLatitude = isWgs84 ? "Latitude" : "Y";
             string xOrLongitude = isWgs84 ? "Longitude" : "X";

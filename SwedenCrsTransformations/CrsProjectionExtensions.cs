@@ -72,5 +72,18 @@ namespace SwedenCrsTransformations {
         ) {
             return CrsCoordinate.CreateCoordinate(crsProjection, yLatitude, xLongitude);
         }
+
+        // public static string ToString(this CrsProjection crsProjection)
+        public static string GetAsString(this CrsProjection crsProjection)
+        {
+            // the enum "ToString()" is the name of the enum
+            // for example "sweref_99_tm"
+            // for the enum 'CrsProjection.sweref_99_tm'
+            // so when using 'ToString().ToUpper()' it becomes "SWEREF_99_TM"
+            // TODO append EPSG suffix, but it should also  affect the ToString of Coordinate and its tests
+            // and also remember to update the example code with output e.g. in the page 'README.md'
+            // (with output from the method 'Example()' in file 'CrsCoordinateTest.cs' )
+            return crsProjection.ToString().ToUpper();  
+        }
     }
 }

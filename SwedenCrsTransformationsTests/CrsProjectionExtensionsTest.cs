@@ -97,5 +97,13 @@ namespace SwedenCrsTransformationsTests {
             Assert.AreEqual(x, crsCoordinate.LongitudeX, delta);
             Assert.AreEqual(y, crsCoordinate.LatitudeY, delta);
         }
+
+        [Test]
+        public void GetAsString() {
+            Assert.AreEqual(
+                "SWEREF_99_TM", //"SWEREF_99_TM(EPSG:3006)", // TODO a string like this instead
+                CrsProjection.sweref_99_tm.GetAsString()
+            );
+        }
     }
 }
