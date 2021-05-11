@@ -101,8 +101,23 @@ namespace SwedenCrsTransformationsTests {
         [Test]
         public void GetAsString() {
             Assert.AreEqual(
-                "SWEREF_99_TM", //"SWEREF_99_TM(EPSG:3006)", // TODO a string like this instead
+                "SWEREF_99_TM(EPSG:3006)",
                 CrsProjection.sweref_99_tm.GetAsString()
+            );
+
+            Assert.AreEqual(
+                "WGS84(EPSG:4326)",
+                CrsProjection.wgs84.GetAsString()
+            );
+
+            Assert.AreEqual(
+                "SWEREF_99_14_15(EPSG:3012)",
+                CrsProjection.sweref_99_14_15.GetAsString()
+            );
+
+            Assert.AreEqual(
+                "RT90_0_0_GON_V(EPSG:3022)",
+                CrsProjection.rt90_0_0_gon_v.GetAsString()
             );
         }
     }
