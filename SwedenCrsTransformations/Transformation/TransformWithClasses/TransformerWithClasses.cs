@@ -10,7 +10,7 @@
 */
 using System;
 
-namespace SwedenCrsTransformations.Transformation.Transformer1 {
+namespace SwedenCrsTransformations.Transformation.TransformWithClasses {
     internal class TransformerWithClasses : TransformStrategy {
 
         // Implementations of transformations from WGS84:

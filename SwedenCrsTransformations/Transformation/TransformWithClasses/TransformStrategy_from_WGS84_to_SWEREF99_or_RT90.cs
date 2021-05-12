@@ -11,7 +11,7 @@
 
 using MightyLittleGeodesy;
 
-namespace SwedenCrsTransformations.Transformation.Transformer1 {
+namespace SwedenCrsTransformations.Transformation.TransformWithClasses {
     internal class TransformStrategy_from_WGS84_to_SWEREF99_or_RT90 : TransformStrategy {
         // Precondition: sourceCoordinate must be CRS WGS84
         public CrsCoordinate Transform(

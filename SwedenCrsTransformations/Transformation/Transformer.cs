@@ -12,8 +12,8 @@
 namespace SwedenCrsTransformations.Transformation {
     internal class Transformer {
 
-        //private static TransformStrategy transformer = new SwedenCrsTransformations.Transformation.Transformer1.TransformerWithClasses();
-        private static TransformStrategy transformer = new SwedenCrsTransformations.Transformation.Transformer2.TransformerWithMethods();
+        //private static TransformStrategy transformer = new SwedenCrsTransformations.Transformation.TransformWithClasses.TransformerWithClasses();
+        private static TransformStrategy transformer = new SwedenCrsTransformations.Transformation.TransformWithMethods.TransformerWithMethods();
 
         public static CrsCoordinate Transform(CrsCoordinate sourceCoordinate, CrsProjection targetCrsProjection) {
             return transformer.Transform(sourceCoordinate, targetCrsProjection);

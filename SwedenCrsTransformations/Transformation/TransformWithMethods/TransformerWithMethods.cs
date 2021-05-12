@@ -8,10 +8,10 @@
 * For more information see the webpage below.
 * https://github.com/TomasJohansson/sweden_crs_transformations_4net
 */
-using SwedenCrsTransformations.Transformation.Transformer1;
+using SwedenCrsTransformations.Transformation.TransformWithClasses;
 using System;
 
-namespace SwedenCrsTransformations.Transformation.Transformer2 {
+namespace SwedenCrsTransformations.Transformation.TransformWithMethods {
     internal class TransformerWithMethods : TransformStrategy {
 
         public CrsCoordinate Transform(
