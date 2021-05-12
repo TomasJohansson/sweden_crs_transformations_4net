@@ -12,6 +12,7 @@ using SwedenCrsTransformations.Transformation.TransformWithClasses;
 using System;
 
 namespace SwedenCrsTransformations.Transformation.TransformWithMethods {
+    // Regarding the purpose of all 'Transform*' types, see the comments at the bottom of the file with the 'Transformer'
     internal class TransformerWithMethods : TransformStrategy {
 
         public CrsCoordinate Transform(
@@ -55,13 +56,12 @@ namespace SwedenCrsTransformations.Transformation.TransformWithMethods {
             throw new ArgumentException(string.Format("Unhandled source/target projection transformation: {0} ==> {1}", sourceCoordinate.CrsProjection, targetCrsProjection));
         }
 
-        // TODO add comments about why this class is implemented as it is, and why there are two
-        // classes in parallell directories doing the same thing but with different implementations ...
+        // Regarding the purpose of all 'Transform*' types, see the comments at the bottom of the file with the 'Transformer'
 
-        // Note that the three classes below are NOT below typed as their interface TransformStrategy
-        // since they can not be implemented with a true polymorphic interface anyway i.e. regarding Liskov substitution principle.
-        // Therefore the below three object is not using 'Strategy' as part of the variable names neither (even though the classes themselves are doing so)
-        // TODO write more about this reasoning somewhere ...
+
+        //Note that the three variables below are NOT typed with their common interface TransformStrategy
+        //since they can not be implemented with a true polymorphic interface anyway i.e.regarding Liskov substitution principle.
+        //Therefore the below three object is not using 'Strategy' as part of the variable names neither(even though the classes themselves are doing so)
 
         private static readonly TransformStrategy_from_WGS84_to_SWEREF99_or_RT90 _transformer_from_WGS84_to_SWEREF99_or_RT90 = new TransformStrategy_from_WGS84_to_SWEREF99_or_RT90();
 

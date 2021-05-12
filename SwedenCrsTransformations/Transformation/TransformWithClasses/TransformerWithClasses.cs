@@ -11,6 +11,7 @@
 using System;
 
 namespace SwedenCrsTransformations.Transformation.TransformWithClasses {
+    // Regarding the purpose of all 'Transform*' types, see the comments at the bottom of the file with the 'Transformer'
     internal class TransformerWithClasses : TransformStrategy {
 
         // Implementations of transformations from WGS84:
@@ -64,6 +65,12 @@ namespace SwedenCrsTransformations.Transformation.TransformWithClasses {
 
             if (_transFormStrategy != null)
             {
+                // Please note that this is NOT a proper way of handling polymorphic interfaces 
+                // as with the Liskov substitution principle.
+                // The different classes implementing the interface "TransformStrategy" can only
+                // handle certain parameters and the parameters have above been used for choosing
+                // which "_transFormStrategy" to be used below.
+                // Then why is it implemented like this? Well, the reason is explained in the bottom of the file for 'Transformer'
                 return _transFormStrategy.Transform(sourceCoordinate, targetCrsProjection);
             }
 

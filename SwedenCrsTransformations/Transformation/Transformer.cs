@@ -20,8 +20,15 @@ namespace SwedenCrsTransformations.Transformation {
 
         public static CrsCoordinate Transform(CrsCoordinate sourceCoordinate, CrsProjection targetCrsProjection) {
             return transformer.Transform(sourceCoordinate, targetCrsProjection);
-       }
+        }
 
     }
 
 }
+/*
+TODO more comments here about why there are different Transform* classes and why they are implemented as they are
+in parallell directories doing the same thing but with different implementations ...
+('TransformerWithClasses' and 'TransformerWithMethods')
+NOTE: The above two mentioned classes are refering to this place i.e. the bottom of the file with the 'Transformer'
+so add and keep the explaining comments here...
+*/
