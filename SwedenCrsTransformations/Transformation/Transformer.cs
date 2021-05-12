@@ -9,11 +9,14 @@
 * https://github.com/TomasJohansson/sweden_crs_transformations_4net
 */
 
+using SwedenCrsTransformations.Transformation.TransformWithClasses;
+using SwedenCrsTransformations.Transformation.TransformWithMethods;
+
 namespace SwedenCrsTransformations.Transformation {
     internal class Transformer {
 
-        //private static TransformStrategy transformer = new SwedenCrsTransformations.Transformation.TransformWithClasses.TransformerWithClasses();
-        private static TransformStrategy transformer = new SwedenCrsTransformations.Transformation.TransformWithMethods.TransformerWithMethods();
+        //private static TransformStrategy transformer = new TransformerWithClasses();
+        private static TransformStrategy transformer = new TransformerWithMethods();
 
         public static CrsCoordinate Transform(CrsCoordinate sourceCoordinate, CrsProjection targetCrsProjection) {
             return transformer.Transform(sourceCoordinate, targetCrsProjection);
