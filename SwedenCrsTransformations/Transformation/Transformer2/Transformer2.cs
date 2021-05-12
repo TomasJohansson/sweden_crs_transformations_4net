@@ -8,21 +8,11 @@
 * For more information see the webpage below.
 * https://github.com/TomasJohansson/sweden_crs_transformations_4net
 */
-using SwedenCrsTransformations.Transformation.Transformer1;
+using MightyLittleGeodesy;
 using System;
 
 namespace SwedenCrsTransformations.Transformation.Transformer2 {
     internal class Transformer2 : TransformStrategy {
-
-        // Implementations of transformations from WGS84:
-        private static readonly TransformStrategy _transformStrategy_from_WGS84_to_SWEREF99_or_RT90 = new TransformStrategy_from_WGS84_to_SWEREF99_or_RT90();
-
-        // Implementations of transformations to WGS84:
-        private static readonly TransformStrategy _transformStrategy_from_SWEREF99_or_RT90_to_WGS84 = new TransformStrategy_from_SWEREF99_or_RT90_to_WGS84();
-
-        // Implementation first transforming to WGS84 and then to the real target:
-        private static readonly TransformStrategy _transFormStrategy_From_Sweref99OrRT90_to_WGS84_andThenToRealTarget = new TransFormStrategy_From_Sweref99OrRT90_to_WGS84_andThenToRealTarget();
-
 
         public CrsCoordinate Transform(
             CrsCoordinate sourceCoordinate,
@@ -69,7 +59,9 @@ namespace SwedenCrsTransformations.Transformation.Transformer2 {
             CrsProjection targetCrsProjection
         )
         {
-            return _transformStrategy_from_WGS84_to_SWEREF99_or_RT90.Transform(sourceCoordinate, targetCrsProjection);
+            var gkProjection = GaussKreugerFactory.getInstance().getGaussKreuger(targetCrsProjection);
+            LatLon latLon = gkProjection.geodetic_to_grid(sourceCoordinate.LatitudeY, sourceCoordinate.LongitudeX);
+            return CrsCoordinate.CreateCoordinate(targetCrsProjection, latLon.LatitudeY, latLon.LongitudeX);
         }
 
         private CrsCoordinate method_transformStrategy_from_SWEREF99_or_RT90_to_WGS84(
@@ -77,7 +69,9 @@ namespace SwedenCrsTransformations.Transformation.Transformer2 {
             CrsProjection targetCrsProjection
         )
         {
-            return _transformStrategy_from_SWEREF99_or_RT90_to_WGS84.Transform(sourceCoordinate, targetCrsProjection);
+            var gkProjection = GaussKreugerFactory.getInstance().getGaussKreuger(sourceCoordinate.CrsProjection);
+            LatLon latLon = gkProjection.grid_to_geodetic(sourceCoordinate.LatitudeY, sourceCoordinate.LongitudeX);
+            return CrsCoordinate.CreateCoordinate(targetCrsProjection, latLon.LatitudeY, latLon.LongitudeX);
         }
 
         private CrsCoordinate method_transFormStrategy_From_Sweref99OrRT90_to_WGS84_andThenToRealTarget(
@@ -85,7 +79,8 @@ namespace SwedenCrsTransformations.Transformation.Transformer2 {
             CrsProjection targetCrsProjection
         )
         {
-            return _transFormStrategy_From_Sweref99OrRT90_to_WGS84_andThenToRealTarget.Transform(sourceCoordinate, targetCrsProjection);
+            var wgs84coordinate = Transformer.Transform(sourceCoordinate, CrsProjection.wgs84);
+            return Transformer.Transform(wgs84coordinate, targetCrsProjection);
         }
     }
 }
