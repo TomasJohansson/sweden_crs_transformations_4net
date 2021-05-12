@@ -96,5 +96,27 @@ namespace SwedenCrsTransformationsTests
             });
             //Assert.IsNotNull(exceptionThrown); // not needed
         }
+
+        
+        [Test]
+        public void GetAllCrsProjections_verify_the_sort_order() {
+            var allProjections = CrsProjectionFactory.GetAllCrsProjections();
+            Assert.AreEqual(allProjections.Count, totalNumberOfProjections); // 20 ( 1 + 13 + 6 )
+
+            // only the first (wgs84, with EPSG 4326) above is "special" but the order of the rest (sweref99 and rt90 projections)
+            // is that they should be ordered by EPSG numbers from 3006 to 3024
+            // i.e. EPSG 3006 for the second item (after the above wgs84) and EPSG 3024 for the last item in the array
+            Assert.AreEqual(CrsProjection.wgs84, allProjections[0]);
+
+            int epsgNumber = 3006; // sweref_99_tm
+            for (int i = 1; i < allProjections.Count; i++) {
+                var proj = allProjections[i];
+                Assert.AreEqual(proj.GetEpsgNumber(), epsgNumber);
+                epsgNumber++;
+            }
+            // The above loop is doing assertions as below (below are the first and last values iterade in the above loop)
+            Assert.AreEqual(3006, allProjections[1].GetEpsgNumber()); // 3006 ==> CrsProjection.sweref_99_tm
+            Assert.AreEqual(3024, allProjections[allProjections.Count - 1].GetEpsgNumber()); // 3024 ==> CrsProjection.rt90_5_0_gon_o
+        }
     }
 }
