@@ -30,8 +30,6 @@ namespace SwedenCrsTransformations.Transformation.Transformer2 {
         ) {
             if (sourceCoordinate.CrsProjection == targetCrsProjection) return sourceCoordinate;
 
-            TransformStrategy _transFormStrategy = null;
-
             // Transform FROM wgs84:
             if (
                 sourceCoordinate.CrsProjection.IsWgs84()
@@ -39,7 +37,7 @@ namespace SwedenCrsTransformations.Transformation.Transformer2 {
                 (targetCrsProjection.IsSweref() || targetCrsProjection.IsRT90())
             )
             {
-                _transFormStrategy = _transformStrategy_from_WGS84_to_SWEREF99_or_RT90;
+                return method_transformStrategy_from_WGS84_to_SWEREF99_or_RT90(sourceCoordinate, targetCrsProjection);
             }
 
             // Transform TO wgs84:
@@ -49,7 +47,7 @@ namespace SwedenCrsTransformations.Transformation.Transformer2 {
                 (sourceCoordinate.CrsProjection.IsSweref() || sourceCoordinate.CrsProjection.IsRT90())
             )
             {
-                _transFormStrategy = _transformStrategy_from_SWEREF99_or_RT90_to_WGS84;
+                return method_transformStrategy_from_SWEREF99_or_RT90_to_WGS84(sourceCoordinate, targetCrsProjection);
             }
 
             // Transform between two non-wgs84:
@@ -60,15 +58,34 @@ namespace SwedenCrsTransformations.Transformation.Transformer2 {
             )
             {
                 // the only direct transform supported is to/from WGS84, so therefore first transform to wgs84
-                _transFormStrategy = _transFormStrategy_From_Sweref99OrRT90_to_WGS84_andThenToRealTarget;
-            }
-
-            if (_transFormStrategy != null)
-            {
-                return _transFormStrategy.Transform(sourceCoordinate, targetCrsProjection);
+                return method_transFormStrategy_From_Sweref99OrRT90_to_WGS84_andThenToRealTarget(sourceCoordinate, targetCrsProjection);
             }
 
             throw new ArgumentException(string.Format("Unhandled source/target projection transformation: {0} ==> {1}", sourceCoordinate.CrsProjection, targetCrsProjection));
+        }
+
+        private CrsCoordinate method_transformStrategy_from_WGS84_to_SWEREF99_or_RT90(
+            CrsCoordinate sourceCoordinate,
+            CrsProjection targetCrsProjection
+        )
+        {
+            return _transformStrategy_from_WGS84_to_SWEREF99_or_RT90.Transform(sourceCoordinate, targetCrsProjection);
+        }
+
+        private CrsCoordinate method_transformStrategy_from_SWEREF99_or_RT90_to_WGS84(
+            CrsCoordinate sourceCoordinate,
+            CrsProjection targetCrsProjection
+        )
+        {
+            return _transformStrategy_from_SWEREF99_or_RT90_to_WGS84.Transform(sourceCoordinate, targetCrsProjection);
+        }
+
+        private CrsCoordinate method_transFormStrategy_From_Sweref99OrRT90_to_WGS84_andThenToRealTarget(
+            CrsCoordinate sourceCoordinate,
+            CrsProjection targetCrsProjection
+        )
+        {
+            return _transFormStrategy_From_Sweref99OrRT90_to_WGS84_andThenToRealTarget.Transform(sourceCoordinate, targetCrsProjection);
         }
     }
 }
