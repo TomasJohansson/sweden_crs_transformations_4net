@@ -82,10 +82,8 @@ namespace SwedenCrsTransformationsTests {
             string messageToDisplayIfAssertionFails = "crsCoordinate_1: " + crsCoordinate_1 + " , crsCoordinate_2 : " + crsCoordinate_2;
             Assert.AreEqual(crsCoordinate_1.CrsProjection, crsCoordinate_2.CrsProjection, messageToDisplayIfAssertionFails);
             double maxDifference = crsCoordinate_1.CrsProjection.IsWgs84() ? 0.000007 : 0.5; // the other (i.e. non-WGS84) value is using meter as unit, so 0.5 is just five decimeters difference
-            double diffLongitude = Math.Abs((crsCoordinate_1.LongitudeX - crsCoordinate_2.LongitudeX));
-            double diffLatitude = Math.Abs((crsCoordinate_1.LatitudeY - crsCoordinate_2.LatitudeY));            
-            Assert.IsTrue(diffLongitude < maxDifference, messageToDisplayIfAssertionFails);
-            Assert.IsTrue(diffLatitude < maxDifference, messageToDisplayIfAssertionFails);
+            Assert.That(crsCoordinate_1.LongitudeX, Is.EqualTo(crsCoordinate_2.LongitudeX).Within(maxDifference), messageToDisplayIfAssertionFails);
+            Assert.That(crsCoordinate_1.LatitudeY, Is.EqualTo(crsCoordinate_2.LatitudeY).Within(maxDifference), messageToDisplayIfAssertionFails);
         }
 
         
