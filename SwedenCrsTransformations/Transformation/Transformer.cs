@@ -14,6 +14,9 @@ using System;
 namespace SwedenCrsTransformations.Transformation {
     internal class Transformer {
 
+        private static TransformStrategy transformer = new SwedenCrsTransformations.Transformation.Transformer1.Transformer1();
+        //private static TransformStrategy transformer = new SwedenCrsTransformations.Transformation.Transformer2.Transformer2();
+
         // Implementations of transformations from WGS84:
         private static readonly TransformStrategy _transformStrategy_from_WGS84_to_SWEREF99_or_RT90 = new TransformStrategy_from_WGS84_to_SWEREF99_or_RT90();
 
@@ -24,7 +27,8 @@ namespace SwedenCrsTransformations.Transformation {
         private static readonly TransformStrategy _transFormStrategy_From_Sweref99OrRT90_to_WGS84_andThenToRealTarget  = new TransFormStrategy_From_Sweref99OrRT90_to_WGS84_andThenToRealTarget();
 
         public static CrsCoordinate Transform(CrsCoordinate sourceCoordinate, CrsProjection targetCrsProjection) {
-            if(sourceCoordinate.CrsProjection == targetCrsProjection) return sourceCoordinate;
+            //return transformer.Transform(sourceCoordinate, targetCrsProjection); // TODO
+            if (sourceCoordinate.CrsProjection == targetCrsProjection) return sourceCoordinate;
 
             TransformStrategy _transFormStrategy = null;
 
