@@ -8,7 +8,7 @@
 * For more information see the webpage below.
 * https://github.com/TomasJohansson/sweden_crs_transformations_4net
 */
-using MightyLittleGeodesy;
+using SwedenCrsTransformations.Transformation.Transformer1;
 using System;
 
 namespace SwedenCrsTransformations.Transformation.Transformer2 {
@@ -17,7 +17,8 @@ namespace SwedenCrsTransformations.Transformation.Transformer2 {
         public CrsCoordinate Transform(
             CrsCoordinate sourceCoordinate,
             CrsProjection targetCrsProjection
-        ) {
+        )
+        {
             if (sourceCoordinate.CrsProjection == targetCrsProjection) return sourceCoordinate;
 
             // Transform FROM wgs84:
@@ -54,33 +55,57 @@ namespace SwedenCrsTransformations.Transformation.Transformer2 {
             throw new ArgumentException(string.Format("Unhandled source/target projection transformation: {0} ==> {1}", sourceCoordinate.CrsProjection, targetCrsProjection));
         }
 
+        // TODO add comments about why this class is implemented as it is, and why there are two
+        // classes in parallell directories doing the same thing but with different implementations ...
+
+        // Note that the three classes below are NOT below typed as their interface TransformStrategy
+        // since they can not be implemented with a true polymorphic interface anyway i.e. regarding Liskov substitution principle.
+        // Therefore the below three object is not using 'Strategy' as part of the variable names neither (even though the classes themselves are doing so)
+        // TODO write more about this reasoning somewhere ...
+
+        private static readonly TransformStrategy_from_WGS84_to_SWEREF99_or_RT90 _transformer_from_WGS84_to_SWEREF99_or_RT90 = new TransformStrategy_from_WGS84_to_SWEREF99_or_RT90();
+
+        private static readonly TransformStrategy_from_SWEREF99_or_RT90_to_WGS84 _transformer_from_SWEREF99_or_RT90_to_WGS84 = new TransformStrategy_from_SWEREF99_or_RT90_to_WGS84();
+
+        private static readonly TransFormStrategy_From_Sweref99OrRT90_to_WGS84_andThenToRealTarget _transFormer_From_Sweref99OrRT90_to_WGS84_andThenToRealTarget = new TransFormStrategy_From_Sweref99OrRT90_to_WGS84_andThenToRealTarget();
+
+
         private CrsCoordinate Transform_from_WGS84_to_SWEREF99_or_RT90(
             CrsCoordinate sourceCoordinate,
             CrsProjection targetCrsProjection
-        )
-        {
-            var gkProjection = GaussKreugerFactory.getInstance().getGaussKreuger(targetCrsProjection);
-            LatLon latLon = gkProjection.geodetic_to_grid(sourceCoordinate.LatitudeY, sourceCoordinate.LongitudeX);
-            return CrsCoordinate.CreateCoordinate(targetCrsProjection, latLon.LatitudeY, latLon.LongitudeX);
+        ) {
+            //var gkProjection = GaussKreugerFactory.getInstance().getGaussKreuger(targetCrsProjection);
+            //LatLon latLon = gkProjection.geodetic_to_grid(sourceCoordinate.LatitudeY, sourceCoordinate.LongitudeX);
+            //return CrsCoordinate.CreateCoordinate(targetCrsProjection, latLon.LatitudeY, latLon.LongitudeX);
+
+            // This method could be implemented with the above code directly here but to avoid duplication,
+            // it is instead reused with the below invocation of a method with the above code
+            return _transformer_from_WGS84_to_SWEREF99_or_RT90.Transform(sourceCoordinate, targetCrsProjection);
         }
 
         private CrsCoordinate Transform_from_SWEREF99_or_RT90_to_WGS84(
             CrsCoordinate sourceCoordinate,
             CrsProjection targetCrsProjection
-        )
-        {
-            var gkProjection = GaussKreugerFactory.getInstance().getGaussKreuger(sourceCoordinate.CrsProjection);
-            LatLon latLon = gkProjection.grid_to_geodetic(sourceCoordinate.LatitudeY, sourceCoordinate.LongitudeX);
-            return CrsCoordinate.CreateCoordinate(targetCrsProjection, latLon.LatitudeY, latLon.LongitudeX);
+        ) {
+            //var gkProjection = GaussKreugerFactory.getInstance().getGaussKreuger(sourceCoordinate.CrsProjection);
+            //LatLon latLon = gkProjection.grid_to_geodetic(sourceCoordinate.LatitudeY, sourceCoordinate.LongitudeX);
+            //return CrsCoordinate.CreateCoordinate(targetCrsProjection, latLon.LatitudeY, latLon.LongitudeX);
+
+            // This method could be implemented with the above code directly here but to avoid duplication,
+            // it is instead reused with the below invocation of a method with the above code
+            return _transformer_from_SWEREF99_or_RT90_to_WGS84.Transform(sourceCoordinate, targetCrsProjection);
         }
 
         private CrsCoordinate Transform_From_Sweref99OrRT90_to_WGS84_andThenToRealTarget(
             CrsCoordinate sourceCoordinate,
             CrsProjection targetCrsProjection
-        )
-        {
-            var wgs84coordinate = Transformer.Transform(sourceCoordinate, CrsProjection.wgs84);
-            return Transformer.Transform(wgs84coordinate, targetCrsProjection);
+        ) {
+            //var wgs84coordinate = Transformer.Transform(sourceCoordinate, CrsProjection.wgs84);
+            //return Transformer.Transform(wgs84coordinate, targetCrsProjection);
+
+            // This method could be implemented with the above code directly here but to avoid duplication,
+            // it is instead reused with the below invocation of a method with the above code
+            return _transFormer_From_Sweref99OrRT90_to_WGS84_andThenToRealTarget.Transform(sourceCoordinate, targetCrsProjection);
         }
     }
 }
