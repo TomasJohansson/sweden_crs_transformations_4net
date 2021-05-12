@@ -1,5 +1,6 @@
 ﻿using NUnit.Framework;
 using SwedenCrsTransformations;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -68,7 +69,32 @@ namespace SwedenCrsTransformationsTests
                 var crsProj = CrsProjectionFactory.GetCrsProjectionByEpsgNumber(crsProjection.GetEpsgNumber());
                 Assert.AreEqual(crsProjection, crsProj);
             }
-        }    
+        }
 
+        [Test]
+        public void GetCrsProjectionByEpsgNumber_failing_when_using_incorrect_number() {
+            Assert.That(
+                () => CrsProjectionFactory.GetCrsProjectionByEpsgNumber(987654321)
+                ,
+                Throws.Exception // any exception, unless specific exceptions are specified below
+                    // testing that the thrown exception type is one of the following:
+                    //.TypeOf<ArgumentOutOfRangeException>().Or
+                    //.TypeOf<NotSupportedException>().Or
+                    //.TypeOf<ArgumentException>().Or
+                    //.TypeOf<Exception>()
+                    .TypeOf<ArgumentException>()
+            );
+            // alterntative assertion of exception, see "Assert.Throws" in the below test method
+        }
+        // The above and below two tests are redundant i.e. none or both should fail 
+        // but the reason to include them both here is just for reference i.e. a place to find NUnit examples of both
+        [Test]
+        public void GetCrsProjectionByEpsgNumber_failing_when_using_incorrect_number_2() {
+            // alterntative assertion of exception, see "Assert.That ... Throws.Exception" in the above test method
+            var exceptionThrown = Assert.Throws<ArgumentException>(() => {
+                CrsProjectionFactory.GetCrsProjectionByEpsgNumber(123456789);
+            });
+            //Assert.IsNotNull(exceptionThrown); // not needed
+        }
     }
 }
