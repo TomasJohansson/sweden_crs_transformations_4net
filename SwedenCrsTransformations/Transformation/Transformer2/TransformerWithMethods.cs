@@ -12,7 +12,7 @@ using SwedenCrsTransformations.Transformation.Transformer1;
 using System;
 
 namespace SwedenCrsTransformations.Transformation.Transformer2 {
-    internal class Transformer2 : TransformStrategy {
+    internal class TransformerWithMethods : TransformStrategy {
 
         public CrsCoordinate Transform(
             CrsCoordinate sourceCoordinate,

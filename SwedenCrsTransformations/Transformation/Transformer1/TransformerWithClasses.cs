@@ -11,7 +11,7 @@
 using System;
 
 namespace SwedenCrsTransformations.Transformation.Transformer1 {
-    internal class Transformer1 : TransformStrategy {
+    internal class TransformerWithClasses : TransformStrategy {
 
         // Implementations of transformations from WGS84:
         private static readonly TransformStrategy _transformStrategy_from_WGS84_to_SWEREF99_or_RT90 = new TransformStrategy_from_WGS84_to_SWEREF99_or_RT90();
