@@ -143,7 +143,8 @@ namespace MightyLittleGeodesy {
             }
             else
             {
-                central_meridian = double.MinValue;
+                //central_meridian = double.MinValue;
+                throw new System.ArgumentException("Can not be used as GaussKreuger parameter: " + projection);
             }
         }
 

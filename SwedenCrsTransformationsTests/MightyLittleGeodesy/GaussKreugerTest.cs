@@ -1,4 +1,5 @@
 ﻿using NUnit.Framework;
+using SwedenCrsTransformations;
 
 namespace MightyLittleGeodesy {
     class GaussKreugerTest {    // https://kartor.eniro.se/m/XRCfh
@@ -38,6 +39,14 @@ namespace MightyLittleGeodesy {
             //  System.out.println("x " + (stockholmCentralStation_WGS84_longitude-resultWGS84.LongitudeX));  
             Assert.AreEqual(stockholmCentralStation_WGS84_latitude, resultWGS84.LatitudeY, delta);
             Assert.AreEqual(stockholmCentralStation_WGS84_longitude, resultWGS84.LongitudeX, delta);
+        }
+
+        
+        [Test] // Actually testing GaussKreugerParameterObject but maybe overkill to create a test class GaussKreugerParameterObjectTest just for this test
+        public void GaussKreugerParameter_should_fail_when_trying_to_use_WGS84() {
+            Assert.Throws<System.ArgumentException>(() => {
+                var g = new GaussKreugerParameterObject(CrsProjection.wgs84);
+            });
         }
 
     }

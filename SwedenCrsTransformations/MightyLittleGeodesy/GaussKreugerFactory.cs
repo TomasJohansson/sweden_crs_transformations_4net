@@ -17,6 +17,7 @@ namespace MightyLittleGeodesy {
         private GaussKreugerFactory() {
             IList<CrsProjection> crsProjections = CrsProjectionFactory.GetAllCrsProjections();
             foreach(CrsProjection crsProjection in crsProjections) {
+                if(crsProjection.IsWgs84()) continue; // WGS84 can not be used as GaussKreuger parameter, and will throw an exception if trying to use it as parameter below
                 GaussKreugerParameterObject gaussKreugerParameterObject = new GaussKreugerParameterObject(crsProjection);
                 GaussKreuger gaussKreuger = GaussKreuger.create(gaussKreugerParameterObject);
                 mapWithAllGaussKreugers.Add(crsProjection, gaussKreuger);
