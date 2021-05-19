@@ -74,6 +74,13 @@ namespace SwedenCrsTransformations {
         }
 
         // public static string ToString(this CrsProjection crsProjection) // it does not work if the extension method is named 'ToString()'
+        /// <summary>
+        /// Two examples of the string that can be returned:
+        /// "SWEREF_99_TM(EPSG:3006)"
+        /// "RT90_0_0_GON_V(EPSG:3022)"
+        /// </summary>
+        /// <param name="crsProjection"></param>
+        /// <returns></returns>
         public static string GetAsString(this CrsProjection crsProjection)
         {
             // the enum "ToString()" is the name of the enum

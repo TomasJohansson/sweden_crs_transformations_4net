@@ -161,7 +161,7 @@ namespace SwedenCrsTransformationsTests {
         public void ToStringTest() {
             CrsCoordinate coordinate = CrsCoordinate.CreateCoordinate(CrsProjection.sweref_99_18_00, 6579457.649, 153369.673);
             Assert.AreEqual(
-                "CrsCoordinate [ Y: 6579457.649 , X: 153369.673 , CRS: SWEREF_99_18_00(EPSG:3011) ]",
+                "CrsCoordinate [ Y: 6579457.649 , X: 153369.673 , CRS: SWEREF_99_18_00(EPSG:3011) ]", 
                 coordinate.ToString()
             );
             CrsCoordinate coordinate2 = CrsCoordinate.CreateCoordinate(CrsProjection.wgs84, 59.330231, 18.059196);

@@ -129,8 +129,8 @@ namespace SwedenCrsTransformations {
 
         /// <summary>
         /// Two examples of the string that can be returned:
-        /// "CrsCoordinate [ X: 153369.673 , Y: 6579457.649 , CRS: SWEREF_99_18_00 ]"
-        /// "CrsCoordinate [ Longitude: 18.059196 , Latitude: 59.330231 , CRS: WGS84 ]"
+        /// "CrsCoordinate [ Y: 6579457.649 , X: 153369.673 , CRS: SWEREF_99_18_00(EPSG:3011) ]"
+        /// "CrsCoordinate [ Latitude: 59.330231 , Longitude: 18.059196 , CRS: WGS84(EPSG:4326) ]"
         /// </summary>
         public override string ToString() {
             return _toStringImplementation(this);

@@ -101,7 +101,7 @@ namespace SwedenCrsTransformationsTests {
         [Test]
         public void GetAsString() {
             Assert.AreEqual(
-                "SWEREF_99_TM(EPSG:3006)",
+                "SWEREF_99_TM(EPSG:3006)", 
                 CrsProjection.sweref_99_tm.GetAsString()
             );
 
