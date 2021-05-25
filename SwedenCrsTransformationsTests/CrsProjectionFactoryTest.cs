@@ -66,12 +66,28 @@ namespace SwedenCrsTransformationsTests
 
         public void VerifyThatAllProjectionsCanBeRetrievedByItsEpsgNumber() {
             foreach(var crsProjection in _allCrsProjections) {
+                Assert.IsTrue(CrsProjectionFactory.IsEpsgNumberSupported(crsProjection.GetEpsgNumber()), "Projection should be supported: " + crsProjection.GetEpsgNumber());
                 var crsProj = CrsProjectionFactory.GetCrsProjectionByEpsgNumber(crsProjection.GetEpsgNumber());
                 Assert.AreEqual(crsProjection, crsProj);
             }
         }
 
+        
         [Test]
+        public void IsEpsgNumberSupported() {
+            // The only 20 values that are supported: 4326 (WGS84) and the 19 swedish projections 3006-3024
+            Assert.IsTrue(CrsProjectionFactory.IsEpsgNumberSupported(4326)); // EPSG number for WGS84
+            IEnumerable<int> rangeWithSupportedEpsgNumbers = Enumerable.Range(3006, 19); // 3006-3024 is 19 values
+            foreach(int epsg in rangeWithSupportedEpsgNumbers) {
+                Assert.IsTrue(CrsProjectionFactory.IsEpsgNumberSupported(epsg), "EPSG should be supported: " + epsg);
+            }
+
+            // Two examples of EPSG numbers NOT supported:
+            Assert.IsFalse(CrsProjectionFactory.IsEpsgNumberSupported(3005));
+            Assert.IsFalse(CrsProjectionFactory.IsEpsgNumberSupported(3025));
+        }
+
+            [Test]
         public void GetCrsProjectionByEpsgNumber_failing_when_using_incorrect_number() {
             Assert.That(
                 () => CrsProjectionFactory.GetCrsProjectionByEpsgNumber(987654321)

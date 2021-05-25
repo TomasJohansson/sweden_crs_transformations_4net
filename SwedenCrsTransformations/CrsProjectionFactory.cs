@@ -40,7 +40,19 @@ namespace SwedenCrsTransformations {
         }
 
         /// <summary>
+        /// The method can be used for checking that the precondition for the method 'GetCrsProjectionByEpsgNumber' is satisfied,
+        /// to avoid feeling a need for using try/catch exception handling when using that method.
+        /// </summary>
+        /// <param name="epsg">An EPSG number</param>
+        /// <returns>true if the EPSG number is supported, otherwise false</returns>
+        /// See also <see cref="GetCrsProjectionByEpsgNumber(int)"/>
+        public static bool IsEpsgNumberSupported(int epsg) {
+            return mapWithAllCrsProjections.ContainsKey(epsg);
+        }
+
+        /// <summary>
         /// Factory method creating an enum 'CrsProjection' by its number (EPSG) value.
+        /// Precondition: The method IsEpsgNumberSupported should return true when using the same EPSG number as parameter.
         /// </summary>
         /// <param name="epsg">
         /// An EPSG number.
@@ -48,7 +60,9 @@ namespace SwedenCrsTransformations {
         /// https://epsg.org
         /// https://epsg.io
         /// </param>
-        /// See also <see cref="CrsProjection"/>        
+        /// <returns>The CrsProjection for the EPSG number, if the provided EPSG parameter was supported i.e. if the precondition was fulfilled, otherwise throws an exception</returns>
+        /// See also <see cref="IsEpsgNumberSupported(int)"/>
+        /// See also <see cref="CrsProjection"/>
         public static CrsProjection GetCrsProjectionByEpsgNumber(int epsg) {
             if(mapWithAllCrsProjections.ContainsKey(epsg)) {
                 return mapWithAllCrsProjections[epsg];
