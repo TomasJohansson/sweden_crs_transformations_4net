@@ -12,6 +12,9 @@ namespace MightyLittleGeodesy {
 
         internal GaussKreugerParameterObject(CrsProjection crsProjection) {
             this.swedish_params(crsProjection);
+            if(central_meridian == double.MinValue) {
+                throw new System.Exception("central_meridian is not set"); // *should* never happen. All if/else branches below should set the value
+            }
         }
 
         // Parameters for RT90 and SWEREF99TM.
@@ -143,7 +146,6 @@ namespace MightyLittleGeodesy {
             }
             else
             {
-                //central_meridian = double.MinValue;
                 throw new System.ArgumentException("Can not be used as GaussKreuger parameter: " + projection);
             }
         }

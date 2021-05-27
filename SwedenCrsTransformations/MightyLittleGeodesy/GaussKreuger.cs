@@ -106,8 +106,6 @@ namespace MightyLittleGeodesy {
         // Conversion from geodetic coordinates to grid coordinates.
         public LatLon geodetic_to_grid(double latitude, double longitude) // public double[] geodetic_to_grid(double latitude, double longitude)
         {
-            double[] x_y = new double[2];
-
             // Prepare ellipsoid-based stuff.
             double e2 = flattening * (2.0 - flattening);
             double n = flattening / (2.0 - flattening);
@@ -146,21 +144,17 @@ namespace MightyLittleGeodesy {
                             beta3 * Math.Cos(6.0 * xi_prim) * math_sinh(6.0 * eta_prim) +
                             beta4 * Math.Cos(8.0 * xi_prim) * math_sinh(8.0 * eta_prim)) +
                             false_easting;
-            x_y[0] = Math.Round(x * 1000.0) / 1000.0;
-            x_y[1] = Math.Round(y * 1000.0) / 1000.0;
-            var latLon = new LatLon(x_y[0], x_y[1]);
-            return latLon;
+            return new LatLon(
+                Math.Round(x * 1000.0) / 1000.0
+                ,
+                Math.Round(y * 1000.0) / 1000.0
+            );
         }
 
         // Conversion from grid coordinates to geodetic coordinates.
-        
         public LatLon grid_to_geodetic(double yLatitude, double xLongitude) // public double[] grid_to_geodetic(double yLatitude, double xLongitude)
         {
-            double[] lat_lon = new double[2];
-            if (central_meridian == double.MinValue)
-            {
-                return new LatLon(lat_lon[1], lat_lon[0]);
-            }
+
             // Prepare ellipsoid-based stuff.
             double e2 = flattening * (2.0 - flattening);
             double n = flattening / (2.0 - flattening);
@@ -198,10 +192,11 @@ namespace MightyLittleGeodesy {
                              Bstar * Math.Pow(Math.Sin(phi_star), 2) +
                              Cstar * Math.Pow(Math.Sin(phi_star), 4) +
                              Dstar * Math.Pow(Math.Sin(phi_star), 6));
-            lat_lon[0] = lat_radian * 180.0 / Math.PI;
-            lat_lon[1] = lon_radian * 180.0 / Math.PI;
-            var latLon = new LatLon(lat_lon[0], lat_lon[1]);
-            return latLon;
+            return new LatLon(
+                lat_radian * 180.0 / Math.PI
+                ,
+                lon_radian * 180.0 / Math.PI
+            );
         }
 
 
