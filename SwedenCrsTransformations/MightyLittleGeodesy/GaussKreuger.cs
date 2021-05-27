@@ -129,39 +129,40 @@ namespace MightyLittleGeodesy {
         // Conversion from geodetic coordinates to grid coordinates.
         public LatLon geodetic_to_grid(double yLatitude, double xLongitude)
         {
-            // Prepare ellipsoid-based stuff.
-            double A = e2;
-            double B = (5.0 * e2_2 - e2_3) / 6.0;
-            double C = (104.0 * e2_3 - 45.0 * e2_4) / 120.0;
-            double D = (1237.0 * e2_4) / 1260.0;
-            double beta1 = n / 2.0 - 2.0 * n_2 / 3.0 + 5.0 * n_3 / 16.0 + 41.0 * n_4 / 180.0;
-            double beta2 = 13.0 * n_2 / 48.0 - 3.0 * n_3 / 5.0 + 557.0 * n_4 / 1440.0;
-            double beta3 = 61.0 * n_3 / 240.0 - 103.0 * n_4 / 140.0;
-            double beta4 = 49561.0 * n_4 / 161280.0;
+            // These below variables with the prefix 'geodetic_' are specific for this method 'geodetic_to_grid'
+            // (unlike many other calculated values in the constructor which are common for both transform methods)
+            double geodetic_A = e2;
+            double geodetic_B = (5.0 * e2_2 - e2_3) / 6.0;
+            double geodetic_C = (104.0 * e2_3 - 45.0 * e2_4) / 120.0;
+            double geodetic_D = (1237.0 * e2_4) / 1260.0;
+            double geodetic_beta1 = n / 2.0 - 2.0 * n_2 / 3.0 + 5.0 * n_3 / 16.0 + 41.0 * n_4 / 180.0;
+            double geodetic_beta2 = 13.0 * n_2 / 48.0 - 3.0 * n_3 / 5.0 + 557.0 * n_4 / 1440.0;
+            double geodetic_beta3 = 61.0 * n_3 / 240.0 - 103.0 * n_4 / 140.0;
+            double geodetic_beta4 = 49561.0 * n_4 / 161280.0;
 
             // Convert.
             double phi = yLatitude * deg_to_rad;
             double lambda = xLongitude * deg_to_rad;
 
             double sin_phi = Math.Sin(phi);
-            double phi_star = phi - sin_phi * Math.Cos(phi) * (A +
-                            B * Math.Pow(sin_phi, 2) +
-                            C * Math.Pow(sin_phi, 4) +
-                            D * Math.Pow(sin_phi, 6));
+            double phi_star = phi - sin_phi * Math.Cos(phi) * (geodetic_A +
+                            geodetic_B * Math.Pow(sin_phi, 2) +
+                            geodetic_C * Math.Pow(sin_phi, 4) +
+                            geodetic_D * Math.Pow(sin_phi, 6));
             double delta_lambda = lambda - lambda_zero;
             double xi_prim = Math.Atan(Math.Tan(phi_star) / Math.Cos(delta_lambda));
             double eta_prim = math_atanh(Math.Cos(phi_star) * Math.Sin(delta_lambda));
             double x = scale_multiplied_with_a_roof * (xi_prim +
-                            beta1 * Math.Sin(2.0 * xi_prim) * math_cosh(2.0 * eta_prim) +
-                            beta2 * Math.Sin(4.0 * xi_prim) * math_cosh(4.0 * eta_prim) +
-                            beta3 * Math.Sin(6.0 * xi_prim) * math_cosh(6.0 * eta_prim) +
-                            beta4 * Math.Sin(8.0 * xi_prim) * math_cosh(8.0 * eta_prim)) +
+                            geodetic_beta1 * Math.Sin(2.0 * xi_prim) * math_cosh(2.0 * eta_prim) +
+                            geodetic_beta2 * Math.Sin(4.0 * xi_prim) * math_cosh(4.0 * eta_prim) +
+                            geodetic_beta3 * Math.Sin(6.0 * xi_prim) * math_cosh(6.0 * eta_prim) +
+                            geodetic_beta4 * Math.Sin(8.0 * xi_prim) * math_cosh(8.0 * eta_prim)) +
                             false_northing;
             double y = scale_multiplied_with_a_roof * (eta_prim +
-                            beta1 * Math.Cos(2.0 * xi_prim) * math_sinh(2.0 * eta_prim) +
-                            beta2 * Math.Cos(4.0 * xi_prim) * math_sinh(4.0 * eta_prim) +
-                            beta3 * Math.Cos(6.0 * xi_prim) * math_sinh(6.0 * eta_prim) +
-                            beta4 * Math.Cos(8.0 * xi_prim) * math_sinh(8.0 * eta_prim)) +
+                            geodetic_beta1 * Math.Cos(2.0 * xi_prim) * math_sinh(2.0 * eta_prim) +
+                            geodetic_beta2 * Math.Cos(4.0 * xi_prim) * math_sinh(4.0 * eta_prim) +
+                            geodetic_beta3 * Math.Cos(6.0 * xi_prim) * math_sinh(6.0 * eta_prim) +
+                            geodetic_beta4 * Math.Cos(8.0 * xi_prim) * math_sinh(8.0 * eta_prim)) +
                             false_easting;
             return new LatLon(
                 Math.Round(x * 1000.0) / 1000.0
@@ -173,39 +174,39 @@ namespace MightyLittleGeodesy {
         // Conversion from grid coordinates to geodetic coordinates.
         public LatLon grid_to_geodetic(double yLatitude, double xLongitude)
         {
-            // Prepare ellipsoid-based stuff.
-            double delta1 = n / 2.0 - 2.0 * n_2 / 3.0 + 37.0 * n_3 / 96.0 - n_4 / 360.0;
-            double delta2 = n_2 / 48.0 + n_3 / 15.0 - 437.0 * n_4 / 1440.0;
-            double delta3 = 17.0 * n_3 / 480.0 - 37 * n_4 / 840.0;
-            double delta4 = 4397.0 * n_4 / 161280.0;
-
-            double Astar = e2 + e2_2 + e2_3 + e2_4;
-            double Bstar = -(7.0 * e2_2 + 17.0 * e2_3 + 30.0 * e2_4) / 6.0;
-            double Cstar = (224.0 * e2_3 + 889.0 * e2_4) / 120.0;
-            double Dstar = -(4279.0 * e2_4) / 1260.0;
+            // These below variables with the prefix 'grid_' are specific for this method 'grid_to_geodetic'
+            // (unlike many other calculated values in the constructor which are common for both transform methods)
+            double grid_delta1 = n / 2.0 - 2.0 * n_2 / 3.0 + 37.0 * n_3 / 96.0 - n_4 / 360.0;
+            double grid_delta2 = n_2 / 48.0 + n_3 / 15.0 - 437.0 * n_4 / 1440.0;
+            double grid_delta3 = 17.0 * n_3 / 480.0 - 37 * n_4 / 840.0;
+            double grid_delta4 = 4397.0 * n_4 / 161280.0;
+            double grid_Astar = e2 + e2_2 + e2_3 + e2_4;
+            double grid_Bstar = -(7.0 * e2_2 + 17.0 * e2_3 + 30.0 * e2_4) / 6.0;
+            double grid_Cstar = (224.0 * e2_3 + 889.0 * e2_4) / 120.0;
+            double grid_Dstar = -(4279.0 * e2_4) / 1260.0;
 
             // Convert.
             double xi = (yLatitude - false_northing) / (scale_multiplied_with_a_roof);
             double eta = (xLongitude - false_easting) / (scale_multiplied_with_a_roof);
             double xi_prim = xi -
-                            delta1 * Math.Sin(2.0 * xi) * math_cosh(2.0 * eta) -
-                            delta2 * Math.Sin(4.0 * xi) * math_cosh(4.0 * eta) -
-                            delta3 * Math.Sin(6.0 * xi) * math_cosh(6.0 * eta) -
-                            delta4 * Math.Sin(8.0 * xi) * math_cosh(8.0 * eta);
+                            grid_delta1 * Math.Sin(2.0 * xi) * math_cosh(2.0 * eta) -
+                            grid_delta2 * Math.Sin(4.0 * xi) * math_cosh(4.0 * eta) -
+                            grid_delta3 * Math.Sin(6.0 * xi) * math_cosh(6.0 * eta) -
+                            grid_delta4 * Math.Sin(8.0 * xi) * math_cosh(8.0 * eta);
             double eta_prim = eta -
-                            delta1 * Math.Cos(2.0 * xi) * math_sinh(2.0 * eta) -
-                            delta2 * Math.Cos(4.0 * xi) * math_sinh(4.0 * eta) -
-                            delta3 * Math.Cos(6.0 * xi) * math_sinh(6.0 * eta) -
-                            delta4 * Math.Cos(8.0 * xi) * math_sinh(8.0 * eta);
+                            grid_delta1 * Math.Cos(2.0 * xi) * math_sinh(2.0 * eta) -
+                            grid_delta2 * Math.Cos(4.0 * xi) * math_sinh(4.0 * eta) -
+                            grid_delta3 * Math.Cos(6.0 * xi) * math_sinh(6.0 * eta) -
+                            grid_delta4 * Math.Cos(8.0 * xi) * math_sinh(8.0 * eta);
             double phi_star = Math.Asin(Math.Sin(xi_prim) / math_cosh(eta_prim));
             double delta_lambda = Math.Atan(math_sinh(eta_prim) / Math.Cos(xi_prim));
             double lon_radian = lambda_zero + delta_lambda;
             double sin_phi_star = Math.Sin(phi_star);
             double lat_radian = phi_star + sin_phi_star * Math.Cos(phi_star) *
-                            (Astar +
-                             Bstar * Math.Pow(sin_phi_star, 2) +
-                             Cstar * Math.Pow(sin_phi_star, 4) +
-                             Dstar * Math.Pow(sin_phi_star, 6));
+                            (grid_Astar +
+                             grid_Bstar * Math.Pow(sin_phi_star, 2) +
+                             grid_Cstar * Math.Pow(sin_phi_star, 4) +
+                             grid_Dstar * Math.Pow(sin_phi_star, 6));
             return new LatLon(
                 lat_radian * 180.0 / Math.PI
                 ,
