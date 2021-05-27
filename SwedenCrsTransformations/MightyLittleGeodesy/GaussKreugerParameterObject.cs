@@ -155,15 +155,6 @@ namespace MightyLittleGeodesy {
             flattening = 1.0 / 298.257222101; // GRS 80.
             central_meridian = double.MinValue;
         }
-        private void bessel_params()
-        {
-            axis = 6377397.155; // Bessel 1841.
-            flattening = 1.0 / 299.1528128; // Bessel 1841.
-            central_meridian = double.MinValue;
-            scale = 1.0;
-            false_northing = 0.0;
-            false_easting = 1500000.0;
-        }
         private void sweref99_params()
         {
             axis = 6378137.0; // GRS 80.
