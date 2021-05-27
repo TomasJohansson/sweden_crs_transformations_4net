@@ -121,14 +121,22 @@ namespace MightyLittleGeodesy {
         public LatLon geodetic_to_grid(double yLatitude, double xLongitude)
         {
             // Prepare ellipsoid-based stuff.
+            double n_2 = n * n;
+            double n_3 = n * n_2;
+            double n_4 = n * n_3;
+
+            double e2_2 = e2 * e2;
+            double e2_3 = e2_2 * e2;
+            double e2_4 = e2_3 * e2;
+
             double A = e2;
-            double B = (5.0 * e2 * e2 - e2 * e2 * e2) / 6.0;
-            double C = (104.0 * e2 * e2 * e2 - 45.0 * e2 * e2 * e2 * e2) / 120.0;
-            double D = (1237.0 * e2 * e2 * e2 * e2) / 1260.0;
-            double beta1 = n / 2.0 - 2.0 * n * n / 3.0 + 5.0 * n * n * n / 16.0 + 41.0 * n * n * n * n / 180.0;
-            double beta2 = 13.0 * n * n / 48.0 - 3.0 * n * n * n / 5.0 + 557.0 * n * n * n * n / 1440.0;
-            double beta3 = 61.0 * n * n * n / 240.0 - 103.0 * n * n * n * n / 140.0;
-            double beta4 = 49561.0 * n * n * n * n / 161280.0;
+            double B = (5.0 * e2_2 - e2_3) / 6.0;
+            double C = (104.0 * e2_3 - 45.0 * e2_4) / 120.0;
+            double D = (1237.0 * e2_4) / 1260.0;
+            double beta1 = n / 2.0 - 2.0 * n_2 / 3.0 + 5.0 * n_3 / 16.0 + 41.0 * n_4 / 180.0;
+            double beta2 = 13.0 * n_2 / 48.0 - 3.0 * n_3 / 5.0 + 557.0 * n_4 / 1440.0;
+            double beta3 = 61.0 * n_3 / 240.0 - 103.0 * n_4 / 140.0;
+            double beta4 = 49561.0 * n_4 / 161280.0;
 
             // Convert.
             double phi = yLatitude * deg_to_rad;
@@ -164,15 +172,23 @@ namespace MightyLittleGeodesy {
         public LatLon grid_to_geodetic(double yLatitude, double xLongitude)
         {
             // Prepare ellipsoid-based stuff.
-            double delta1 = n / 2.0 - 2.0 * n * n / 3.0 + 37.0 * n * n * n / 96.0 - n * n * n * n / 360.0;
-            double delta2 = n * n / 48.0 + n * n * n / 15.0 - 437.0 * n * n * n * n / 1440.0;
-            double delta3 = 17.0 * n * n * n / 480.0 - 37 * n * n * n * n / 840.0;
-            double delta4 = 4397.0 * n * n * n * n / 161280.0;
+            double n_2 = n * n;
+            double n_3 = n * n_2;
+            double n_4 = n * n_3;
 
-            double Astar = e2 + e2 * e2 + e2 * e2 * e2 + e2 * e2 * e2 * e2;
-            double Bstar = -(7.0 * e2 * e2 + 17.0 * e2 * e2 * e2 + 30.0 * e2 * e2 * e2 * e2) / 6.0;
-            double Cstar = (224.0 * e2 * e2 * e2 + 889.0 * e2 * e2 * e2 * e2) / 120.0;
-            double Dstar = -(4279.0 * e2 * e2 * e2 * e2) / 1260.0;
+            double e2_2 = e2 * e2;
+            double e2_3 = e2_2 * e2;
+            double e2_4 = e2_3 * e2;
+
+            double delta1 = n / 2.0 - 2.0 * n_2 / 3.0 + 37.0 * n_3 / 96.0 - n_4 / 360.0;
+            double delta2 = n_2 / 48.0 + n_3 / 15.0 - 437.0 * n_4 / 1440.0;
+            double delta3 = 17.0 * n_3 / 480.0 - 37 * n_4 / 840.0;
+            double delta4 = 4397.0 * n_4 / 161280.0;
+
+            double Astar = e2 + e2_2 + e2_3 + e2_4;
+            double Bstar = -(7.0 * e2_2 + 17.0 * e2_3 + 30.0 * e2_4) / 6.0;
+            double Cstar = (224.0 * e2_3 + 889.0 * e2_4) / 120.0;
+            double Dstar = -(4279.0 * e2_4) / 1260.0;
 
             // Convert.
             double xi = (yLatitude - false_northing) / (scale * a_roof);
