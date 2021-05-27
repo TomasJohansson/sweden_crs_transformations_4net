@@ -96,6 +96,9 @@ namespace MightyLittleGeodesy {
         private readonly double n_2, n_3, n_4, e2_2, e2_3, e2_4;
         private readonly double scale_multiplied_with_a_roof;
 
+        private readonly double geodetic_A, geodetic_B, geodetic_C, geodetic_D, geodetic_beta1, geodetic_beta2, geodetic_beta3, geodetic_beta4;
+        private readonly double grid_delta1, grid_delta2, grid_delta3, grid_delta4, grid_Astar, grid_Bstar, grid_Cstar, grid_Dstar;
+
         private GaussKreuger(GaussKreugerParameterObject gaussKreugerParameterObject) {
             this.axis = gaussKreugerParameterObject.axis;
             this.flattening = gaussKreugerParameterObject.flattening;
@@ -120,6 +123,42 @@ namespace MightyLittleGeodesy {
             e2_3 = e2_2 * e2;
             e2_4 = e2_3 * e2;
             scale_multiplied_with_a_roof = scale * a_roof;
+            // The above (about 12) calculated fields are used by both transform methods 
+            // i.e. the methods 'geodetic_to_grid' and 'grid_to_geodetic'.
+            // Below are some other 16 fields (8 per transform method) which are calculated here at construction since they 
+            // do not depend on a method parameter (i.e. the specific coordinate to be transformed).
+            // If only one of the two transform methods will be used with the created 'GaussKreuger' instance,
+            // then 8 of these 16 calculations below were unneedingly calculated.
+            // However, if only used once, those calculations are fast anyway, and there 
+            // will be more benefit to win if lots of transformations are done, when calculations 
+            // not depending on the coordinates have been moved out from the transform methods.
+            // Another option for the implementation (instead of simply calculating all 16 fields here as currently)
+            // would be to use lazy loading of these values from each of the transform methods.
+            // But thread-safe lazy loading is maybe not easily implemented with all programming languages 
+            // which this library is intended to become ported to, and therefore it maybe is a bit overkill
+            // to care too much about these 8 potentially unneeded calculations below.
+
+            // These below variables with the prefix 'geodetic_' are specific for this method 'geodetic_to_grid'
+            // (unlike many other calculated values in the constructor which are common for both transform methods)
+            geodetic_A = e2;
+            geodetic_B = (5.0 * e2_2 - e2_3) / 6.0;
+            geodetic_C = (104.0 * e2_3 - 45.0 * e2_4) / 120.0;
+            geodetic_D = (1237.0 * e2_4) / 1260.0;
+            geodetic_beta1 = n / 2.0 - 2.0 * n_2 / 3.0 + 5.0 * n_3 / 16.0 + 41.0 * n_4 / 180.0;
+            geodetic_beta2 = 13.0 * n_2 / 48.0 - 3.0 * n_3 / 5.0 + 557.0 * n_4 / 1440.0;
+            geodetic_beta3 = 61.0 * n_3 / 240.0 - 103.0 * n_4 / 140.0;
+            geodetic_beta4 = 49561.0 * n_4 / 161280.0;
+
+            // These below variables with the prefix 'grid_' are specific for this method 'grid_to_geodetic'
+            // (unlike many other calculated values in the constructor which are common for both transform methods)
+            grid_delta1 = n / 2.0 - 2.0 * n_2 / 3.0 + 37.0 * n_3 / 96.0 - n_4 / 360.0;
+            grid_delta2 = n_2 / 48.0 + n_3 / 15.0 - 437.0 * n_4 / 1440.0;
+            grid_delta3 = 17.0 * n_3 / 480.0 - 37 * n_4 / 840.0;
+            grid_delta4 = 4397.0 * n_4 / 161280.0;
+            grid_Astar = e2 + e2_2 + e2_3 + e2_4;
+            grid_Bstar = -(7.0 * e2_2 + 17.0 * e2_3 + 30.0 * e2_4) / 6.0;
+            grid_Cstar = (224.0 * e2_3 + 889.0 * e2_4) / 120.0;
+            grid_Dstar = -(4279.0 * e2_4) / 1260.0;
         }
         public static GaussKreuger create(GaussKreugerParameterObject gaussKreugerParameterObject) {
             GaussKreuger gaussKreuger = new GaussKreuger(gaussKreugerParameterObject);
@@ -129,18 +168,6 @@ namespace MightyLittleGeodesy {
         // Conversion from geodetic coordinates to grid coordinates.
         public LatLon geodetic_to_grid(double yLatitude, double xLongitude)
         {
-            // These below variables with the prefix 'geodetic_' are specific for this method 'geodetic_to_grid'
-            // (unlike many other calculated values in the constructor which are common for both transform methods)
-            double geodetic_A = e2;
-            double geodetic_B = (5.0 * e2_2 - e2_3) / 6.0;
-            double geodetic_C = (104.0 * e2_3 - 45.0 * e2_4) / 120.0;
-            double geodetic_D = (1237.0 * e2_4) / 1260.0;
-            double geodetic_beta1 = n / 2.0 - 2.0 * n_2 / 3.0 + 5.0 * n_3 / 16.0 + 41.0 * n_4 / 180.0;
-            double geodetic_beta2 = 13.0 * n_2 / 48.0 - 3.0 * n_3 / 5.0 + 557.0 * n_4 / 1440.0;
-            double geodetic_beta3 = 61.0 * n_3 / 240.0 - 103.0 * n_4 / 140.0;
-            double geodetic_beta4 = 49561.0 * n_4 / 161280.0;
-
-            // Convert.
             double phi = yLatitude * deg_to_rad;
             double lambda = xLongitude * deg_to_rad;
 
@@ -174,18 +201,6 @@ namespace MightyLittleGeodesy {
         // Conversion from grid coordinates to geodetic coordinates.
         public LatLon grid_to_geodetic(double yLatitude, double xLongitude)
         {
-            // These below variables with the prefix 'grid_' are specific for this method 'grid_to_geodetic'
-            // (unlike many other calculated values in the constructor which are common for both transform methods)
-            double grid_delta1 = n / 2.0 - 2.0 * n_2 / 3.0 + 37.0 * n_3 / 96.0 - n_4 / 360.0;
-            double grid_delta2 = n_2 / 48.0 + n_3 / 15.0 - 437.0 * n_4 / 1440.0;
-            double grid_delta3 = 17.0 * n_3 / 480.0 - 37 * n_4 / 840.0;
-            double grid_delta4 = 4397.0 * n_4 / 161280.0;
-            double grid_Astar = e2 + e2_2 + e2_3 + e2_4;
-            double grid_Bstar = -(7.0 * e2_2 + 17.0 * e2_3 + 30.0 * e2_4) / 6.0;
-            double grid_Cstar = (224.0 * e2_3 + 889.0 * e2_4) / 120.0;
-            double grid_Dstar = -(4279.0 * e2_4) / 1260.0;
-
-            // Convert.
             double xi = (yLatitude - false_northing) / (scale_multiplied_with_a_roof);
             double eta = (xLongitude - false_easting) / (scale_multiplied_with_a_roof);
             double xi_prim = xi -
