@@ -113,12 +113,12 @@ namespace MightyLittleGeodesy {
             // and also if the GaussKreuger is reused then these values need not be calculated again since they do not depend on the method parameters
             e2 = flattening * (2.0 - flattening);
             n = flattening / (2.0 - flattening);
-            a_roof = axis / (1.0 + n) * (1.0 + n * n / 4.0 + n * n * n * n / 64.0);
-            deg_to_rad = Math.PI / 180.0;
-            lambda_zero = central_meridian * deg_to_rad;
             n_2 = n * n;
             n_3 = n * n_2;
             n_4 = n * n_3;
+            a_roof = axis / (1.0 + n) * (1.0 + n_2 / 4.0 + n_4 / 64.0);
+            deg_to_rad = Math.PI / 180.0;
+            lambda_zero = central_meridian * deg_to_rad;
             e2_2 = e2 * e2;
             e2_3 = e2_2 * e2;
             e2_4 = e2_3 * e2;
