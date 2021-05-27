@@ -91,8 +91,9 @@ namespace MightyLittleGeodesy {
         private readonly double false_northing; // Offset for origo.
         private readonly double false_easting; // Offset for origo.
         // The above six fields will simply be copied from the parameter
-        // The above five fields will be calculated in the constructor
+        // The below fields will be calculated in the constructor
         private readonly double e2, n, a_roof, deg_to_rad, lambda_zero;
+        private readonly double n_2, n_3, n_4, e2_2, e2_3, e2_4;
 
         private GaussKreuger(GaussKreugerParameterObject gaussKreugerParameterObject) {
             this.axis = gaussKreugerParameterObject.axis;
@@ -103,7 +104,7 @@ namespace MightyLittleGeodesy {
             this.false_easting = gaussKreugerParameterObject.false_easting;
 
 
-            // These five fields below are always needed by both transform methods (i.e. regardless of the direction of the transformation)
+            // These fields below are always needed by both transform methods (i.e. regardless of the direction of the transformation)
             // and therefore the code duplication (i.e. the same calculation) have been reduced by moving the code here
             // and also if the GaussKreuger is reused then these values need not be calculated again since they do not depend on the method parameters
             e2 = flattening * (2.0 - flattening);
@@ -111,6 +112,12 @@ namespace MightyLittleGeodesy {
             a_roof = axis / (1.0 + n) * (1.0 + n * n / 4.0 + n * n * n * n / 64.0);
             deg_to_rad = Math.PI / 180.0;
             lambda_zero = central_meridian * deg_to_rad;
+            n_2 = n * n;
+            n_3 = n * n_2;
+            n_4 = n * n_3;
+            e2_2 = e2 * e2;
+            e2_3 = e2_2 * e2;
+            e2_4 = e2_3 * e2;
         }
         public static GaussKreuger create(GaussKreugerParameterObject gaussKreugerParameterObject) {
             GaussKreuger gaussKreuger = new GaussKreuger(gaussKreugerParameterObject);
@@ -121,14 +128,6 @@ namespace MightyLittleGeodesy {
         public LatLon geodetic_to_grid(double yLatitude, double xLongitude)
         {
             // Prepare ellipsoid-based stuff.
-            double n_2 = n * n;
-            double n_3 = n * n_2;
-            double n_4 = n * n_3;
-
-            double e2_2 = e2 * e2;
-            double e2_3 = e2_2 * e2;
-            double e2_4 = e2_3 * e2;
-
             double A = e2;
             double B = (5.0 * e2_2 - e2_3) / 6.0;
             double C = (104.0 * e2_3 - 45.0 * e2_4) / 120.0;
@@ -172,14 +171,6 @@ namespace MightyLittleGeodesy {
         public LatLon grid_to_geodetic(double yLatitude, double xLongitude)
         {
             // Prepare ellipsoid-based stuff.
-            double n_2 = n * n;
-            double n_3 = n * n_2;
-            double n_4 = n * n_3;
-
-            double e2_2 = e2 * e2;
-            double e2_3 = e2_2 * e2;
-            double e2_4 = e2_3 * e2;
-
             double delta1 = n / 2.0 - 2.0 * n_2 / 3.0 + 37.0 * n_3 / 96.0 - n_4 / 360.0;
             double delta2 = n_2 / 48.0 + n_3 / 15.0 - 437.0 * n_4 / 1440.0;
             double delta3 = 17.0 * n_3 / 480.0 - 37 * n_4 / 840.0;
