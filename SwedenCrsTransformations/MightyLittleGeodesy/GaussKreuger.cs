@@ -143,10 +143,11 @@ namespace MightyLittleGeodesy {
             double phi = yLatitude * deg_to_rad;
             double lambda = xLongitude * deg_to_rad;
 
-            double phi_star = phi - Math.Sin(phi) * Math.Cos(phi) * (A +
-                            B * Math.Pow(Math.Sin(phi), 2) +
-                            C * Math.Pow(Math.Sin(phi), 4) +
-                            D * Math.Pow(Math.Sin(phi), 6));
+            double sin_phi = Math.Sin(phi);
+            double phi_star = phi - sin_phi * Math.Cos(phi) * (A +
+                            B * Math.Pow(sin_phi, 2) +
+                            C * Math.Pow(sin_phi, 4) +
+                            D * Math.Pow(sin_phi, 6));
             double delta_lambda = lambda - lambda_zero;
             double xi_prim = Math.Atan(Math.Tan(phi_star) / Math.Cos(delta_lambda));
             double eta_prim = math_atanh(Math.Cos(phi_star) * Math.Sin(delta_lambda));
@@ -199,11 +200,12 @@ namespace MightyLittleGeodesy {
             double phi_star = Math.Asin(Math.Sin(xi_prim) / math_cosh(eta_prim));
             double delta_lambda = Math.Atan(math_sinh(eta_prim) / Math.Cos(xi_prim));
             double lon_radian = lambda_zero + delta_lambda;
-            double lat_radian = phi_star + Math.Sin(phi_star) * Math.Cos(phi_star) *
+            double sin_phi_star = Math.Sin(phi_star);
+            double lat_radian = phi_star + sin_phi_star * Math.Cos(phi_star) *
                             (Astar +
-                             Bstar * Math.Pow(Math.Sin(phi_star), 2) +
-                             Cstar * Math.Pow(Math.Sin(phi_star), 4) +
-                             Dstar * Math.Pow(Math.Sin(phi_star), 6));
+                             Bstar * Math.Pow(sin_phi_star, 2) +
+                             Cstar * Math.Pow(sin_phi_star, 4) +
+                             Dstar * Math.Pow(sin_phi_star, 6));
             return new LatLon(
                 lat_radian * 180.0 / Math.PI
                 ,
