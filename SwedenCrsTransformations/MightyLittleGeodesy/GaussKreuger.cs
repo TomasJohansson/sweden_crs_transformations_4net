@@ -94,6 +94,7 @@ namespace MightyLittleGeodesy {
         // The below fields will be calculated in the constructor
         private readonly double e2, n, a_roof, deg_to_rad, lambda_zero;
         private readonly double n_2, n_3, n_4, e2_2, e2_3, e2_4;
+        private readonly double scale_multiplied_with_a_roof;
 
         private GaussKreuger(GaussKreugerParameterObject gaussKreugerParameterObject) {
             this.axis = gaussKreugerParameterObject.axis;
@@ -118,6 +119,7 @@ namespace MightyLittleGeodesy {
             e2_2 = e2 * e2;
             e2_3 = e2_2 * e2;
             e2_4 = e2_3 * e2;
+            scale_multiplied_with_a_roof = scale * a_roof;
         }
         public static GaussKreuger create(GaussKreugerParameterObject gaussKreugerParameterObject) {
             GaussKreuger gaussKreuger = new GaussKreuger(gaussKreugerParameterObject);
@@ -148,13 +150,13 @@ namespace MightyLittleGeodesy {
             double delta_lambda = lambda - lambda_zero;
             double xi_prim = Math.Atan(Math.Tan(phi_star) / Math.Cos(delta_lambda));
             double eta_prim = math_atanh(Math.Cos(phi_star) * Math.Sin(delta_lambda));
-            double x = scale * a_roof * (xi_prim +
+            double x = scale_multiplied_with_a_roof * (xi_prim +
                             beta1 * Math.Sin(2.0 * xi_prim) * math_cosh(2.0 * eta_prim) +
                             beta2 * Math.Sin(4.0 * xi_prim) * math_cosh(4.0 * eta_prim) +
                             beta3 * Math.Sin(6.0 * xi_prim) * math_cosh(6.0 * eta_prim) +
                             beta4 * Math.Sin(8.0 * xi_prim) * math_cosh(8.0 * eta_prim)) +
                             false_northing;
-            double y = scale * a_roof * (eta_prim +
+            double y = scale_multiplied_with_a_roof * (eta_prim +
                             beta1 * Math.Cos(2.0 * xi_prim) * math_sinh(2.0 * eta_prim) +
                             beta2 * Math.Cos(4.0 * xi_prim) * math_sinh(4.0 * eta_prim) +
                             beta3 * Math.Cos(6.0 * xi_prim) * math_sinh(6.0 * eta_prim) +
@@ -182,8 +184,8 @@ namespace MightyLittleGeodesy {
             double Dstar = -(4279.0 * e2_4) / 1260.0;
 
             // Convert.
-            double xi = (yLatitude - false_northing) / (scale * a_roof);
-            double eta = (xLongitude - false_easting) / (scale * a_roof);
+            double xi = (yLatitude - false_northing) / (scale_multiplied_with_a_roof);
+            double eta = (xLongitude - false_easting) / (scale_multiplied_with_a_roof);
             double xi_prim = xi -
                             delta1 * Math.Sin(2.0 * xi) * math_cosh(2.0 * eta) -
                             delta2 * Math.Sin(4.0 * xi) * math_cosh(4.0 * eta) -
