@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFrameworks>netstandard1.2;net45;net40;portable-net45+win8+wpa81+wp8</TargetFrameworks>
+    <TargetFrameworks>netstandard1.2;netstandard2.0;net35;net40;net45;net5.0</TargetFrameworks>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
   </PropertyGroup>
   
@@ -39,14 +39,5 @@
   </PropertyGroup>
       <PropertyGroup Condition="'$(TargetFramework)' == 'net40'">
     <DefineConstants>NET40;$(AdditionalConstants)</DefineConstants>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(TargetFramework)' == 'portable-net45+win8+wpa81+wp8'">
-    <AssemblyTitle>Json.NET Portable</AssemblyTitle>
-    <DefineConstants>PORTABLE45;$(AdditionalConstants)</DefineConstants>
-    <TargetFrameworkIdentifier>.NETPortable</TargetFrameworkIdentifier>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
-    <TargetFrameworkProfile>Profile259</TargetFrameworkProfile>
-    <NugetTargetMoniker>.NETPortable,Version=v0.0,Profile=Profile259</NugetTargetMoniker>
-    <LanguageTargets>$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets</LanguageTargets>
   </PropertyGroup>
 </Project>
