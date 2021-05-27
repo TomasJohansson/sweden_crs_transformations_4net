@@ -90,6 +90,10 @@ namespace MightyLittleGeodesy {
         private readonly double scale; // Scale on central meridian.
         private readonly double false_northing; // Offset for origo.
         private readonly double false_easting; // Offset for origo.
+        // The above six fields will simply be copied from the parameter
+        // The above five fields will be calculated in the constructor
+        private readonly double e2, n, a_roof, deg_to_rad, lambda_zero;
+
         private GaussKreuger(GaussKreugerParameterObject gaussKreugerParameterObject) {
             this.axis = gaussKreugerParameterObject.axis;
             this.flattening = gaussKreugerParameterObject.flattening;
@@ -97,6 +101,16 @@ namespace MightyLittleGeodesy {
             this.scale = gaussKreugerParameterObject.scale;
             this.false_northing = gaussKreugerParameterObject.false_northing;
             this.false_easting = gaussKreugerParameterObject.false_easting;
+
+
+            // These five fields below are always needed by both transform methods (i.e. regardless of the direction of the transformation)
+            // and therefore the code duplication (i.e. the same calculation) have been reduced by moving the code here
+            // and also if the GaussKreuger is reused then these values need not be calculated again since they do not depend on the method parameters
+            e2 = flattening * (2.0 - flattening);
+            n = flattening / (2.0 - flattening);
+            a_roof = axis / (1.0 + n) * (1.0 + n * n / 4.0 + n * n * n * n / 64.0);
+            deg_to_rad = Math.PI / 180.0;
+            lambda_zero = central_meridian * deg_to_rad;
         }
         public static GaussKreuger create(GaussKreugerParameterObject gaussKreugerParameterObject) {
             GaussKreuger gaussKreuger = new GaussKreuger(gaussKreugerParameterObject);
@@ -107,9 +121,6 @@ namespace MightyLittleGeodesy {
         public LatLon geodetic_to_grid(double yLatitude, double xLongitude)
         {
             // Prepare ellipsoid-based stuff.
-            double e2 = flattening * (2.0 - flattening);
-            double n = flattening / (2.0 - flattening);
-            double a_roof = axis / (1.0 + n) * (1.0 + n * n / 4.0 + n * n * n * n / 64.0);
             double A = e2;
             double B = (5.0 * e2 * e2 - e2 * e2 * e2) / 6.0;
             double C = (104.0 * e2 * e2 * e2 - 45.0 * e2 * e2 * e2 * e2) / 120.0;
@@ -120,10 +131,8 @@ namespace MightyLittleGeodesy {
             double beta4 = 49561.0 * n * n * n * n / 161280.0;
 
             // Convert.
-            double deg_to_rad = Math.PI / 180.0;
             double phi = yLatitude * deg_to_rad;
             double lambda = xLongitude * deg_to_rad;
-            double lambda_zero = central_meridian * deg_to_rad;
 
             double phi_star = phi - Math.Sin(phi) * Math.Cos(phi) * (A +
                             B * Math.Pow(Math.Sin(phi), 2) +
@@ -154,11 +163,7 @@ namespace MightyLittleGeodesy {
         // Conversion from grid coordinates to geodetic coordinates.
         public LatLon grid_to_geodetic(double yLatitude, double xLongitude)
         {
-
             // Prepare ellipsoid-based stuff.
-            double e2 = flattening * (2.0 - flattening);
-            double n = flattening / (2.0 - flattening);
-            double a_roof = axis / (1.0 + n) * (1.0 + n * n / 4.0 + n * n * n * n / 64.0);
             double delta1 = n / 2.0 - 2.0 * n * n / 3.0 + 37.0 * n * n * n / 96.0 - n * n * n * n / 360.0;
             double delta2 = n * n / 48.0 + n * n * n / 15.0 - 437.0 * n * n * n * n / 1440.0;
             double delta3 = 17.0 * n * n * n / 480.0 - 37 * n * n * n * n / 840.0;
@@ -170,8 +175,6 @@ namespace MightyLittleGeodesy {
             double Dstar = -(4279.0 * e2 * e2 * e2 * e2) / 1260.0;
 
             // Convert.
-            double deg_to_rad = Math.PI / 180;
-            double lambda_zero = central_meridian * deg_to_rad;
             double xi = (yLatitude - false_northing) / (scale * a_roof);
             double eta = (xLongitude - false_easting) / (scale * a_roof);
             double xi_prim = xi -
