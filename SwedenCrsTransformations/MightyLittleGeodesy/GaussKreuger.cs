@@ -104,7 +104,7 @@ namespace MightyLittleGeodesy {
         }
 
         // Conversion from geodetic coordinates to grid coordinates.
-        public LatLon geodetic_to_grid(double latitude, double longitude) // public double[] geodetic_to_grid(double latitude, double longitude)
+        public LatLon geodetic_to_grid(double yLatitude, double xLongitude)
         {
             // Prepare ellipsoid-based stuff.
             double e2 = flattening * (2.0 - flattening);
@@ -121,8 +121,8 @@ namespace MightyLittleGeodesy {
 
             // Convert.
             double deg_to_rad = Math.PI / 180.0;
-            double phi = latitude * deg_to_rad;
-            double lambda = longitude * deg_to_rad;
+            double phi = yLatitude * deg_to_rad;
+            double lambda = xLongitude * deg_to_rad;
             double lambda_zero = central_meridian * deg_to_rad;
 
             double phi_star = phi - Math.Sin(phi) * Math.Cos(phi) * (A +
@@ -152,7 +152,7 @@ namespace MightyLittleGeodesy {
         }
 
         // Conversion from grid coordinates to geodetic coordinates.
-        public LatLon grid_to_geodetic(double yLatitude, double xLongitude) // public double[] grid_to_geodetic(double yLatitude, double xLongitude)
+        public LatLon grid_to_geodetic(double yLatitude, double xLongitude)
         {
 
             // Prepare ellipsoid-based stuff.
