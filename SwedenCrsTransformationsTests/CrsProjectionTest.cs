@@ -6,7 +6,7 @@ using static SwedenCrsTransformations.CrsProjection;
 namespace SwedenCrsTransformationsTests {
     
     [TestFixture]
-    public class CrsProjectionExtensionsTest {
+    public class CrsProjectionTest {
 
         private HashSet<CrsProjection> _wgs84Projections;
         private HashSet<CrsProjection> _sweref99Projections;
